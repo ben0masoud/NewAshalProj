@@ -1,0 +1,82 @@
+[
+  {
+    "uwi": "SA-0271",
+    "liftMethod": "EP",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2548094",
+    "area": "NK",
+    "feild": "SA",
+    "reservoiR_ID": "UB"
+  },
+  {
+    "uwi": "SA-0271",
+    "liftMethod": "EP",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2548087",
+    "area": "NK",
+    "feild": "SA",
+    "reservoiR_ID": "LB"
+  },
+  {
+    "uwi": "SA-0271",
+    "liftMethod": "NF",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2548080",
+    "area": "NK",
+    "feild": "SA",
+    "reservoiR_ID": "LB"
+  },
+  {
+    "uwi": "BG-0669",
+    "liftMethod": "NF",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2510585",
+    "area": "SK",
+    "feild": "BG",
+    "reservoiR_ID": "3S"
+  },
+  {
+    "uwi": "BG-0669",
+    "liftMethod": "NF",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2510578",
+    "area": "SK",
+    "feild": "BG",
+    "reservoiR_ID": "3S"
+  },
+  {
+    "uwi": "BG-0653",
+    "liftMethod": "NF",
+    "currentStatus": "Oil Well",
+    "opStatus": "CLOSE",
+    "welL_COMPLETION_S": "2510270",
+    "area": "SK",
+    "feild": "BG",
+    "reservoiR_ID": "3S"
+  },
+  {
+    "uwi": "UG-0113",
+    "liftMethod": "EP",
+    "currentStatus": "Oil Well",
+    "opStatus": "OPEN",
+    "welL_COMPLETION_S": "2567126",
+    "area": "WK",
+    "feild": "UG",
+    "reservoiR_ID": "MM"
+  },
+  {
+    "uwi": "UG-0113",
+    "liftMethod": "",
+    "currentStatus": "Oil Well",
+    "opStatus": "",
+    "welL_COMPLETION_S": "2567120",
+    "area": "WK",
+    "feild": "UG",
+    "reservoiR_ID": "MM"
+  }
+  ]
