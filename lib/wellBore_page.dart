@@ -28,12 +28,12 @@ class _WellBorePageState extends State<WellBorePage> {
     String _spud_date = "";
     DateTime dt2;
     String _completion_date = "";
-    if(widget.item!.SPUD_DATE != null) {
+    if(widget.item!.SPUD_DATE != "") {
       dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
           widget.item!.SPUD_DATE.toString());
       _spud_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
     }
-    if(widget.item!.COMPLETION_DATE != null) {
+    if(widget.item!.COMPLETION_DATE != "") {
        dt2 = DateFormat('MM/dd/yyyy hh:mm').parse(
           widget.item!.COMPLETION_DATE.toString());
        _completion_date = DateFormat('dd/MM/yyyy h:mm a').format(dt2);

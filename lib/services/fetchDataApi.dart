@@ -21,7 +21,9 @@ import 'header_comp_connection.dart';
 
 
 class FetchDataApi{
-  String myPath = "https://ashalim.kockw.com/test/api/v1.0/GetTable/";
+  String myPath = "https://ashal.kockw.com/api/v1.0/GetTable/";
+
+  //"https://ashalim.kockw.com/test/api/v1.0/GetTable/";
 
   Future<List<Well>?> fetchWell(String JsonFilter) async {
     print('enter fetchWell fun ');

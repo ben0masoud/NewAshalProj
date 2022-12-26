@@ -516,7 +516,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver{
           ashal_access = await fetchApi.fetchAshalAccess(":1:USER_ID='${user_info.UserName!.split('@')[0]}'") as List<ASHAL_ACCESS>;
         print('User : ${user_profile[0].USER_ID}   Profile : ${user_profile[0].PROFILE}   Area : ${ashal_access[0].ASSET}');
 
-        if (user_profile == 'wellcompletionlist')
+        if (user_profile[0].PROFILE == 'wellcompletionlist')
         {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
         settings: RouteSettings(name: "Home"),
