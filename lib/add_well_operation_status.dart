@@ -1,16 +1,22 @@
 
+import 'dart:convert';
+
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well_op_status_reason.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+import 'package:quiver/testing/src/time/time.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:darq/darq.dart';
 
 class AddWellOperationStatus extends StatefulWidget {
-  const AddWellOperationStatus({Key? key, required this.title, required this.WellStatus,this.WellReason}) : super(key: key);
+  const AddWellOperationStatus({Key? key, required this.title, required this.WellStatus,this.WellReason,this.StatusDate,this.WellCompletion}) : super(key: key);
   final String title;
   final String WellStatus;
   final String? WellReason;
+  final String? StatusDate;
+  final String? WellCompletion;
   @override
   State<AddWellOperationStatus> createState() => _AddWellOperationStatusState();
 }
@@ -20,6 +26,8 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
 
   FetchDataApi fetchApi = FetchDataApi();
+ // PostWellOpStatus _postWellOpStatus
+  PostWellOpStatus post_well_op_status = PostWellOpStatus(v_status: "");
 
  /* late List<WellOpStatusReason?> AllWellsOp;
   late List<WellOpStatusReason?> level1;
@@ -48,6 +56,11 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
   bool isStatusSelected = false;
   bool isLevel1Selected = false;
+  TextEditingController _descController = TextEditingController();
+  TextEditingController _remarkController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
+ // PostWellOpStatus post_well_op_status = PostWellOpStatus();
 
 
   void initState() {
@@ -143,78 +156,104 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(widget.title),
+
       ),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Status',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                    CupertinoSlidingSegmentedControl(
-                      thumbColor: groupValue == 0 ? CupertinoColors.activeGreen : CupertinoColors.destructiveRed,
-                      padding: const EdgeInsets.all(4),
-                      groupValue: groupValue,
-                      children: {
-                        0: buildSegment('OPEN'),
-                        1: buildSegment('CLOSE'),
-                      },
-                      onValueChanged: (groupValue) {
-                        // print(groupValue);
-                        setState(() {
-                          this.groupValue = groupValue as int?;
-                        //  this.isClicked = true;
+      body: SingleChildScrollView(
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('Status',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                      CupertinoSlidingSegmentedControl(
+                        thumbColor: groupValue == 0 ? CupertinoColors.activeGreen : CupertinoColors.destructiveRed,
+                        padding: const EdgeInsets.all(4),
+                        groupValue: groupValue,
+                        children: {
+                          0: buildSegment('OPEN'),
+                          1: buildSegment('CLOSE'),
+                        },
+                        onValueChanged: (groupValue) {
+                          // print(groupValue);
+                          setState(() {
+                            this.groupValue = groupValue as int?;
+                          //  this.isClicked = true;
 
-                          if(groupValue == 1) {
-                            fetchWellOpStatusReason('CLOSE') ;
-                            print('CLOSE = ${AllWellsOp.length}');
-                          }
-                          else {
-                            fetchWellOpStatusReason('OPEN');
-                            print('OPEN = ${AllWellsOp.length}');
-                          }
+                            if(groupValue == 1) {
+                              fetchWellOpStatusReason('CLOSE') ;
+                              print('CLOSE = ${AllWellsOp.length}');
+                            }
+                            else {
+                              fetchWellOpStatusReason('OPEN');
+                              print('OPEN = ${AllWellsOp.length}');
+                            }
 
-                        });
-                      },
+                          });
+                        },
 
 
-                    )
-                  ],
+                      )
+                    ],
 
-                ),
-                const SizedBox(width: 20,),
-                Column(
-                  children: [
-                    const Text('Date and Time',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                    ElevatedButton(
-                        onPressed: pickDateTime,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            '${dateTime.year}/${dateTime.month}/${dateTime.day} ${dateTime.hour}:${dateTime.minute}',
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        )
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(width: 20,),
+                  Column(
+                    children: [
+                      const Text('Date and Time',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                      ElevatedButton(
+                          onPressed: pickDateTime,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              '${dateTime.year}/${dateTime.month}/${dateTime.day} ${dateTime.hour}:${dateTime.minute}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          )
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
             ),
+            level1.isNotEmpty  ? DropDownValues() : const Center(child: CircularProgressIndicator(),),
 
-          ),
-          level1.isNotEmpty  ? DropDownValues() : const Center(child: CircularProgressIndicator(),),
+          ],
+        ),
 
-        ],
       ),
+      floatingActionButton:   FloatingActionButton(child: Text('add'),
+        onPressed: () async{
+          post_well_op_status.proc_name = "InsertOperationStatus";
+          post_well_op_status.v_status = "";
+          post_well_op_status.WELL_COMPLETION_S = widget.WellCompletion;
+          print(DateFormat('dd-MMM-yyyy hh:mm:ss a').format(dateTime));
+          post_well_op_status.start_time = DateFormat('dd-MMM-yyyy hh:mm:ss a').format(dateTime);
+          post_well_op_status.status = widget.WellStatus;
+          post_well_op_status.STATUS_REASON = reasonId;
+          post_well_op_status.remarks = _descController.text;
+          post_well_op_status.ofo_remarks = _remarkController.text;
+          // post_well_op_status.insert_date = "29-May-2022 10:00:00 AM";//DateFormat('dd/MM/yyyy hh:mm a').parse('07/03/2021 2:05 AM').toString();
+          post_well_op_status.insert_date = DateFormat('dd-MMM-yyyy hh:mm:ss a').format(DateTime.now());
+          post_well_op_status.inserted_by = "hmmarri";
+
+          print('the json is : ${post_well_op_status.toJson()}');
+          print('the json encode is : ${jsonEncode(post_well_op_status)}');
+
+          result = await fetchApi.PostWellOpStatus("JsonHeader", jsonEncode(post_well_op_status));
+          print(result);
+
+        },),
     );
   }
 
@@ -401,20 +440,28 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
                             //optionLabel: "Name"
                           ),
                           */
-                    const SizedBox(height: 10,),
-                    const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text('Description',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                    ),
-                    const SizedBox(height: 10,),
-                    const TextField(
-                    maxLines: 3,
-                    decoration: InputDecoration(border: OutlineInputBorder()),
-                    ),
-                    const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text('Remarks',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                    ),
+          const SizedBox(height: 10,),
+          const Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Text('Description',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+          ),
+          const SizedBox(height: 10,),
+           TextField(
+            controller:_descController ,
+          maxLines: 3,
+          decoration: InputDecoration(border: OutlineInputBorder()),
+          ),
+          const Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Text('Remarks',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+          ),
+           TextField(
+            controller: _remarkController,
+            maxLines: 3,
+            decoration: InputDecoration(border: OutlineInputBorder()),
+          ),
+
+
     ],
     );
   }
@@ -427,18 +474,24 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
       ),
     );
   }
-  Future<DateTime?> pickDate() => showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(1900),
-    lastDate: DateTime(2100),
-  );
+  Future<DateTime?> pickDate() {
+
+    DateTime dt =DateFormat('dd/MM/yyyy hh:mm a').parse(widget.StatusDate ??  '07/03/2021 2:05 AM') ;  //widget.StatusDate ?? "1980"   07/03/2021 2:05 AM
+    return showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: dt,
+      lastDate: DateTime(2100),
+    );
+  }
   Future<TimeOfDay?> pickTime() => showTimePicker(
       context:context,
       initialTime: TimeOfDay(hour: dateTime.hour, minute: dateTime.minute)
   );
   Future pickDateTime() async {
     DateTime? date = await pickDate();
+
+
     if (date == null) return;
 
     TimeOfDay? time = await pickTime();
@@ -487,5 +540,45 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
     );
   }
+}
+
+class PostWellOpStatus{
+  String? proc_name="";
+  String v_status;
+  String? WELL_COMPLETION_S="";
+  String? start_time="";
+  String? status="";
+  String? STATUS_REASON="";
+  String? remarks="";
+  String? ofo_remarks="";
+  String? insert_date="";
+  String? inserted_by="";
+
+  PostWellOpStatus({
+    this.proc_name,
+    required this.v_status,
+    this.WELL_COMPLETION_S,
+    this.start_time,
+    this.status,
+    this.STATUS_REASON,
+    this.remarks,
+    this.ofo_remarks,
+    this.insert_date,
+    this.inserted_by
+  });
+
+  Map<String, dynamic> toJson() => {
+    "proc_name": proc_name,
+    "v_status": v_status,
+    "WELL_COMPLETION_S" : WELL_COMPLETION_S,
+    "start_time": start_time,
+    "status":status,
+    "STATUS_REASON": STATUS_REASON,
+    "remarks": remarks,
+    "ofo_remarks": ofo_remarks,
+    "insert_date": insert_date,
+    "inserted_by": inserted_by
+  };
+
 }
 

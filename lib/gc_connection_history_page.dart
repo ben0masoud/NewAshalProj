@@ -124,14 +124,35 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
       body: screens[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
           items: [
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.email_outlined), label: 'GC'),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.account_balance_wallet_rounded),
+            //     label: 'Header'),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.connect_without_contact_outlined),
+            //     label: 'Slot'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.email_outlined), label: 'GC'),
+              icon: ImageIcon(
+                AssetImage("assets/icons/GCConnectionLists/GC.png"),
+                color: Color(0xFF3A5A98),
+              ),
+              label: 'GC',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_balance_wallet_rounded),
-                label: 'Header'),
+              icon: ImageIcon(
+                AssetImage("assets/icons/GCConnectionLists/Header.png"),
+                color: Color(0xFF3A5A98),
+              ),
+              label: 'Header',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.connect_without_contact_outlined),
-                label: 'Slot'),
+              icon: ImageIcon(
+                AssetImage("assets/icons/GCConnectionLists/Slot.png"),
+                color: Color(0xFF3A5A98),
+              ),
+              label: 'Slot',
+            ),
 
           ],
           selectedItemColor: Colors.green,

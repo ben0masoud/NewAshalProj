@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:get/get.dart';
 import 'package:ashal_ver_3/pages/wellCompletion/all_area.dart';
 import 'package:ashal_ver_3/pages/wellCompletion/n_area.dart';
 import 'package:ashal_ver_3/pages/wellCompletion/o_area.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      builder: (ctx, child) => MaterialApp(
+      builder: (ctx, child) => GetMaterialApp(
         title: 'ASHAL',
         theme: ThemeData(
           //primarySwatch: Colors.blue,
@@ -229,9 +229,7 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
-            'Read Data From Local Json',
-          ),
+          title: Text(widget.title),
         ),
         body: AllWells!.isNotEmpty
             ? screens[selectedPage]

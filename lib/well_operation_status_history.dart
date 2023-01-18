@@ -33,6 +33,7 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
   double? _size = 14.sp;
    String FirstWellStatus = "";
   String FirstWellReason = "";
+  String FirstStatusDate = "";
 
 
   Widget build(BuildContext context) {
@@ -85,6 +86,10 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
                  // print(ListWellOperationStatusHistory[index].START_TIME!);
                   DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(ListWellOperationStatusHistory[index].START_TIME!);
                   String _star_time = DateFormat('dd/MM/yyyy h:mm a').format(dt);
+                  if(index == 0)
+                    {
+                       FirstStatusDate =_star_time ;
+                    }
                  // print(_star_time);
                   if(ListWellOperationStatusHistory[index].STATUS == "CLOSE")
                   {
@@ -231,7 +236,9 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
               settings: RouteSettings(name: "AddWellOperationStatus"),
               builder: (context)=>AddWellOperationStatus(title: widget.item_well_completion.toString(),
                                                          WellStatus: FirstWellStatus,
-                                                         WellReason: FirstWellReason,)
+                                                         WellReason: FirstWellReason,
+                                                          StatusDate: FirstStatusDate,
+                                                          WellCompletion: widget.item_well_completion)
           ),
           );
         },
