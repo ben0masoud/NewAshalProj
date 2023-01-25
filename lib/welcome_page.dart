@@ -11,9 +11,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:action_slider/action_slider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:quickalert/quickalert.dart';
+
+
 
 import 'main.dart';
 import 'gc_list_page.dart';
+//import 'controller/base_controller.dart';
 //import 'main.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -37,6 +41,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
   late UserInfo user_info;
   late List<ASHAL_ACCESS> ashal_access = [];
   late List<UserProfile> user_profile = [];
+
 
   @override
   initState() {
@@ -426,7 +431,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
             builder: (context) => MyHomePageWithPages(
                   title: 'ASHAL',
                   profile: user_profile[0].PROFILE!,
-                  AshalAccess: ashal_access[0].ASSET,
+                  Area: ashal_access[0].ASSET,
                 )));
       } else {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -434,7 +439,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
             builder: (context) => GcListPages(
                   title: 'ASHAL',
                   profile: user_profile[0].PROFILE!,
-                  AshalAccess: ashal_access[0].ASSET,
+                  Area: ashal_access[0].ASSET,
                 )));
       }
       return true;
@@ -523,7 +528,8 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
               builder: (context) => MyHomePageWithPages(
                     title: 'ASHAL',
                     profile: user_profile[0].PROFILE!,
-                    AshalAccess: ashal_access[0].ASSET,
+                    Area: ashal_access[0].ASSET,
+
                   )));
         } else {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -531,7 +537,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
               builder: (context) => GcListPages(
                     title: 'ASHAL',
                     profile: user_profile[0].PROFILE!,
-                    AshalAccess: ashal_access[0].ASSET,
+                    Area: ashal_access[0].ASSET,
                   )));
         }
       }
@@ -551,7 +557,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
               builder: (context) => MyHomePageWithPages(
                 title: 'ASHAL',
                 profile: user_profile[0].PROFILE!,
-                AshalAccess: ashal_access[0].ASSET,
+                Area: ashal_access[0].ASSET,
               )));
         } else {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -559,7 +565,7 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
               builder: (context) => GcListPages(
                 title: 'ASHAL',
                 profile: user_profile[0].PROFILE!,
-                AshalAccess: ashal_access[0].ASSET,
+                Area: ashal_access[0].ASSET,
               )));
         }
       }

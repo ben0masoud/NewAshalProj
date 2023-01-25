@@ -59,6 +59,7 @@ dependencies:
   rename: ^2.0.1
   shared_preferences: ^2.0.15
   get: ^4.6.5
+  quickalert: ^1.0.1
 
 
 
@@ -112,6 +113,9 @@ flutter:
     - assets/icons/West-Direction-icon.png
     - assets/icons/South-Direction-icon.png
     - assets/icons/Center-Direction-icon.png
+    - assets/icons/GCConnectionLists/
+    - assets/icons/WellStatusSummary/
+    - assets/icons/Production/
 
 
   # To add assets to your application, add an assets section, like this:

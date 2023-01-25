@@ -1,6 +1,7 @@
 
 //import 'dart:convert';
 
+import 'package:ashal_ver_3/constant_values.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/gc_comp_connection.dart';
 import 'package:ashal_ver_3/services/header_comp_connection.dart';
@@ -135,31 +136,40 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/icons/GCConnectionLists/GC.png"),
-                color: Color(0xFF3A5A98),
+                //color: ConstantValues.GcConnectionType,
               ),
               label: 'GC',
+
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/icons/GCConnectionLists/Header.png"),
-                color: Color(0xFF3A5A98),
+                //color: ConstantValues.GcConnectionType,
               ),
               label: 'Header',
+
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/icons/GCConnectionLists/Slot.png"),
-                color: Color(0xFF3A5A98),
+                //color: ConstantValues.GcConnectionType,
               ),
               label: 'Slot',
+
             ),
 
           ],
-          selectedItemColor: Colors.green,
+          iconSize: 60,
+          selectedItemColor: ConstantValues.GcConnectionType,//Colors.white,
           elevation: 5.0,
-          unselectedItemColor: Colors.green[900],
+          unselectedItemColor: Colors.grey,
+         // unselectedIconTheme: Colors.green[900],
+          selectedIconTheme: IconThemeData(color: ConstantValues.GcConnectionType),
+          unselectedIconTheme:  IconThemeData(color: Colors.grey),
           currentIndex: selectedPage,
-          backgroundColor: Colors.white,
+          selectedFontSize: 20,
+          unselectedFontSize: 15,
+          backgroundColor: ConstantValues.MainColor1,//Theme.of(context).primaryColor,//   Colors.white,
           onTap: (index) {
             setState(() {
               //print('index = $index');

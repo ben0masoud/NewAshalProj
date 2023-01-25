@@ -7,10 +7,10 @@ import '../../widgets/search_widget.dart';
 import '../../widgets/well_completion_main_info.dart';
 
 class AllArea extends StatefulWidget {
-   AllArea({Key? key,required this.wellList}) : super(key: key);
+   AllArea({Key? key,required this.wellList,this.userPrivilege}) : super(key: key);
 
   final List<Well>? wellList;
-
+   List<String>? userPrivilege;
 
   @override
   State<AllArea> createState() => _AllAreaState();
@@ -53,7 +53,7 @@ class _AllAreaState extends State<AllArea> {
 
                         Navigator.push(context,
                           MaterialPageRoute(
-                            builder: (context) => WellPage(item: wellsSearch![index]),
+                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,),
                             settings: RouteSettings(name: "Well_Page"),
 
                           ),

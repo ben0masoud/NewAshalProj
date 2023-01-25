@@ -1,6 +1,7 @@
 //import 'dart:convert';
 import 'dart:async';
 import '../constant_values.dart';
+import '../controller/test_controller.dart';
 import 'base_client.dart';
 import 'production_facility.dart';
 import 'slot_comp_connection.dart';
@@ -35,7 +36,7 @@ class FetchDataApi{
 
   //"https://ashalim.kockw.com/test/api/v1.0/GetTable/";
 
-
+  final controller = TestContrller();
 
   Future<List<Well>?> fetchWell(String JsonFilter) async {
     print('enter fetchWell fun ');
@@ -180,7 +181,7 @@ class FetchDataApi{
   }
 
   Future<List<ASHAL_ACCESS>?> fetchAshalAccess(String JsonFilter) async {
-    var response = await BaseClient().get('${myPath}ASHAL_ACCESS', JsonFilter)  ;
+    var response = await  controller.getData(myPath, 'ASHAL_ACCESS', JsonFilter) ;//BaseClient().get('${myPath}ASHAL_ACCESS', JsonFilter)  ;
     List<ASHAL_ACCESS> ashal_access = [];
     ashal_access.clear();
     for(var item in response) {
@@ -190,20 +191,22 @@ class FetchDataApi{
   }
 
   Future<List<UserProfile>?> fetchUserProfile(String JsonFilter) async {
-    var response = await BaseClient().get('${myPath}user_profile', JsonFilter)  ;
+    var response = await controller.getData(myPath, 'user_profile', JsonFilter) ;//  .get('${myPath}user_profile', JsonFilter)  ;
     List<UserProfile> user_profile = [];
     user_profile.clear();
-    for(var item in response) {
-      user_profile.add(UserProfile.fromJson(item));
+    if(response != null) {
+      for (var item in response) {
+        user_profile.add(UserProfile.fromJson(item));
+      }
     }
     return user_profile;
   }
   Future<dynamic> fetchUserLogin(String JsonFilter) async {
-    var response = await BaseClient().get('${LogPath}Login/', JsonFilter);
+    var response = await controller.getData(LogPath, 'Login', JsonFilter) ;// BaseClient().get('${LogPath}Login/', JsonFilter);
     return response;
   }
   Future<dynamic> fetchUserLogout(String JsonFilter) async {
-    var response = await BaseClient().get('${LogPath}Logout/', JsonFilter);
+    var response = await controller.getData(LogPath, 'Logout', JsonFilter) ;// BaseClient().get('${LogPath}Logout/', JsonFilter);
     return response;
   }
 

@@ -11,10 +11,11 @@ import 'package:ashal_ver_3/services/production_facility.dart';
 import 'package:flutter/material.dart';
 
 class GcListPages extends StatefulWidget {
-  const GcListPages({Key? key,required this.title,this.profile,this.AshalAccess}) : super(key: key);
+  const GcListPages({Key? key,required this.title,this.profile,this.AshalAccess,this.Area}) : super(key: key);
   final String title;
   final String? profile;
-  final String? AshalAccess;
+  final List<String>? AshalAccess;
+  final String? Area;
 
   @override
   State<GcListPages> createState() => _GcListPagesState();
@@ -44,7 +45,7 @@ class _GcListPagesState extends State<GcListPages> {
     selectedPage = 0;
     super.initState();
     gcsSearch = gcs;
-    fetchGCList(widget.profile!, widget.AshalAccess!);
+    fetchGCList(widget.profile!, widget.Area!);
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);

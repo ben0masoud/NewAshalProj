@@ -8,11 +8,12 @@ import '../../widgets/search_widget.dart';
 
 
 class OAreaGCs extends StatefulWidget {
-  OAreaGCs({Key? key,required this.gcList,this.profile,this.AshalAccess}) : super(key: key);
+  OAreaGCs({Key? key,required this.gcList,this.profile,this.AshalAccess,this.Area}) : super(key: key);
 
   final List<ProductionFacility>? gcList;
   final String? profile;
-  final String? AshalAccess;
+  final List<String>? AshalAccess;
+  final String? Area;
 
 
   @override
@@ -58,6 +59,7 @@ class _OAreaGCsState extends State<OAreaGCs> {
                                 MyHomePageWithPages(title: 'Flutter Demo Home Page',
                                   profile: widget.profile!,
                                   AshalAccess: widget.AshalAccess,
+                                  Area: widget.Area,
                                   Gc: gcsSearch![index].GC,
                                 )));
                       },

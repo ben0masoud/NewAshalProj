@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:ashal_ver_3/services/navigation_service.dart';
+import 'package:ashal_ver_3/wellcome_page1.dart';
 import 'package:get/get.dart';
 import 'package:ashal_ver_3/pages/wellCompletion/all_area.dart';
 import 'package:ashal_ver_3/pages/wellCompletion/n_area.dart';
@@ -38,9 +40,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      builder: (ctx, child) => GetMaterialApp(
+      builder: (ctx, child) => MaterialApp(
+        navigatorKey:  NavigationService.navigatorKey,
         title: 'ASHAL',
         theme: ThemeData(
           //primarySwatch: Colors.blue,
@@ -55,19 +59,21 @@ class MyApp extends StatelessWidget {
         //home: new MyHomePage(title: 'Ashal Project'),
         debugShowCheckedModeBanner: false,
       ),
-      child: const WelcomePage(),
+      child: const WelcomePage1(),
     );
   }
 }
 
 class MyHomePageWithPages extends StatefulWidget {
   const MyHomePageWithPages(
-      {Key? key, required this.title, this.profile, this.AshalAccess,this.Gc})
+      {Key? key, required this.title, this.profile,this.AshalAccess,this.Gc,this.Area})
       : super(key: key);
   final String title;
   final String? profile;
-  final String? AshalAccess;
+  final List<String>? AshalAccess;
   final String? Gc;
+  final String? Area;
+
  // final UserProfile? profile;
  // final ASHAL_ACCESS? AshalAccess;
 
@@ -97,7 +103,7 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
     selectedPage = 0;
     super.initState();
     wellsSearch = wells;
-    fetchWellCompletion(widget.profile!, widget.AshalAccess!);
+    fetchWellCompletion(widget.profile!, widget.Area!);
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);
@@ -116,7 +122,7 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
           AllWells =
               await fetchApi.fetchWell("::AREA='${access}'") as List<Well>?;
         }
-      } else if(prof =='gclist')
+      } else if(prof =='GcLists')
         {
           if (access == 'ALL AREA') {
             AllWells = await fetchApi.fetchWell("::GC='${widget.Gc}'") as List<Well>?;
@@ -145,17 +151,24 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
           screens = [
             AllArea(
               wellList: AllWells,
+              userPrivilege: widget.AshalAccess,
             ),
             NArea(
               wellList: nkData,
+              userPrivilege: widget.AshalAccess,
             ),
             SArea(
               wellList: skData,
+              userPrivilege: widget.AshalAccess,
             ),
             WArea(
               wellList: wkData,
+              userPrivilege: widget.AshalAccess,
             ),
-            OArea(wellList: otherData)
+            OArea(
+                wellList: otherData,
+               userPrivilege: widget.AshalAccess,
+            )
           ];
         });
       }

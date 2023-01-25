@@ -1,4 +1,5 @@
 import 'package:ashal_ver_3/services/WellProduction.dart';
+import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellBore.dart';
 import 'package:ashal_ver_3/services/wellLatest.dart';
@@ -23,8 +24,9 @@ import 'main.dart';
 
 class WellPage extends StatefulWidget {
   Well? item;
+  List<String>? userPrivilege;
 
-  WellPage({Key? key, required this.item}) : super(key: key);
+  WellPage({Key? key, required this.item,this.userPrivilege}) : super(key: key);
 
   @override
   _WellPageState createState() => _WellPageState();
@@ -114,7 +116,7 @@ class _WellPageState extends State<WellPage> {
             },
           ),
         ),
-        endDrawer: NavBar(uwi: widget.item!.UWI,well_completion: widget.item!.WELL_COMPLETION_S,my_well: widget.item,),
+        endDrawer: NavBar(uwi: widget.item!.UWI,well_completion: widget.item!.WELL_COMPLETION_S,my_well: widget.item,userPrivilege: widget.userPrivilege,),
         body: Center(
           child: Container(
             //color: Colors.red,

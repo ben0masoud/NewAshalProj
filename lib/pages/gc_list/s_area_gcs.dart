@@ -5,10 +5,11 @@ import '../../services/production_facility.dart';
 import '../../widgets/search_widget.dart';
 
 class SAreaGCs extends StatefulWidget {
-  const SAreaGCs({Key? key,this.gcList,this.profile,this.AshalAccess}) : super(key: key);
+  const SAreaGCs({Key? key,this.gcList,this.profile,this.AshalAccess,this.Area}) : super(key: key);
   final List<ProductionFacility>? gcList;
   final String? profile;
-  final String? AshalAccess;
+  final List<String>? AshalAccess;
+  final String? Area;
   @override
   State<SAreaGCs> createState() => _SAreaGCsState();
 }
@@ -51,6 +52,7 @@ class _SAreaGCsState extends State<SAreaGCs> {
                                 MyHomePageWithPages(title: 'Flutter Demo Home Page',
                                   profile: widget.profile!,
                                   AshalAccess: widget.AshalAccess,
+                                  Area: widget.Area,
                                   Gc: gcsSearch![index].GC,
                                 )));
                       },

@@ -1,4 +1,5 @@
 
+import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellOperationStatus.dart';
@@ -18,8 +19,9 @@ class WellOperationStatusHistory_Page extends StatefulWidget {
   String? item_uwi;
   String? item_well_completion;
   Well? item_well;
+  List<String>? userPrivilege;
 
-  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well}) : super(key: key);
+  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege}) : super(key: key);
 
   @override
   State<WellOperationStatusHistory_Page> createState() => _WellOperationStatusHistory_PageState();
@@ -34,10 +36,19 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
    String FirstWellStatus = "";
   String FirstWellReason = "";
   String FirstStatusDate = "";
-
+  //bool found = false;
+  @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   setState(() {
+  //     found = widget.userPrivilege!.FORM_GROUP_ID.contains('PO_OPERATOR_GC');
+  //   });
+  //   super.initState();
+  // }
 
   Widget build(BuildContext context) {
     FetchDataApi fetchApi = FetchDataApi();
+
 
     ScreenUtil.init(context,designSize: Size(360, 690));
 
@@ -230,22 +241,34 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _getFAB(widget.userPrivilege!.contains('PO_OPERATOR_GC')),
+    );
+
+
+  }
+  Widget _getFAB(bool found) {
+    if(found) {
+      return FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               settings: RouteSettings(name: "AddWellOperationStatus"),
-              builder: (context)=>AddWellOperationStatus(title: widget.item_well_completion.toString(),
-                                                         WellStatus: FirstWellStatus,
-                                                         WellReason: FirstWellReason,
-                                                          StatusDate: FirstStatusDate,
-                                                          WellCompletion: widget.item_well_completion)
+              builder: (context) =>
+                  AddWellOperationStatus(
+                      title: widget.item_well_completion.toString(),
+                      WellStatus: FirstWellStatus,
+                      WellReason: FirstWellReason,
+                      StatusDate: FirstStatusDate,
+                      WellCompletion: widget.item_well_completion)
           ),
           );
         },
         tooltip: 'Add Status',
         child: const Icon(Icons.add),
-      ),
-    );
+      );
+    }
+    else {
+      return Container();
+    }
   }
 }
 

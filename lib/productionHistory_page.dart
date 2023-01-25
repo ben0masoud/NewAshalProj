@@ -73,70 +73,20 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
                   _last_update ='';
                 }
                 return ListTile(
-                  leading:  Container(
-                    width: 0.2.sw,
-                    height: 0.14.sh,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.r),
-                          topLeft: Radius.circular(10.r),
-                          bottomRight: Radius.circular(10.r),
-                          bottomLeft: Radius.circular(10.r),
-                        ),
-                        border: Border.all(color: Colors.black,width: 2),
-                        //boxShadow: BoxShadow(blurRadius: ),
-
-                    ),
-                    child: Column(
-
-                      children: [
-                        Container(
-                          height: 0.026.sh,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8.r),
-                              topLeft: Radius.circular(8.r),
-
-                            ),
-                          ),
-                          child: Text(
-                            "Days",
-                            textAlign: TextAlign.center,
-                            //overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.sp  ,
-                                fontWeight: FontWeight.bold
-                            ),
-
-                          ),
-                        ),
-                        Container(
+                  leading:
+                  Container(
+                      //padding: EdgeInsets.all(20.r),
+                      width: 0.15.sw,
+                      height: 0.14.sh,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/icons/Production/ProductionDays.png"), //assets/icons/Production/ProductionDays.png
                           //alignment: Alignment.center,
-                          // padding: EdgeInsets.fromLTRB(2, 10, 2, 2),
-                          margin: EdgeInsets.only(top: 5.r),
-                          width: 0.18.sw,//double.infinity,
-                          height: 0.03.sh,
-                          decoration: BoxDecoration(
-                              color: Colors.white
-                          ),
-                          child: Center(
-                            child: Text(
-                              ListProductionHistory[index].PRODUCTIVE_DAYS.toString(),
-                              //textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.sp  ,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                          fit: BoxFit.fill,
+                        )
+                        ,
+                      ),
+                      child: Center(child: Text(ListProductionHistory[index].PRODUCTIVE_DAYS.toString(),style: TextStyle(fontSize: 10.sp,fontWeight: FontWeight.bold),))
                   ),
                   title:  Row(
                     children: [

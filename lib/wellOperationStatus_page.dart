@@ -50,20 +50,17 @@ class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
 
                 //height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.all(8.r),
-                color:  Color(0xffaabbd5), //Colors.grey,
+                 //Colors.grey,
+                color:  Color(0xffaabbd5),
+
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        infoContainer(height: 0.1.sh,
-                          width: 0.3.sw,
-                          textColor: Colors.black,
-                          backgroundColor: Colors.white,
-                          borderColor: Colors.black,
-                          text: widget.item!.OPERATION_STATUS.toString(), size: 18.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 5.r, rbRadius: 5.r,
-                          borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
-                        ),
+
+
+                        WellStatus(widget.item!.OPERATION_STATUS.toString()),
                         Column(children: [
                           //Text("Elevation Ref."),
                           infoContainer(height: 0.05.sh,
@@ -133,6 +130,60 @@ class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
           ),
         ),
       ),
+    );
+  }
+  Widget WellStatus(String? status)
+  {
+    AssetImage image_path;
+    Color txt_color;
+
+    if(status == 'OPEN')
+      {
+        image_path = AssetImage("assets/icons/WellStatusSummary/open_well.png");
+        txt_color = Colors.green;
+
+      }
+    else if(status == 'CLOSE')
+      {
+        image_path = AssetImage("assets/icons/WellStatusSummary/close_well.png");
+        txt_color = Colors.red;
+
+      }
+    else
+      {
+        image_path = AssetImage("assets/icons/WellStatusSummary/no well_status.png");
+        txt_color = Colors.black12;
+        status = "No Status";
+      }
+    return
+    Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: -0.02.sh,
+          child: Container(
+            height: 0.1.sh,
+            width: 0.3.sw,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: image_path,
+                alignment: Alignment.centerLeft,
+                //fit: BoxFit.cover,
+              )
+              ,
+            ),
+            child: Text("")
+          ),
+        ),
+        Container(
+          height: 0.1.sh,
+          width: 0.3.sw,
+            child: Text(status!,style: TextStyle(fontSize: 18.sp,color: txt_color),),
+            alignment: Alignment.centerRight,
+
+        ),
+      ]
+
     );
   }
 }

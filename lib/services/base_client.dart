@@ -14,7 +14,9 @@ class BaseClient
      var uri = Uri.parse(baseUrl+api);
      try {
        var response = await http.get(uri);
-       return _processResponse(response);
+       //print ( _processResponse(response));
+       var res = _processResponse(response);
+       return res;
      } on SocketException{
        throw FetchDataException('No Internet Connection', uri.toString());
      }

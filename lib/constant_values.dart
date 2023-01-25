@@ -9,6 +9,8 @@ class ConstantValues{
    static const String api_post_path_prod = "https://ashal.kockw.com/api/v1.0/";
    static const String api_get_path_test = "https://ashalim.kockw.com/test/api/v1.0/GetTable/";
    static const String api_post_path_test = "https://ashalim.kockw.com/test/api/v1.0/";
+   static const String api_get_col_path_test = "https://ashalim.kockw.com/test/api/v1.0/GetColums/";
+   static const String api_get_col_path_prod = "https://ashal.kockw.com/api/v1.0/GetColums/";
 
 
    static const Color MainTitle = Color(0xFFDCDDDF);
@@ -23,6 +25,7 @@ class ConstantValues{
    static const Color UnknownStatus = Colors.grey;
    static const Color ALStatus = Color(0xFF345A7F);
    static const Color LiftMethod = Color(0xFFDB8554);
+   static const Color GcConnectionType = Colors.blueAccent;
 
 
 }

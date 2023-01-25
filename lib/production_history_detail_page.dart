@@ -34,70 +34,23 @@ class _ProductionHistoryDetailPageState extends State<ProductionHistoryDetailPag
             children: [
               SizedBox(height: 0.05.sh,),
               Container(
-                width: 0.2.sw,
-                height: 0.1.sh,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10.r),
-                    topLeft: Radius.circular(10.r),
-                    bottomRight: Radius.circular(10.r),
-                    bottomLeft: Radius.circular(10.r),
-                  ),
-                  border: Border.all(color: Colors.black,width: 2),
-                  //boxShadow: BoxShadow(blurRadius: ),
-
-                ),
-                child: Column(
-
-                  children: [
-                    Container(
-                      height:  0.035.sh,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(8.r),
-                          topLeft: Radius.circular(8.r),
-
-                        ),
-                      ),
-                      child: Text(
-                        "Days",
-                        textAlign: TextAlign.center,
-                        //overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp  ,
-                            fontWeight: FontWeight.bold
-                        ),
-
-                      ),
-                    ),
-
-                    Container(
+                //padding: EdgeInsets.all(20.r),
+                  width: 0.3.sw,
+                  height: 0.15.sh,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/icons/Production/ProductionDays.png"), //assets/icons/Production/ProductionDays.png
                       //alignment: Alignment.center,
-                      // padding: EdgeInsets.fromLTRB(2, 10, 2, 2),
-                      margin: EdgeInsets.only(top: 5.r),
-                      //width: 30,
-                      //height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.white
+                      fit: BoxFit.fill,
+                    )
+                    ,
+                  ),
+                  child: Center(
+                      child: Text(widget.item!.PRODUCTIVE_DAYS.toString(),
+                                  style: TextStyle(fontSize: 18.sp,fontWeight:
+                                                     FontWeight.bold),
                       ),
-                      child: Center(
-                        child: Text(
-                            widget.item!.PRODUCTIVE_DAYS.toString(),
-                          //textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15.sp  ,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  )
               ),
               SizedBox(height: 0.02.sh,),
               WellTestDetailsContainer(height: 0.12.sh,

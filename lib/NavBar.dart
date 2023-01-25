@@ -1,5 +1,6 @@
 import 'package:ashal_ver_3/WellTest_Container.dart';
 import 'package:ashal_ver_3/productionHistory_page.dart';
+import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/well_operation_status_history.dart';
 import 'package:ashal_ver_3/well_page.dart';
@@ -15,8 +16,9 @@ class NavBar extends StatelessWidget {
   final String? uwi;
   final String? well_completion;
   final Well? my_well;
+  List<String>? userPrivilege;
 
-   NavBar({Key? key, this.uwi,this.well_completion,this.my_well}) : super(key: key);
+   NavBar({Key? key, this.uwi,this.well_completion,this.my_well,this.userPrivilege}) : super(key: key);
  final padding = EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class NavBar extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(
                            builder: (context) =>
-                               WellOperationStatusHistory_Page(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,),
+                               WellOperationStatusHistory_Page(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,),
                            settings: RouteSettings(name: "WellOperationStatusHistory_Page"))
         );
         break;

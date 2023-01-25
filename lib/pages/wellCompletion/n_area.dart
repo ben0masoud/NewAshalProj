@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../services/access_info.dart';
 import '../../services/well.dart';
 import '../../well_page.dart';
 import '../../widgets/search_widget.dart';
 import '../../widgets/well_completion_main_info.dart';
 class NArea extends StatefulWidget {
-   NArea({Key? key,required this.wellList}) : super(key: key);
+   NArea({Key? key,required this.wellList,this.userPrivilege}) : super(key: key);
   final List<Well>? wellList;
+   List<String>? userPrivilege;
   @override
   State<NArea> createState() => _NAreaState();
 }
@@ -48,7 +50,7 @@ class _NAreaState extends State<NArea> {
 
                         Navigator.push(context,
                           MaterialPageRoute(
-                            builder: (context) => WellPage(item: wellsSearch![index]),
+                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,),
                             settings: RouteSettings(name: "Well_Page"),
 
                           ),

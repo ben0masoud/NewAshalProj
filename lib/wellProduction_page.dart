@@ -131,11 +131,24 @@ class _WellProductionPageState extends State<WellProductionPage> {
                         SizedBox(width: 0.02.sw,),
                         Column(children:
                         [
-                          DaysContainer(height: 0.13.sh,width: 0.25.sw,borderWidth: 5,textColor: Colors.black,
-                            text:  widget.item!.PRODUCTIVE_DAYS.toString(),
-                            size: 20.sp,radius: 30.r,
-                            borderColor: Colors.blueGrey,
-                            backgroundColor: Colors.white,
+                          // DaysContainer(height: 0.13.sh,width: 0.25.sw,borderWidth: 5,textColor: Colors.black,
+                          //   text:  widget.item!.PRODUCTIVE_DAYS.toString(),
+                          //   size: 20.sp,radius: 30.r,
+                          //   borderColor: Colors.blueGrey,
+                          //   backgroundColor: Colors.white,
+                          // ),
+                          Container(
+                              height: 0.13.sh,
+                              width: 0.25.sw,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/icons/Production/ProductionDays.png"), //assets/icons/Production/ProductionDays.png
+                                  alignment: Alignment.center,
+                                  fit: BoxFit.cover,
+                                )
+                                ,
+                              ),
+                              child: Center(child: Text(widget.item!.PRODUCTIVE_DAYS.toString(),style: TextStyle(fontSize: 20.sp),))
                           ),
                         ],
                         ),
