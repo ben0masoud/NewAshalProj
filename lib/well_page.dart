@@ -1,5 +1,6 @@
 import 'package:ashal_ver_3/services/WellProduction.dart';
 import 'package:ashal_ver_3/services/access_info.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellBore.dart';
 import 'package:ashal_ver_3/services/wellLatest.dart';
@@ -20,13 +21,15 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'NavBar.dart';
+import 'constant_values.dart';
 import 'main.dart';
 
 class WellPage extends StatefulWidget {
   Well? item;
   List<String>? userPrivilege;
+  String? user;
 
-  WellPage({Key? key, required this.item,this.userPrivilege}) : super(key: key);
+  WellPage({Key? key, required this.item,this.userPrivilege,this.user}) : super(key: key);
 
   @override
   _WellPageState createState() => _WellPageState();
@@ -79,8 +82,11 @@ class _WellPageState extends State<WellPage> {
       //fetchApi.fetchWellLatestByFile()
     ]);
      */
-
-    well_latest = await fetchApi.fetchWellLatest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'") as List<WellLatest?>;
+    BodyPost wellPostBody = BodyPost();
+    wellPostBody.user =widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item!.WELL_COMPLETION_S}'";
+    well_latest = await fetchApi.fetchWellLatestPost(wellPostBody) as List<WellLatest?>;
+   //'' well_latest = await fetchApi.fetchWellLatest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'") as List<WellLatest?>;
     wellLatest =  await well_latest[0];
     print(well_latest);
     setState(() {
@@ -101,14 +107,34 @@ class _WellPageState extends State<WellPage> {
     return 
       SafeArea(
         child: Scaffold(
+
         appBar: AppBar(
-          title: Center(child: Text(widget.item!.UWI.toString())),
+          backgroundColor: ConstantValues.MainColor1,
+          iconTheme: IconThemeData(color: Colors.blue),
+          title: Center(
+              child: Column(
+                children: [
+                  Text('Main',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                    ),
+                  ),
+                  Text('${widget.item!.UWI} ${widget.item!.FACILITY_NAME} - ${widget.item!.FACILITY_ID}',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              )),
           leadingWidth: 75.w,
           leading: GestureDetector(
             child: Row(
               children: [
-                Icon(Icons.arrow_back_ios_outlined),
-                Text("Wells",style: TextStyle(fontSize: 15.sp),),
+                Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+                Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
               ],
             ),
             onTap: () {
@@ -116,7 +142,7 @@ class _WellPageState extends State<WellPage> {
             },
           ),
         ),
-        endDrawer: NavBar(uwi: widget.item!.UWI,well_completion: widget.item!.WELL_COMPLETION_S,my_well: widget.item,userPrivilege: widget.userPrivilege,),
+        endDrawer: NavBar(uwi: widget.item!.UWI,well_completion: widget.item!.WELL_COMPLETION_S,my_well: widget.item,userPrivilege: widget.userPrivilege,user:widget.user),
         body: Center(
           child: Container(
             //color: Colors.red,
@@ -275,12 +301,12 @@ class _WellPageState extends State<WellPage> {
                   Padding(
                     padding:  EdgeInsets.all(8.r),
                     child: CircleAvatar(
-                      radius: 70.r,
+                      radius: 60.r,
                       backgroundColor: widget.item!.OPERATION_STATUS == 'OPEN'
                           ? Colors.lightGreen
                           : Colors.redAccent,
                       child: CircleAvatar(
-                          radius: 60.r,
+                          radius: 55.r,
                           backgroundColor: widget.item!.OPERATION_STATUS == 'OPEN'
                               ? Colors.greenAccent
                               : Colors.red,

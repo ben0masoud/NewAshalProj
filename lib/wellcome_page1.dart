@@ -2,6 +2,7 @@
 import 'package:action_slider/action_slider.dart';
 import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/app_security.dart';
+import 'package:ashal_ver_3/services/navigation_service.dart';
 import 'package:ashal_ver_3/services/user_info.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'constant_values.dart';
 import 'gc_list_page.dart';
 import 'main.dart';
 
@@ -81,11 +83,11 @@ class _WelcomePage1State extends State<WelcomePage1> {
    // WidgetsBinding.instance.addObserver(this);
 
     setState(() {
-      IsOn = false;
+      IsOn = true;
       approve = false;
       user_info = UserInfo();
       usr_priv = UserPrivilege();
-      appSecurity = AppSecurity(oauth);
+      appSecurity = AppSecurity(oauth,context);
       user_info.GivenName = 'hamad';
       user_info.FamilyName = 'almarri';
       user_info.FullName = 'hamad masoud almarri';
@@ -95,7 +97,15 @@ class _WelcomePage1State extends State<WelcomePage1> {
   }
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: NavigationService.navigatorKey,
+      theme:  ThemeData(
+       // primarySwatch: ConstantValues.MainColor1,
+        useMaterial3: true,
+
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: Text("Welcome"),
@@ -138,9 +148,14 @@ class _WelcomePage1State extends State<WelcomePage1> {
                       width: 50,
                       child: Center(child: Icon(Icons.refresh_rounded))),
                   action: (controller) async {
-                    if(IsOn) {
-                      approve = await AccessPage();
 
+                    if(IsOn) {
+                      controller.loading();
+                      approve = await AccessPage(context);
+                      if(approve)
+                        controller.success();
+                       else
+                         controller.reset();
                     }
                     //login();
                   },
@@ -150,28 +165,31 @@ class _WelcomePage1State extends State<WelcomePage1> {
                 height: 0.05.sh,
               ),
               Center(
-                child: Row(
+                child: (user_info.FullName == 'Al-Marri, Hamad Masoud') ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('AD'),
-                    Switch(
-                      value: IsOn,
-                      activeColor: Colors.red,
-                      onChanged: (bool value) {
-                        // This is called when the user toggles the switch.
-                        setState(() {
-                          IsOn = value;
-                        });
-                      },
-                    ),
+                        Text('AD'),
+                        Switch(
+                          value: IsOn,
+                          activeColor: Colors.red,
+                          onChanged: (bool value) {
+                            // This is called when the user toggles the switch.
+                            setState(() {
+                              IsOn = value;
+                            });
+                          },
+                        ),
                   ],
-                ),
+                ) : null,
               ),
               SizedBox(
                 height: 0.05.sh,
               ),
+              /*
               Center(
-                child: Row(
+                child:
+                //( usr_priv.AccessToken != null) ?
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Logout'),
@@ -192,12 +210,12 @@ class _WelcomePage1State extends State<WelcomePage1> {
                               onConfirmBtnTap: ()  async{
                                  appSecurity.logout();
 
-                                 Navigator.pop(context);
-                                 await Future.delayed(const Duration(milliseconds: 1000));
-                                 await QuickAlert.show(
-                                     context: context,
-                                     type: QuickAlertType.success,
-                                     text: "${usr_priv.USER_ID} has been Logged out!.");
+                                  Navigator.pop(context);
+                                 // await Future.delayed(const Duration(milliseconds: 1000));
+                                 // await QuickAlert.show(
+                                 //     context: context,
+                                 //     type: QuickAlertType.success,
+                                 //     text: "${usr_priv.USER_ID} has been Logged out!.");
 
                               }
                             );
@@ -210,8 +228,9 @@ class _WelcomePage1State extends State<WelcomePage1> {
                       },
                     ),
                   ],
-                ),
+                ),// : null,
               ),
+              */
             ],
           ),
         ),
@@ -219,14 +238,15 @@ class _WelcomePage1State extends State<WelcomePage1> {
     );
   }
 
-  Future<bool> AccessPage() async {
+  Future<bool> AccessPage(BuildContext context) async {
 
-    usr_priv = await appSecurity.loginWithAD();
+    usr_priv = (await appSecurity.loginWithAD())!;
     if (usr_priv.PROFILE == 'wellcompletionlist') {
       await Navigator.of(context).pushReplacement(MaterialPageRoute(
           settings: RouteSettings(name: "Home"),
           builder: (context) => MyHomePageWithPages(
             title: 'ASHAL',
+            user: usr_priv.USER_ID,
             profile: usr_priv.PROFILE!,
             AshalAccess: usr_priv.FORM_GROUP_ID,
             Area: usr_priv.Area,
@@ -237,6 +257,7 @@ class _WelcomePage1State extends State<WelcomePage1> {
           settings: RouteSettings(name: "GcLists"),
           builder: (context) => GcListPages(
             title: 'ASHAL',
+            user: usr_priv.USER_ID,
             profile: usr_priv.PROFILE!,
             AshalAccess: usr_priv.FORM_GROUP_ID,
             Area: usr_priv.Area,

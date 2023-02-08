@@ -6,9 +6,10 @@ class ConstantValues{
    ConstantValues._();
 
    static const String api_get_path_prod = "https://ashal.kockw.com/api/v1.0/GetTable/";
-   static const String api_post_path_prod = "https://ashal.kockw.com/api/v1.0/";
+   //static const String api_post_path_prod = "https://ashal.kockw.com/api/v1.0/";
+   static const String api_post_path_prod = "https://ashal.kockw.com/api/v1.0/GetTable";
    static const String api_get_path_test = "https://ashalim.kockw.com/test/api/v1.0/GetTable/";
-   static const String api_post_path_test = "https://ashalim.kockw.com/test/api/v1.0/";
+   static const String api_post_path_test = "https://ashalim.kockw.com/test/api/v1.0/GetTable/";
    static const String api_get_col_path_test = "https://ashalim.kockw.com/test/api/v1.0/GetColums/";
    static const String api_get_col_path_prod = "https://ashal.kockw.com/api/v1.0/GetColums/";
 

@@ -53,8 +53,8 @@ class WHPChartPage extends StatelessWidget {
 
        // final DateTime date =
        //  DateTime.fromMillisecondsSinceEpoch(value.toInt());
-
-
+       text = value.toInt().toString();
+/*
         if (value.toInt() == meta.min.toInt())
       {
         text =  meta.min.toString();
@@ -72,7 +72,7 @@ class WHPChartPage extends StatelessWidget {
         text = value.toInt().toString();
         //print('${}');
       }
-
+*/
        return SideTitleWidget(
          child: Text(text,style: TextStyle(fontSize: 12),),
          axisSide: meta.axisSide,

@@ -1,4 +1,5 @@
 import 'package:ashal_ver_3/WellTest_Container.dart';
+import 'package:ashal_ver_3/constant_values.dart';
 import 'package:ashal_ver_3/productionHistory_page.dart';
 import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/well.dart';
@@ -17,14 +18,15 @@ class NavBar extends StatelessWidget {
   final String? well_completion;
   final Well? my_well;
   List<String>? userPrivilege;
+  String? user;
 
-   NavBar({Key? key, this.uwi,this.well_completion,this.my_well,this.userPrivilege}) : super(key: key);
+   NavBar({Key? key, this.uwi,this.well_completion,this.my_well,this.userPrivilege,this.user}) : super(key: key);
  final padding = EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Color(0xFFBDEDB3),//Color.fromRGBO(50, 75, 205, 1),
+        color: ConstantValues.MainColor1,//Color(0xFFBDEDB3),//Color.fromRGBO(50, 75, 205, 1),
         child: ListView(
           padding: padding,
           children: [
@@ -56,17 +58,17 @@ class NavBar extends StatelessWidget {
             const SizedBox(height: 16,),
             buildMenuItem(text: 'Operation Status', icon: Icons.wysiwyg_outlined, onClicked: ()=> selectedItem(context,1)),
             const SizedBox(height: 16,),
-            buildMenuItem(text: 'Well Test', icon: Icons.flag_rounded, onClicked: ()=> selectedItem(context,2)),
+            buildMenuItem(text: 'Well Test', icon: Icons.biotech, onClicked: ()=> selectedItem(context,2)),
             const SizedBox(height: 16,),
             buildMenuItem(text: 'Wireline Activity', icon: Icons.local_activity_rounded, onClicked: ()=> selectedItem(context,3)),
             const SizedBox(height: 16,),
-            buildMenuItem(text: 'Production History', icon: Icons.production_quantity_limits, onClicked: ()=> selectedItem(context,4)),
+            buildMenuItem(text: 'Production History', icon: Icons.oil_barrel, onClicked: ()=> selectedItem(context,4)),
             const SizedBox(height: 16,),
             buildMenuItem(text: 'GC Connection', icon: Icons.connect_without_contact, onClicked: ()=> selectedItem(context,5)),
             const SizedBox(height: 16,),
-            buildMenuItem(text: 'GC List', icon: Icons.connect_without_contact, onClicked: ()=> selectedItem(context,6)),
-            const SizedBox(height: 16,),
-            buildMenuItem(text: 'Well Test Chart', icon: Icons.bar_chart_outlined, onClicked: ()=> selectedItem(context,7)),
+           // buildMenuItem(text: 'GC List', icon: Icons.connect_without_contact, onClicked: ()=> selectedItem(context,6)),
+          //  const SizedBox(height: 16,),
+            buildMenuItem(text: 'Well Test Chart', icon: Icons.bar_chart_outlined, onClicked: ()=> selectedItem(context,6)),
             const SizedBox(height: 16,),
             buildMenuItem(text: 'Exit', icon: Icons.exit_to_app, onClicked: ()=> SystemNavigator.pop()),
 
@@ -107,46 +109,38 @@ class NavBar extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(
                            builder: (context) =>
-                               WellOperationStatusHistory_Page(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,),
+                               WellOperationStatusHistory_Page(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
                            settings: RouteSettings(name: "WellOperationStatusHistory_Page"))
         );
         break;
       case 2:
            Navigator.of(context).push(MaterialPageRoute(
-               builder: (context) => AllWellTestHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,),
+               builder: (context) => AllWellTestHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
                settings: RouteSettings(name: "AllWellTestHistoryPage")
            ));
            break;
 
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => WireLineActivityHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,),
+          builder: (context) => WireLineActivityHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
             settings: RouteSettings(name: "WireLineActivityHistoryPage")
         ));
         break;
       case 4:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductionHistoryPage(item_uwi: uwi,item_well_completion: well_completion),
+          builder: (context) => ProductionHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
             settings: RouteSettings(name: "ProductionHistoryPage")
         ));
         break;
       case 5:
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => GcGonnectionHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well),
+            builder: (context) => GcGonnectionHistoryPage(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
             settings: RouteSettings(name: "GcGonnectionHistoryPage")
         ));
         break;
       case 6:
-        /*
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => GcListPages(),
-            settings: RouteSettings(name: "GcListPages")
-        ));
-        */
-        break;
-      case 7:
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => WellTestChart(item_uwi: uwi,item_well_completion: well_completion),
+            builder: (context) => WellTestChart(item_uwi: uwi,item_well_completion: well_completion,user: user),
             settings: RouteSettings(name: "Well Test Chart")
         ));
         break;

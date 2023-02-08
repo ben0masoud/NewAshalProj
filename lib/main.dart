@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/navigation_service.dart';
 import 'package:ashal_ver_3/wellcome_page1.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,8 @@ import 'package:ashal_ver_3/welcome_page.dart';
 //import 'package:ashal_ver_3/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'constant_values.dart';
 //import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -44,18 +47,9 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (ctx, child) => MaterialApp(
-        navigatorKey:  NavigationService.navigatorKey,
+       // navigatorKey:  NavigationService.navigatorKey,
         title: 'ASHAL',
-        theme: ThemeData(
-          //primarySwatch: Colors.blue,
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Color(0xFFBDEDB3),
-          ),
-          //canvasColor: Color(0xFFBDEDB3),
-          //primaryColor: Color(0xFFBDEDB3),
-          // textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-        ),
-        home: child, //new MyHomePage(title: 'Ashal Project'),
+        home: WelcomePage1(), //new MyHomePage(title: 'Ashal Project'),
         //home: new MyHomePage(title: 'Ashal Project'),
         debugShowCheckedModeBanner: false,
       ),
@@ -66,9 +60,10 @@ class MyApp extends StatelessWidget {
 
 class MyHomePageWithPages extends StatefulWidget {
   const MyHomePageWithPages(
-      {Key? key, required this.title, this.profile,this.AshalAccess,this.Gc,this.Area})
+      {Key? key, required this.title,this.user, this.profile,this.AshalAccess,this.Gc,this.Area})
       : super(key: key);
   final String title;
+  final String? user;
   final String? profile;
   final List<String>? AshalAccess;
   final String? Gc;
@@ -103,36 +98,48 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
     selectedPage = 0;
     super.initState();
     wellsSearch = wells;
-    fetchWellCompletion(widget.profile!, widget.Area!);
+    fetchWellCompletion(widget.profile!, widget.Area!,widget.user!);
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);
   //FetchDataApi fetchApi = FetchDataApi();
 
-  Future fetchWellCompletion(String prof, String access) async {
+  Future fetchWellCompletion(String prof, String access,String user) async {
     FetchDataApi fetchApi = FetchDataApi();
+
+    BodyPost wellPostBody = BodyPost();
+    wellPostBody.user =user;
+
+  // AllWells = await fetchApi.fetchWellPost(wellPostBody);
+
     //final String response = await rootBundle.loadString('assets/well_completion.json');
     try {
       // print('the response is '+response.statusCode.toString());
       AllWells!.clear();
       if (prof == 'wellcompletionlist') {
         if (access == 'ALL AREA') {
-          AllWells = await fetchApi.fetchWell('') as List<Well>?;
+          //AllWells = await fetchApi.fetchWell('') as List<Well>?;
+          AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
         } else {
-          AllWells =
-              await fetchApi.fetchWell("::AREA='${access}'") as List<Well>?;
+          wellPostBody.whereCondition = "AREA='${access}'";
+          AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+          //AllWells = await fetchApi.fetchWell("::AREA='${access}'") as List<Well>?;
         }
       } else if(prof =='GcLists')
         {
           if (access == 'ALL AREA') {
-            AllWells = await fetchApi.fetchWell("::GC='${widget.Gc}'") as List<Well>?;
+            wellPostBody.whereCondition = "GC='${widget.Gc}'";
+            AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+            //AllWells = await fetchApi.fetchWell("::GC='${widget.Gc}'") as List<Well>?;
           } else {
-            AllWells =
-            await fetchApi.fetchWell("::AREA='${access}' AND GC='${widget.Gc}'") as List<Well>?;
+            wellPostBody.whereCondition = "AREA='${access}' AND GC='${widget.Gc}'";
+            AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+         //   AllWells = await fetchApi.fetchWell("::AREA='${access}' AND GC='${widget.Gc}'") as List<Well>?;
           }
         }
       else
-        AllWells = await fetchApi.fetchWell('') as List<Well>?;
+        AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+       // AllWells = await fetchApi.fetchWell('') as List<Well>?;
 
       if (AllWells!.isNotEmpty) {
         setState(() {
@@ -240,9 +247,12 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
     );
     */
     return Scaffold(
+
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.title),
+          backgroundColor: ConstantValues.MainColor1,
+
+          title: Text('Well Completion List',style: TextStyle(color: Colors.black),),
         ),
         body: AllWells!.isNotEmpty
             ? screens[selectedPage]
@@ -250,11 +260,11 @@ class _MyHomePageWithPagesState extends State<MyHomePageWithPages> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPage,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xFF6200EE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
+          backgroundColor: ConstantValues.MainColor1,//ThemeData().primaryColor,//Color(0xFF6200EE),
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 16,
+          unselectedFontSize: 16,
           onTap: (value) {
             // Respond to item press.
             setState(() => selectedPage = value);

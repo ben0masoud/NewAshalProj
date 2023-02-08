@@ -1,41 +1,92 @@
 //import 'package:ashal_ver_3/daysContainer.dart';
 import 'package:ashal_ver_3/production_history_detail_page.dart';
 import 'package:ashal_ver_3/services/WellProduction.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
+import 'package:ashal_ver_3/services/well.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+
+import 'NavBar.dart';
+import 'constant_values.dart';
+import 'main.dart';
 
 class ProductionHistoryPage extends StatefulWidget {
 
   // List<WellProduction?> ListItem;
  // WellProduction item;
-  String? item_uwi;
-  String? item_well_completion;
+  final String? item_uwi;
+  final String? item_well_completion;
+  final Well? item_well;
+  List<String>? userPrivilege;
+  final String? user;
 
 
 
-  ProductionHistoryPage({Key? key ,required this.item_uwi,required this.item_well_completion}) : super(key: key);
+  ProductionHistoryPage({Key? key ,required this.item_uwi,required this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
 
   @override
   _ProductionHistoryPageState createState() => _ProductionHistoryPageState();
 }
 
 class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
-  @override
+
   FetchDataApi fetchApi = FetchDataApi();
+  BodyPost wellPostBody = BodyPost();
 
-
+  @override
 
   Widget build(BuildContext context) {
 
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "UWI='${widget.item_uwi}'";
+    wellPostBody.orderBy = "PRODUCTION_DATE DESC";
+
     return Scaffold(
-        appBar: AppBar(
-        title: Text("Production History of ${widget.item_uwi!} "),
-    ),
-    body: Container(
+      appBar: AppBar(
+
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Production History',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_well!.UWI} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
+        leadingWidth: 75.w,
+        leading: GestureDetector(
+          child: Row(
+            children: [
+              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
+            ],
+          ),
+          onTap: () {
+            //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+          },
+        ),
+      ),
+      //drawer: NavBar(),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+
+      body: Container(
       child: FutureBuilder(
-        future: fetchApi.fetchWellProduction("::UWI='"+widget.item_uwi.toString()+"':PRODUCTION_DATE DESC"),
+        future: fetchApi.fetchWellProductionPost(wellPostBody),
         builder: (context, snapshot) {
           if(snapshot.data == null) {
             return Container(

@@ -19,6 +19,19 @@ class WirelineActivityPage extends StatefulWidget {
 
 class _WirelineActivityPageState extends State<WirelineActivityPage> {
   @override
+  List<String?> OilCompany = [
+    'FPS',
+    'EXPERTEST',
+    'BJ',
+    'GDMC',
+    'GOFSC',
+    'GOFSCO',
+    'HLS',
+    'NPSC',
+    'SLB',
+    'SPETCO',
+    'WeatherFord'
+  ];
   Widget build(BuildContext context) {
     print("wire page UWI  = "+widget.item!.UWI.toString());
     DateTime dt1;
@@ -58,9 +71,21 @@ class _WirelineActivityPageState extends State<WirelineActivityPage> {
                 child: Column(
                     children: [
                       //SizedBox(height: 10),
+                      Image.asset(
+                        //'assets/no-image-available.jpeg',
+                        OilCompany.indexOf(widget.item!.CONTRACTOR) >
+                            -1 //where((item) => item == list[i]!.CONTRACTOR)
+                            ? 'assets/company/${widget.item!.CONTRACTOR}.png'
+                            : 'assets/company/NoLogo.png',
+                        height: 0.15.sh,
+                        width: 0.5.sw,
+
+                        fit: BoxFit.scaleDown,
+                      ),
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+
                           //SizedBox(width: 5),
                           infoContainer(height: 0.04.sh,
                             width: 0.35.sw,

@@ -4,6 +4,7 @@ import 'package:ashal_ver_3/pages/charts/gor_chart_page.dart';
 import 'package:ashal_ver_3/pages/charts/liquid_rate_chart_page.dart';
 import 'package:ashal_ver_3/pages/charts/wc_chart_page.dart';
 import 'package:ashal_ver_3/pages/charts/whp_chart_page.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 //import 'package:ashal_ver_3/services/wellOperationStatus.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
@@ -18,8 +19,9 @@ import 'package:fl_chart/fl_chart.dart';
 class WellTestChart extends StatefulWidget {
   String? item_uwi;
   String? item_well_completion;
+  String? user;
 
-   WellTestChart({Key? key, required this.item_uwi, required this.item_well_completion}) : super(key: key);
+   WellTestChart({Key? key, required this.item_uwi, required this.item_well_completion,this.user}) : super(key: key);
 
   @override
   State<WellTestChart> createState() => _WellTestChartState();
@@ -55,8 +57,16 @@ class _WellTestChartState extends State<WellTestChart> {
   }
 
   Future _fetchData() async {
-    results = await fetchApi.fetchWellTest(":20:WELL_COMPLETION_S='" + widget.item_well_completion! + "' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y':START_TIME DESC");
 
+    FetchDataApi fetchApi = FetchDataApi();
+    BodyPost wellPostBody = BodyPost();
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion!}' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y'";
+    wellPostBody.orderBy = "START_TIME DESC";
+    wellPostBody.rowsLimit = "20";
+
+    //results = await fetchApi.fetchWellTest(":20:WELL_COMPLETION_S='" + widget.item_well_completion! + "' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y':START_TIME DESC");
+    results = await fetchApi.fetchWellTestPost(wellPostBody);
 
     List<WellTest>? ListWellTestHistory = results;// as List<WellTest>?;
     List<WHPTest>? WHPList = [];

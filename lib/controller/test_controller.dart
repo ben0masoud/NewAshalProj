@@ -1,4 +1,5 @@
 import '../services/base_client.dart';
+import '../services/body_post_json.dart';
 import 'base_controller.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -14,10 +15,11 @@ class TestContrller with BaseController {
       return response;
 
   }
-  void postData(String myPath,String Obj, String Cond) async {
-    var response = await BaseClient().get(myPath+Obj, Cond)
+  Future<dynamic> postData(String myPath,dynamic Body,dynamic Header) async {
+    var response = await BaseClient().post(myPath, Body,Header)
         .catchError(handleError);
     if(response == null) return;
+    return response;
 
   }
 

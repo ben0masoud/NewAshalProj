@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well_op_status_reason.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,14 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:darq/darq.dart';
 
 class AddWellOperationStatus extends StatefulWidget {
-  const AddWellOperationStatus({Key? key, required this.title, required this.WellStatus,this.WellReason,this.StatusDate,this.WellCompletion}) : super(key: key);
+  const AddWellOperationStatus({Key? key, required this.title, required this.WellStatus,this.WellReason,this.StatusDate,this.WellCompletion,this.user}) : super(key: key);
   final String title;
   final String WellStatus;
   final String? WellReason;
   final String? StatusDate;
   final String? WellCompletion;
+  final String? user;
+
   @override
   State<AddWellOperationStatus> createState() => _AddWellOperationStatusState();
 }
@@ -54,6 +57,8 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
   int? groupValue=0;
   String? status_rsn;
 
+  BodyPost wellPostBody = BodyPost();
+
   bool isStatusSelected = false;
   bool isLevel1Selected = false;
   TextEditingController _descController = TextEditingController();
@@ -79,6 +84,10 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
   }
 
   Future fetchWellOpStatusReason(String status) async {
+
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "STATUS_TYPE= '$status'";
+   // wellPostBody.orderBy = "START_TIME DESC";
     try {
       // print('the response is '+response.statusCode.toString());
       setState(() {
@@ -91,7 +100,7 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
         }
       });
 
-      result = await fetchApi.fetchWellOpStatusReason("::STATUS_TYPE= '$status'");
+      result = await fetchApi.fetchWellOpStatusReasonPost(wellPostBody);
      // result = await fetchApi.fetchWellOpStatusReason("");
       print('fetchWellOpStatusReason AllWellsOp = ${result!.length}');
       setState((){

@@ -1,3 +1,4 @@
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
@@ -9,15 +10,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import 'NavBar.dart';
+import 'constant_values.dart';
 import 'main.dart';
 
 class WireLineActivityHistoryPage extends StatefulWidget {
   String? item_uwi;
   String? item_well_completion;
   Well? item_well;
+  List<String>? userPrivilege;
+  String? user;
 
   WireLineActivityHistoryPage(
-      {Key? key, required this.item_uwi, required this.item_well_completion,this.item_well})
+      {Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user})
       : super(key: key);
 
   @override
@@ -29,6 +33,7 @@ class _WireLineActivityHistoryPageState
     extends State<WireLineActivityHistoryPage> {
   @override
   FetchDataApi fetchApi = FetchDataApi();
+  BodyPost wellPostBody = BodyPost();
   List<String?> OilCompany = [
     'FPS',
     'EXPERTEST',
@@ -145,8 +150,12 @@ class _WireLineActivityHistoryPageState
   _getWellTestInfo(String str,String? start_time) async{
     DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(start_time!);
     String _start_time = DateFormat('MM-dd-yyyy').format(dt);
-    List<WellTest>? ListWellTestHistory  = await fetchApi.fetchWellTest("::WELL_COMPLETION_S='${widget
-        .item_well_completion!}' and ACTIVITY_NAME= '${str}' and Convert(date,START_TIME) = '${_start_time}'");
+
+    wellPostBody.user =widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion!}' and ACTIVITY_NAME= '${str}' and Convert(date,START_TIME) = '${_start_time}'";
+   // wellPostBody.orderBy = "START_TIME DESC";
+    List<WellTest>? ListWellTestHistory  = await fetchApi.fetchWellTestPost(wellPostBody);
+   // List<WellTest>? ListWellTestHistory  = await fetchApi.fetchWellTest("::WELL_COMPLETION_S='${widget.item_well_completion!}' and ACTIVITY_NAME= '${str}' and Convert(date,START_TIME) = '${_start_time}'");
     if (ListWellTestHistory!.isNotEmpty) {
       Navigator.push(
         context,
@@ -162,62 +171,49 @@ class _WireLineActivityHistoryPageState
   }
   Widget build(BuildContext context) {
     //final List<WirelineActivity?> ListWirelineActivityHistory = [];
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "UWI='${widget.item_uwi}'";
+    wellPostBody.orderBy = "START_TIME DESC";
+
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 0.24.sw,
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(
+            child: Column(
+              children: [
+                Text('Wireline Activity',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_well!.UWI} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
+        leadingWidth: 75.w,
         leading: GestureDetector(
           child: Row(
             children: [
-              TextButton.icon(
-                onPressed: () {
-                  //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePage(title: 'Flutter Demo Home Page')));
-                  Navigator.of(context).popUntil(ModalRoute.withName("Home"));
-                },
-                label: Text("Wells",style: TextStyle(fontSize: 12.sp,color: Colors.blue),),
-                icon: Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),)
-              //Icon(Icons.arrow_back_ios_outlined),
-              // Text("Wells",style: TextStyle(fontSize: 10.sp),),
+              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
             ],
           ),
           onTap: () {
             Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
           },
         ),
-        actions: [
-          Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                onPressed: (){
-                  Scaffold.of(context).openEndDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-                icon: Icon(Icons.menu),
-
-                color: Colors.blue,
-              );
-            },
-          ),
-        ],
-        title: Center(
-          child: Column(
-            children: [
-              Text(
-                "Well Activity",style: TextStyle(color: Colors.black,fontSize: 14.sp,fontWeight: FontWeight.bold),
-              ),
-              Text(
-                widget.item_uwi!,style: TextStyle(color: Colors.black,fontSize: 13.sp),
-              ),
-            ],
-          ),
-        ),
       ),
-      //drawer: NavBar(),
-      endDrawer: NavBar(
-          uwi: widget.item_uwi, well_completion: widget.item_well_completion),
+      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
       body: Container(
         child: FutureBuilder(
-          future: fetchApi.fetchWirelineActivity(
-              "::UWI='" + widget.item_uwi.toString() + "':START_TIME DESC"),
+          future: fetchApi.fetchWirelineActivityPost(wellPostBody),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Container(

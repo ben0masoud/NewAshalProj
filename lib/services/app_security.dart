@@ -1,6 +1,9 @@
 
 
+import 'dart:io';
+
 import 'package:ashal_ver_3/services/access_info.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_aad_oauth/flutter_aad_oauth.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:ashal_ver_3/services/user_info.dart';
@@ -12,7 +15,8 @@ import 'fetchDataApi.dart';
 class AppSecurity{
 
   late FlutterAadOauth oauth;
-  AppSecurity(this.oauth);
+  late BuildContext context;
+  AppSecurity(this.oauth,this.context);
 
 
   UserInfo GetUserInfo(String accessToken){
@@ -25,29 +29,55 @@ class AppSecurity{
 
     return _user_info;
   }
-  Future<UserPrivilege> loginWithAD() async {
+  Future<UserPrivilege?> loginWithAD() async {
     String? accessToken;
    // FetchDataApi fetchApi = FetchDataApi();
+    print(context);
+    UserInfo user_info = UserInfo();
+    UserPrivilege? user_priv;
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        if (await oauth.tokenIsValid()) {
+          accessToken = await oauth.getAccessToken();
+          //print("login was successfully from checkIsLogged");
+          // QuickAlert.show(
+          //     context: context,
+          //     type: QuickAlertType.success,
+          //     text: "login was successfully from checkIsLogged");
+         // await Future.delayed(const Duration(milliseconds: 1000));
+        } else {
+          await oauth.login();
+          accessToken = await oauth.getAccessToken();
 
-      if (await oauth.tokenIsValid()) {
-        accessToken = await oauth.getAccessToken();
-        print("login was successfully from checkIsLogged");
-      } else {
-        await oauth.login();
-        accessToken = await oauth.getAccessToken();
+          String? idToken = await oauth.getIdToken();
+          //print("login was successfully from login");
+          QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              text: "login was successfully from login");
+        }
+        //await Future.delayed(const Duration(milliseconds: 1000));
 
-        String? idToken = await oauth.getIdToken();
-        print("login was successfully from login");
+
+        user_info = GetUserInfo(accessToken!);
+
+        AccessInfo access_info = await AccessInfo(accessToken, user_info);
+        user_priv = await access_info.get_info();
+        //user_priv.success = true;
+        //print(user_priv);
+
       }
 
-      UserInfo user_info = UserInfo();
-      user_info = GetUserInfo(accessToken!);
-      UserPrivilege user_priv;
-      AccessInfo access_info = await AccessInfo(accessToken, user_info);
-      user_priv = await access_info.get_info();
-      //print(user_priv);
-      return user_priv;
+        return user_priv;
+    } on SocketException catch (_) {
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text: "No Internet access",
+       );
 
+    }
 
 
 
@@ -63,5 +93,10 @@ class AppSecurity{
     //print(await fetchApi.fetchUserLogin('hmmarri'));
 
     //showMessage("Logged out");
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: "Logged out");
+
   }
 }

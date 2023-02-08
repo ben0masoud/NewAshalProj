@@ -6,16 +6,19 @@ import 'package:ashal_ver_3/pages/gc_list/n_area_gcs.dart';
 import 'package:ashal_ver_3/pages/gc_list/o_area_gcs.dart';
 import 'package:ashal_ver_3/pages/gc_list/s_area_gcs.dart';
 import 'package:ashal_ver_3/pages/gc_list/w_area_gcs.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/production_facility.dart';
 import 'package:flutter/material.dart';
 
 class GcListPages extends StatefulWidget {
-  const GcListPages({Key? key,required this.title,this.profile,this.AshalAccess,this.Area}) : super(key: key);
+  const GcListPages({Key? key,required this.title,this.user,this.profile,this.AshalAccess,this.Area}) : super(key: key);
   final String title;
+  final String? user;
   final String? profile;
   final List<String>? AshalAccess;
   final String? Area;
+
 
   @override
   State<GcListPages> createState() => _GcListPagesState();
@@ -45,24 +48,30 @@ class _GcListPagesState extends State<GcListPages> {
     selectedPage = 0;
     super.initState();
     gcsSearch = gcs;
-    fetchGCList(widget.profile!, widget.Area!);
+    fetchGCList(widget.profile!, widget.Area!,widget.user!);
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);
   //FetchDataApi fetchApi = FetchDataApi();
 
-  Future fetchGCList(String prof, String access) async {
+  Future fetchGCList(String prof, String access,String user) async {
     FetchDataApi fetchApi = FetchDataApi();
+    BodyPost wellPostBody = BodyPost();
+    wellPostBody.user = widget.user;
+
+    // wellPostBody.orderBy = "START_TIME DESC";
     //final String response = await rootBundle.loadString('assets/well_completion.json');
     try {
       // print('the response is '+response.statusCode.toString());
       AllGcs!.clear();
 
       if (access == 'ALL AREA') {
-        AllGcs = await fetchApi.fetchProductFacility('') as List<ProductionFacility>?;
+        //AllGcs = await fetchApi.fetchProductFacility('') as List<ProductionFacility>?;
+        AllGcs = await fetchApi.fetchProductFacilityPost(wellPostBody) as List<ProductionFacility>?;
       } else {
-        AllGcs =
-        await fetchApi.fetchProductFacility("::OPERATOR='${access}'") as List<ProductionFacility>?;
+        wellPostBody.whereCondition = "OPERATOR='${access}'";
+        //AllGcs = await fetchApi.fetchProductFacility("::OPERATOR='${access}'") as List<ProductionFacility>?;
+        AllGcs = await fetchApi.fetchProductFacilityPost(wellPostBody) as List<ProductionFacility>?;
       }
 
 

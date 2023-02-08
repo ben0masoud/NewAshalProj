@@ -10,14 +10,14 @@ class BaseController {
  // BuildContext context;
   //BaseController(this.context);
   void handleError(error) {
-
+    BuildContext context = NavigationService.navigatorKey.currentContext!;
     if(error is BadRequestException) {
       //BuildContext? context;
       //context =NavigationService.navigatorKey.currentContext;
       // var message = error.message;
       // DialogHelper.ShowErrorDialog(description: message);
        QuickAlert.show(
-         context: NavigationService.navigatorKey.currentContext!,
+         context: context,
          type: QuickAlertType.error,
          title: 'Oops...',
          text: error.message,
@@ -26,7 +26,7 @@ class BaseController {
      // var message = error.message;
       //DialogHelper.ShowErrorDialog(description: message);
       QuickAlert.show(
-        context: NavigationService.navigatorKey.currentContext!,
+        context: context,
         type: QuickAlertType.error,
         title: 'Oops...',
         text: error.message,
@@ -34,7 +34,7 @@ class BaseController {
     } else if (error is ApiNotRespondingException){
       //DialogHelper.ShowErrorDialog(description: 'Opps! it took longer to respond.');
       QuickAlert.show(
-        context: NavigationService.navigatorKey.currentContext!,
+        context: context,
         type: QuickAlertType.error,
         title: 'Oops...',
         text: error.message,

@@ -48,7 +48,8 @@ class _AllAreaState extends State<AllArea> {
                                 uwi: wellsSearch![index].UWI,
                                 facilityNameID: "${wellsSearch![index].FACILITY_NAME}-${wellsSearch![index].FACILITY_ID}",
                                 currentStatue: wellsSearch![index].CURRENT_STATUS,
-                                leftMethod: wellsSearch![index].LIFT_METHOD),
+                                leftMethod: wellsSearch![index].LIFT_METHOD,
+                                 end_time: wellsSearch![index].END_TIME,),
                       onTap: () {
 
                         Navigator.push(context,

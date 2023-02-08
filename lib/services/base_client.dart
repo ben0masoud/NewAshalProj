@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'app_axceptions.dart';
+import 'body_post_json.dart';
 
 class BaseClient
 {
@@ -25,8 +26,8 @@ class BaseClient
      }
   }
   //POST
-  Future<dynamic> post(String baseUrl,String api,dynamic headerObj ,dynamic bodyObj) async {
-    var uri = Uri.parse(baseUrl+api);
+  Future<dynamic> post(String baseUrl,dynamic bodyObj,dynamic headerObj) async {
+    var uri = Uri.parse(baseUrl);
     var _bodyObj = bodyObj;
     print(_bodyObj);
     try {
@@ -48,7 +49,7 @@ class BaseClient
           //     'inserted_by' : 'ALMARRI'
           //
           // })
-        body: _bodyObj
+        body: jsonEncode(_bodyObj)
       );
       return _processResponse(response);
     } on SocketException{throw FetchDataException('No Internet Connection', uri.toString());}

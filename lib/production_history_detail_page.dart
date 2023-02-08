@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import 'constant_values.dart';
+
 class ProductionHistoryDetailPage extends StatefulWidget {
   WellProduction? item;
    ProductionHistoryDetailPage({Key? key,this.item}) : super(key: key);
@@ -27,12 +29,22 @@ class _ProductionHistoryDetailPageState extends State<ProductionHistoryDetailPag
             dt1);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Prod. of ${widget.item!.UWI} "),
+          title: Text("Production History",style: TextStyle(color: Colors.blue),),
+          backgroundColor: ConstantValues.MainColor1,
+          iconTheme: IconThemeData(color: Colors.blue),
         ),
         body:Container(
           child: Column(
             children: [
               SizedBox(height: 0.05.sh,),
+              Text('${widget.item!.UWI} ${widget.item!.FACILITY_TYPE} - ${widget.item!.FACILITY_ID}',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(height: 0.01.sh,),
               Container(
                 //padding: EdgeInsets.all(20.r),
                   width: 0.3.sw,

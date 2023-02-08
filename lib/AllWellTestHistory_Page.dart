@@ -1,4 +1,5 @@
 import 'package:ashal_ver_3/WellTest_Container.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
@@ -9,15 +10,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import 'NavBar.dart';
+import 'constant_values.dart';
 
 class AllWellTestHistoryPage extends StatefulWidget {
   String? item_uwi;
   String? item_well_completion;
   Well? item_well;
+  List<String>? userPrivilege;
+  String? user;
 
 
   AllWellTestHistoryPage(
-      {Key? key, required this.item_uwi, required this.item_well_completion, required this.item_well})
+      {Key? key, required this.item_uwi, required this.item_well_completion, required this.item_well,this.userPrivilege,this.user})
       : super(key: key);
 
   @override
@@ -25,12 +29,21 @@ class AllWellTestHistoryPage extends StatefulWidget {
 }
 
 class _AllWellTestHistoryPageState extends State<AllWellTestHistoryPage> {
+
+  BodyPost wellPostBody = BodyPost();
   @override
   Widget build(BuildContext context) {
     FetchDataApi fetchApi = FetchDataApi();
 
+    wellPostBody.user =widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion!}'";
+    wellPostBody.orderBy = "START_TIME DESC";
+
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
         leadingWidth: 0.24.sw,
         leading: GestureDetector(
           child: Row(
@@ -67,27 +80,31 @@ class _AllWellTestHistoryPageState extends State<AllWellTestHistoryPage> {
           ),
         ],
         title: Center(
-          child: Column(
-            children: [
-              Text(
-               "Well Test",style: TextStyle(color: Colors.black,fontSize: 14.sp,fontWeight: FontWeight.bold),
-              ),
-              Text(
-                widget.item_uwi!,style: TextStyle(color: Colors.black,fontSize: 13.sp),
-              ),
-            ],
-          ),
-        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Well Test',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_well!.UWI} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
       ),
       //drawer: NavBar(),
-      endDrawer: NavBar(
-          uwi: widget.item_uwi, well_completion: widget.item_well_completion),
+      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
 
       body: Container(
         child: FutureBuilder(
-          future: fetchApi.fetchWellTest("::WELL_COMPLETION_S='" +
-              widget.item_well_completion! +
-              "':START_TIME DESC"), //fetchApi.fetchWellTest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'"),
+          future: fetchApi.fetchWellTestPost(wellPostBody),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Container(

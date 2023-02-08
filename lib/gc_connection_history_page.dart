@@ -2,6 +2,7 @@
 //import 'dart:convert';
 
 import 'package:ashal_ver_3/constant_values.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/gc_comp_connection.dart';
 import 'package:ashal_ver_3/services/header_comp_connection.dart';
@@ -9,19 +10,24 @@ import 'package:ashal_ver_3/services/slot_comp_connection.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/slot_comp_connection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:flutter_spinkit/flutter_spinkit.dart';
 //import 'package:intl/intl.dart';
 //import 'package:http/http.dart' as http;
 //import 'NavBar.dart';
+import 'NavBar.dart';
 import 'gc_comp_connection.dart';
 import 'header_comp_connection.dart';
+import 'main.dart';
 
 class GcGonnectionHistoryPage extends StatefulWidget {
   final String? item_uwi;
   final String? item_well_completion;
   final Well? item_well;
+  List<String>? userPrivilege;
+  final String? user;
 
-  GcGonnectionHistoryPage({Key? key,this.item_uwi,this.item_well_completion,this.item_well}) : super(key: key);
+  GcGonnectionHistoryPage({Key? key,this.item_uwi,this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
 
   //String? _itemWell_completion = item_well_completion;
   @override
@@ -32,6 +38,7 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
   late int selectedPage;
 
    FetchDataApi fetchApi = FetchDataApi();
+   BodyPost wellPostBody = BodyPost();
 
    late List<GcCompConnection?> gc_comp_list ;
    late List<HeaderCompConnection?> header_comp_list ;
@@ -67,11 +74,17 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
       //fetchApi.fetchSlotCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}"),
 
  //   ]);
-    results = await fetchApi.fetchGcCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S = '${widget.item_well_completion}'";
+    wellPostBody.orderBy = "START_TIME DESC";
+    //results = await fetchApi.fetchGcCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    results = await fetchApi.fetchGcCompConnectionPost(wellPostBody);
     gc_comp_list = results!.cast<GcCompConnection?>().toList();
-    results = await fetchApi.fetchHeaderCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    //results = await fetchApi.fetchHeaderCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    results = await fetchApi.fetchHeaderCompConnectionPost(wellPostBody);
     header_comp_list = results!.cast<HeaderCompConnection?>().toList();
-    results = await fetchApi.fetchSlotCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    //results = await fetchApi.fetchSlotCompConnection("::WELL_COMPLETION_S= ${widget.item_well_completion}:START_TIME DESC");
+    results = await fetchApi.fetchSlotCompConnectionPost(wellPostBody);
     slote_comp_list = results!.cast<SlotCompConnection?>().toList();
 
     setState(() {
@@ -120,8 +133,46 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
 
     return Scaffold(
 
-      appBar: AppBar(),
-     // endDrawer: NavBar(),
+      appBar: AppBar(
+
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('GC Connection',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_well!.UWI} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
+        leadingWidth: 75.w,
+        leading: GestureDetector(
+          child: Row(
+            children: [
+              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
+            ],
+          ),
+          onTap: () {
+            //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+          },
+        ),
+      ),
+      //drawer: NavBar(),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+
       body: screens[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
           items: [

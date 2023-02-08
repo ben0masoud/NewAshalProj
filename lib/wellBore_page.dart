@@ -40,6 +40,7 @@ class _WellBorePageState extends State<WellBorePage> {
     }
 
     print("well bore page UWI  = "+widget.item!.UWI.toString());
+    double fontSize = 10.sp;
     return Scaffold(
 
       body: Center(
@@ -77,7 +78,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                     textColor: Colors.black,
                                     backgroundColor: Colors.white,
                                     borderColor: Colors.black,
-                                    text: "Elevation", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0.r, rbRadius: 0.r,
+                                    text: "Elevation", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0.r, rbRadius: 0.r,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
                                 SizedBox(height: 0.005.sh),
@@ -86,7 +87,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                     textColor: Colors.black,
                                     backgroundColor: Colors.white,
                                     borderColor: Colors.black,
-                                    text: widget.item!.ELEVATION.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                    text: widget.item!.ELEVATION.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
                               ],
@@ -100,7 +101,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: "Elevation Ref.", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
+                                text: "Elevation Ref.", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
@@ -109,7 +110,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: widget.item!.ELEVATION_REF.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                text: widget.item!.ELEVATION_REF.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
 
@@ -136,7 +137,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: "Spud Date", size: 12.sp, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
+                                text: "Spud Date", size: fontSize, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                              // Text(widget.item!.spuD_DATE.toString()),
@@ -146,7 +147,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                   textColor: Colors.black,
                                   backgroundColor: Colors.white,
                                   borderColor: Colors.black,
-                                  text: "Comp. Date" , size: 12.sp, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
+                                  text: "Comp. Date" , size: fontSize, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
                             ],
@@ -161,7 +162,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: _spud_date, size: 12.sp, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
+                                text: _spud_date, size: fontSize, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               // Text(widget.item!.spuD_DATE.toString()),
@@ -171,7 +172,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: _completion_date , size: 12.sp, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
+                                text: _completion_date , size: fontSize, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                             ],
@@ -196,7 +197,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: "Ground Elevation", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
+                                text: "Ground Elevation", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
@@ -205,7 +206,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: widget.item!.GROUND_ELEVATION.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                text: widget.item!.GROUND_ELEVATION.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               //Text(widget.item!.grounD_ELEVATION.toString()),
@@ -219,7 +220,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: "Drillers TD.", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
+                                text: "Drillers TD.", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
@@ -228,7 +229,7 @@ class _WellBorePageState extends State<WellBorePage> {
                                 textColor: Colors.black,
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.black,
-                                text: widget.item!.DRILLERS_TD.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                text: widget.item!.DRILLERS_TD.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               //Text(widget.item!.drillerS_TD.toString()),

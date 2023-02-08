@@ -77,8 +77,8 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
       children: [
         CustomContainer(
           height: 0.103.sh,
-          width: 0.20.sw,
-          child: Center(child: CustomText(text: gc_title!,size: 17.sp,color: Colors.blue,fontwdth: FontWeight.bold,textAlign: TextAlign.right,),),
+          width: 0.22.sw,
+          child: Center(child: CustomText(text: gc_title!,size: 15.sp,color: Colors.blue,fontwdth: FontWeight.bold,textAlign: TextAlign.right,),),
           borderColor: Colors.black,
           borderWidth: 1,
           radius: 5.r,
@@ -91,8 +91,8 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
           children: [
             CustomContainer(
               height: 0.05.sh,
-              width: 0.75.sw,
-              child: Center(child: CustomText(text: gc_name!,size: 16.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
+              width: 0.73.sw,
+              child: Center(child: CustomText(text: gc_name!,size: 15.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
               borderColor: Colors.black,
               borderWidth: 1,
               radius: 5.r,
@@ -103,8 +103,8 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
               children: [
                 CustomContainer(
                   height: 0.05.sh,
-                  width: 0.26.sw,
-                  child: Center(child: CustomText(text: "Connection Date",size: 13.sp,color: Colors.black,fontwdth: FontWeight.bold,textAlign: TextAlign.center,)),
+                  width: 0.24.sw,
+                  child: Center(child: CustomText(text: "Connection Date",size: 11.sp,color: Colors.black,fontwdth: FontWeight.bold,textAlign: TextAlign.center,)),
                   borderColor: Colors.black,
                   borderWidth: 1,
                   radius: 5.r,
@@ -114,7 +114,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                 CustomContainer(
                   height: 0.05.sh,
                   width: 0.48.sw,
-                  child: Center(child: CustomText(text: _conn_date,size: 14.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
+                  child: Center(child: CustomText(text: _conn_date,size: 12.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
                   borderColor: Colors.black,
                   borderWidth: 1,
                   radius: 5.r,

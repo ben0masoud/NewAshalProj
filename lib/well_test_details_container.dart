@@ -54,6 +54,7 @@ class WellTestDetailsContainer extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
+            SizedBox(height: 10,),
             Text(
               name,
               textAlign: TextAlign.center,

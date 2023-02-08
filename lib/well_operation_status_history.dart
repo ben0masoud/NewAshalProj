@@ -1,5 +1,6 @@
 
 import 'package:ashal_ver_3/services/access_info.dart';
+import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellOperationStatus.dart';
@@ -10,6 +11,7 @@ import 'package:intl/intl.dart';
 
 import 'NavBar.dart';
 import 'add_well_operation_status.dart';
+import 'constant_values.dart';
 import 'main.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,8 +22,9 @@ class WellOperationStatusHistory_Page extends StatefulWidget {
   String? item_well_completion;
   Well? item_well;
   List<String>? userPrivilege;
+  String? user;
 
-  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege}) : super(key: key);
+  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
 
   @override
   State<WellOperationStatusHistory_Page> createState() => _WellOperationStatusHistory_PageState();
@@ -48,19 +51,46 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
 
   Widget build(BuildContext context) {
     FetchDataApi fetchApi = FetchDataApi();
+    BodyPost wellPostBody = BodyPost();
 
 
     ScreenUtil.init(context,designSize: Size(360, 690));
 
+    //"::WELL_COMPLETION_S='"+widget.item_well_completion!+"':START_TIME DESC"
+    wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion}'";
+    wellPostBody.orderBy = "START_TIME DESC";
+
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(widget.item_uwi!)),
+
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Operation Status',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_well!.UWI} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
         leadingWidth: 75.w,
         leading: GestureDetector(
           child: Row(
             children: [
-              Icon(Icons.arrow_back_ios_outlined),
-              Text("Wells",style: TextStyle(fontSize: 15.sp),),
+              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
             ],
           ),
           onTap: () {
@@ -70,10 +100,10 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
         ),
       ),
       //drawer: NavBar(),
-      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
       body: Container(
         child: FutureBuilder(
-          future: fetchApi.fetchWellOperationStatus("::WELL_COMPLETION_S='"+widget.item_well_completion!+"':START_TIME DESC"),//fetchApi.fetchWellTest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'"),
+          future: fetchApi.fetchWellOperationStatusPost(wellPostBody),//fetchApi.fetchWellTest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'"),
           builder: (context, snapshot) {
             if(snapshot.data == null) {
               return Container(

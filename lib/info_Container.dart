@@ -7,6 +7,7 @@ class infoContainer extends StatelessWidget {
   final double height;
   final double width;
   final Color textColor;
+  final FontWeight? fontWeight;
   final Color backgroundColor;
   final Color borderColor;
   final String text;
@@ -29,10 +30,12 @@ class infoContainer extends StatelessWidget {
     required this.height,
     required this.width,
     required this.textColor,
+
     required this.backgroundColor,
     required this.borderColor,
     required this.text,
     required this.size,
+    this.fontWeight,
     required this.ltRadius,
     required this.rtRadius,
     required this.lbRadius,
@@ -56,12 +59,12 @@ class infoContainer extends StatelessWidget {
       child: Center(
           child: Text(
             text,
-            textAlign: TextAlign.left,
+            textAlign: TextAlign.center,
             //overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: textColor,
-              fontSize: size  ,
-              fontWeight: FontWeight.bold
+              fontSize: size,
+              fontWeight: FontWeight.bold,
             ),
               softWrap: this.softWrap
           ),
