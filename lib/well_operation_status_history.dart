@@ -4,6 +4,7 @@ import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellOperationStatus.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -95,7 +96,7 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
           ),
           onTap: () {
             //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),
@@ -105,6 +106,7 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
         child: FutureBuilder(
           future: fetchApi.fetchWellOperationStatusPost(wellPostBody),//fetchApi.fetchWellTest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'"),
           builder: (context, snapshot) {
+            //print(snapshot.data);
             if(snapshot.data == null) {
               return Container(
                 child: Center(
@@ -112,162 +114,185 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
                 ),
               );
             } else {
-              List<WellOperationStatus>? ListWellOperationStatusHistory = snapshot.data as List<WellOperationStatus>?;
-              if(ListWellOperationStatusHistory![0].STATUS.toString() == 'CLOSE')
-                {
-                  FirstWellStatus = 'OPEN';
-                  FirstWellReason = ListWellOperationStatusHistory![0].STATUS_REASON.toString();
-                } else {
-                FirstWellStatus = 'CLOSE';
-              }
-              //FirstWellStatus = ListWellOperationStatusHistory![0].STATUS.toString();
-              return ListView.builder(
-                itemCount: ListWellOperationStatusHistory!.length,
-                itemBuilder: (context,int index) {
-                 // print(ListWellOperationStatusHistory[index].START_TIME!);
-                  DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(ListWellOperationStatusHistory[index].START_TIME!);
-                  String _star_time = DateFormat('dd/MM/yyyy h:mm a').format(dt);
-                  if(index == 0)
-                    {
-                       FirstStatusDate =_star_time ;
-                    }
-                 // print(_star_time);
-                  if(ListWellOperationStatusHistory[index].STATUS == "CLOSE")
-                  {
-                    _well_status="Close Date:";
-                    _statusColor = Colors.red;
-                  }
-                  else
-                  {
-                    _well_status="Open Date:";
-                    _statusColor = Colors.green;
-                  }
-                  return Card(
-                    child: Container(
-                      width:  double.infinity,//  ScreenUtil().screenWidth,// MediaQuery.of(context).size.width,
-                      height: 0.24.sh,//ScreenUtil().screenHeight * 0.2,// MediaQuery.of(context).size.height * 0.2,
-                      color: _statusColor,
-                      child: Padding(
-                        padding:  EdgeInsets.all(8.r),
-                        child: Column(
-                          children: [
-                            //SizedBox(height: ScreenUtil().screenHeight * 0.010),
-                            SizedBox(height: 0.005.sh),
-                            Row(
-                              children: [
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
 
-                                  width: 0.30.sw,//ScreenUtil().screenWidth * .3-10,
-                                  child: Text(
-                                    _well_status!,
-                                    //textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: _textColor,
-                                      fontSize: 14.sp  ,
-                                      fontWeight: FontWeight.bold,
+                    List<WellOperationStatus>? ListWellOperationStatusHistory = snapshot.data as List<WellOperationStatus>?;
+                    if(ListWellOperationStatusHistory!.length>0) {
+                    //print(ListWellOperationStatusHistory!.length);
+                        if (ListWellOperationStatusHistory![0].STATUS!.isNotEmpty) {
+                          if (ListWellOperationStatusHistory![0].STATUS
+                              .toString() == 'CLOSE') {
+                            FirstWellStatus = 'OPEN';
+                            FirstWellReason =
+                                ListWellOperationStatusHistory![0].STATUS_REASON
+                                    .toString();
+                          } else {
+                            FirstWellStatus = 'CLOSE';
+                          }
+                        } else {
+                          FirstWellStatus = "";
+                          FirstWellReason = "";
+                        }
+                    //FirstWellStatus = ListWellOperationStatusHistory![0].STATUS.toString();
+                      return ListView.builder(
+                      itemCount: ListWellOperationStatusHistory!.length,
+                      itemBuilder: (context, int index) {
+                        // print(ListWellOperationStatusHistory[index].START_TIME!);
+                        DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(
+                            ListWellOperationStatusHistory[index].START_TIME!);
+                        String _star_time = DateFormat('dd/MM/yyyy h:mm a')
+                            .format(dt);
+                        if (index == 0) {
+                          FirstStatusDate = _star_time;
+                        }
+                        // print(_star_time);
+                        if (ListWellOperationStatusHistory[index].STATUS ==
+                            "CLOSE") {
+                          _well_status = "Close Date:";
+                          _statusColor = Colors.red;
+                        }
+                        else {
+                          _well_status = "Open Date:";
+                          _statusColor = Colors.green;
+                        }
+                        return Card(
+                          child: Container(
+                            width: double.infinity,
+                            //  ScreenUtil().screenWidth,// MediaQuery.of(context).size.width,
+                            height: 0.24.sh,
+                            //ScreenUtil().screenHeight * 0.2,// MediaQuery.of(context).size.height * 0.2,
+                            color: _statusColor,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.r),
+                              child: Column(
+                                children: [
+                                  //SizedBox(height: ScreenUtil().screenHeight * 0.010),
+                                  SizedBox(height: 0.005.sh),
+                                  Row(
+                                    children: [
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
 
-                                    ),
+                                        width: 0.30.sw,
+                                        //ScreenUtil().screenWidth * .3-10,
+                                        child: Text(
+                                          _well_status!,
+                                          //textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: _textColor,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+
+                                          ),
+                                        ),
+                                      ),
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
+                                        //alignment: Alignment.center,
+                                        width: 0.60.sw,
+                                        //ScreenUtil().screenWidth * .7-10,
+                                        child: Text(
+
+                                          //ListWellOperationStatusHistory[index].START_TIME.toString(),
+                                          _star_time,
+                                          //textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: _textColor,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      //SizedBox(width: 0.005.sw),
+                                    ],
                                   ),
-                                ),
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
-                                  //alignment: Alignment.center,
-                                  width: 0.60.sw,//ScreenUtil().screenWidth * .7-10,
-                                  child: Text(
+                                  //SizedBox(height: ScreenUtil().screenHeight * 0.009),
+                                  SizedBox(height: 0.02.sw),
+                                  Row(
+                                    children: [
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
+                                        width: 0.3.sw,
+                                        //ScreenUtil().screenWidth * .3-10,
+                                        child: Text("Reason:",
+                                          style: TextStyle(
+                                              color: _textColor,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
+                                        //alignment: Alignment.center,
+                                        width: 0.6.sw,
+                                        //ScreenUtil().screenWidth * .7-10,
+                                        child: Text(
+                                          ListWellOperationStatusHistory[index]
+                                              .STATUS_REASON.toString(),
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
 
-                                    //ListWellOperationStatusHistory[index].START_TIME.toString(),
-                                    _star_time,
-                                    //textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: _textColor,
-                                        fontSize: 14.sp  ,
-                                        fontWeight: FontWeight.bold
-                                    ),
+                                              color: _textColor,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      // SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      // SizedBox(width: 0.005.sw),
+                                    ],
                                   ),
-                                ),
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                //SizedBox(width: 0.005.sw),
-                              ],
+                                  SizedBox(height: ScreenUtil().screenHeight *
+                                      0.009),
+                                  Row(
+                                    children: [
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
+                                        width: 0.3.sw,
+                                        child: Text("Remarks:",
+                                          style: TextStyle(
+                                              color: _textColor,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                      Container(
+                                        //alignment: Alignment.center,
+                                        width: 0.6.sw,
+                                        child: Text(
+                                          ListWellOperationStatusHistory[index]
+                                              .REMARKS.toString(),
+                                          style: TextStyle(
+                                              color: _textColor,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      //SizedBox(width: ScreenUtil().screenWidth * .003,),
+                                      SizedBox(width: 0.005.sw),
+                                    ],
+                                  ),
+                                  //SizedBox(height: ScreenUtil().screenHeight * 0.009),
+                                ],
+                              ),
                             ),
-                            //SizedBox(height: ScreenUtil().screenHeight * 0.009),
-                            SizedBox(height: 0.02.sw),
-                            Row(
-                              children: [
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
-                                  width: 0.3.sw,//ScreenUtil().screenWidth * .3-10,
-                                  child: Text("Reason:",
-                                    style: TextStyle(
-                                        color: _textColor,
-                                        fontSize: 14.sp  ,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
-                                  //alignment: Alignment.center,
-                                  width: 0.6.sw,//ScreenUtil().screenWidth * .7-10,
-                                  child: Text(ListWellOperationStatusHistory[index].STATUS_REASON.toString(),textAlign: TextAlign.start,
-                                    style: TextStyle(
-
-                                        color: _textColor,
-                                        fontSize: 14.sp  ,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                               // SizedBox(width: ScreenUtil().screenWidth * .003,),
-                               // SizedBox(width: 0.005.sw),
-                              ],
-                            ),
-                            SizedBox(height: ScreenUtil().screenHeight * 0.009),
-                            Row(
-                              children: [
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
-                                  width: 0.3.sw,
-                                  child: Text("Remarks:",
-                                    style: TextStyle(
-                                        color: _textColor,
-                                        fontSize: 14.sp  ,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                                Container(
-                                  //alignment: Alignment.center,
-                                  width: 0.6.sw,
-                                  child: Text(ListWellOperationStatusHistory[index].REMARKS.toString(),
-                                    style: TextStyle(
-                                        color: _textColor,
-                                        fontSize: 14.sp  ,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                                //SizedBox(width: ScreenUtil().screenWidth * .003,),
-                                SizedBox(width: 0.005.sw),
-                              ],
-                            ),
-                            //SizedBox(height: ScreenUtil().screenHeight * 0.009),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-
-                },
-              );
-            };
+                          ),
+                        );
+                      },
+                    );
+                  } else
+                      return Center(child: Text('No Data'),);
+               };
           },
         ),
       ),
@@ -288,7 +313,8 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
                       WellStatus: FirstWellStatus,
                       WellReason: FirstWellReason,
                       StatusDate: FirstStatusDate,
-                      WellCompletion: widget.item_well_completion)
+                      WellCompletion: widget.item_well_completion,
+                       user: widget.user,)
           ),
           );
         },

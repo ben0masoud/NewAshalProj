@@ -10,10 +10,12 @@ import 'package:intl/intl.dart';
 
 class WellGcConnectionPage extends StatefulWidget {
   WellLatest? item;
+
    WellGcConnectionPage({Key? key,this.item}) : super(key: key);
 
   @override
-  State<WellGcConnectionPage> createState() => _WellGcConnectionPageState();
+
+  _WellGcConnectionPageState createState() => _WellGcConnectionPageState();
 }
 
 class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
@@ -21,11 +23,23 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
   Widget build(BuildContext context) {
    // print("well op status page UWI  = "+widget.item!.UWI.toString());
     DateTime dt1;
-    String _start_time = "";
-    if(widget.item!.START_TIME != null) {
+    String _gc_conn_date = "";
+    String _header_conn_date = "";
+    String _slot_conn_date = "";
+    if(widget.item!.GC_CONN_DATE!.isNotEmpty) {
       dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
-          widget.item!.START_TIME.toString());
-      _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+          widget.item!.GC_CONN_DATE.toString());
+      _gc_conn_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    }
+    if(widget.item!.HEADER_CONN_DATE!.isNotEmpty) {
+      dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+          widget.item!.HEADER_CONN_DATE.toString());
+      _header_conn_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    }
+    if(widget.item!.SLOT_CONN_DATE!.isNotEmpty) {
+      dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+          widget.item!.SLOT_CONN_DATE.toString());
+      _slot_conn_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
     }
     return Scaffold(
       body: SingleChildScrollView(
@@ -54,10 +68,10 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                 color:  Color(0xffaabbd5), //Colors.grey,
                 child: Column(
                   children: [
-                    GcConnCard('GC',widget.item!.GC.toString(),widget.item!.GC_CONN_DATE.toString()),
+                    GcConnCard('GC',widget.item!.GC!,_gc_conn_date!),
                     SizedBox(height: 0.002.sh,),
-                    GcConnCard('HEADER',widget.item!.HEADER.toString(),widget.item!.HEADER_CONN_DATE.toString()),
-                    GcConnCard('SLOT',widget.item!.SLOT.toString(),widget.item!.SLOT_CONN_DATE.toString()),
+                    GcConnCard('HEADER',widget.item!.HEADER!,_header_conn_date!),
+                    GcConnCard('SLOT',widget.item!.SLOT!,_slot_conn_date!),
                     SizedBox(height: 0.002.sh,),
 
                   ],
@@ -70,8 +84,12 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
     );
   }
   Widget GcConnCard(String? gc_title,String? gc_name,String? conn_date) {
-    DateTime? dt3 = DateFormat('MM/dd/yyyy hh:mm').parse(conn_date!);
-    String? _conn_date = DateFormat('dd/MM/yyyy h:mm a').format(dt3);
+
+    if(conn_date!.isNotEmpty) {
+      DateTime? dt3 = DateFormat('MM/dd/yyyy hh:mm').parse(conn_date!);
+      conn_date = DateFormat('dd/MM/yyyy h:mm a').format(dt3!);
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -114,7 +132,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                 CustomContainer(
                   height: 0.05.sh,
                   width: 0.48.sw,
-                  child: Center(child: CustomText(text: _conn_date,size: 12.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
+                  child: Center(child: CustomText(text: conn_date!,size: 12.sp,color: Colors.black,fontwdth: FontWeight.bold,)),
                   borderColor: Colors.black,
                   borderWidth: 1,
                   radius: 5.r,

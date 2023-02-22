@@ -2,6 +2,7 @@
 
 import 'package:ashal_ver_3/services/user_info.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'body_post_json.dart';
 import 'fetchDataApi.dart';
@@ -9,7 +10,7 @@ import 'fetchDataApi.dart';
 class AccessInfo{
 
   String access_token;
-  UserInfo user_info;
+  String user_info;
 
   AccessInfo(this.access_token,this.user_info);
 
@@ -23,8 +24,8 @@ class AccessInfo{
     late UserPrivilege _usr_priv = UserPrivilege();
     FetchDataApi fetchApi = FetchDataApi();
     BodyPost wellPostBody = BodyPost();
-    wellPostBody.user = user_info.UserName!.split('@')[0];
-    wellPostBody.whereCondition = "USER_ID='${user_info.UserName!.split('@')[0]}'";
+    wellPostBody.user = user_info!.split('@')[0];
+    wellPostBody.whereCondition = "USER_ID='${user_info!.split('@')[0]}'";
 
     //user_profile = await fetchApi.fetchUserProfile(":1:USER_ID='${user_info.UserName!.split('@')[0]}'") as List<UserProfile?>;
 
@@ -50,8 +51,16 @@ class AccessInfo{
         }
 
         _usr_priv.FORM_GROUP_ID = lst;
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_id', _usr_priv.USER_ID!);
+
+
+
+
       }
     }
+
     return _usr_priv;
 
   }

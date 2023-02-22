@@ -11,6 +11,8 @@ import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/production_facility.dart';
 import 'package:flutter/material.dart';
 
+import 'constant_values.dart';
+
 class GcListPages extends StatefulWidget {
   const GcListPages({Key? key,required this.title,this.user,this.profile,this.AshalAccess,this.Area}) : super(key: key);
   final String title;
@@ -58,6 +60,7 @@ class _GcListPagesState extends State<GcListPages> {
     FetchDataApi fetchApi = FetchDataApi();
     BodyPost wellPostBody = BodyPost();
     wellPostBody.user = widget.user;
+    wellPostBody.orderBy = "GC";
 
     // wellPostBody.orderBy = "START_TIME DESC";
     //final String response = await rootBundle.loadString('assets/well_completion.json');
@@ -94,26 +97,36 @@ class _GcListPagesState extends State<GcListPages> {
               gcList: AllGcs,
               profile: widget.profile,
               AshalAccess: widget.AshalAccess,
+              Area: widget.Area,
+              user: widget.user,
             ),
             NAreaGCs(
               gcList: nkData,
               profile: widget.profile,
               AshalAccess: widget.AshalAccess,
-            ),
-            SAreaGCs(
-              gcList: skData,
-              profile: widget.profile,
-              AshalAccess: widget.AshalAccess,
+              Area: widget.Area,
+              user: widget.user,
             ),
             WAreaGCs(
               gcList: wkData,
               profile: widget.profile,
               AshalAccess: widget.AshalAccess,
+              Area: widget.Area,
+              user: widget.user,
+            ),
+            SAreaGCs(
+              gcList: skData,
+              profile: widget.profile,
+              AshalAccess: widget.AshalAccess,
+              Area: widget.Area,
+              user: widget.user,
             ),
             OAreaGCs(
               gcList: otherData,
               profile: widget.profile,
               AshalAccess: widget.AshalAccess,
+              Area: widget.Area,
+              user: widget.user,
             )
           ];
         });
@@ -130,9 +143,8 @@ class _GcListPagesState extends State<GcListPages> {
     return  Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
-            'Read Data From Local Json',
-          ),
+          backgroundColor: ConstantValues.MainColor1,
+          title: Text('GC List',style: TextStyle(color: Colors.black),),
         ),
         body: AllGcs!.isNotEmpty
             ? screens[selectedPage]
@@ -140,11 +152,11 @@ class _GcListPagesState extends State<GcListPages> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPage,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xFF6200EE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
+          backgroundColor: ConstantValues.MainColor1,//ThemeData().primaryColor,//Color(0xFF6200EE),
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 16,
+          unselectedFontSize: 16,
           onTap: (value) {
             // Respond to item press.
             setState(() => selectedPage = value);
@@ -162,32 +174,44 @@ class _GcListPagesState extends State<GcListPages> {
               //Icon(Icons.favorite),
             ),
             BottomNavigationBarItem(
-                label: nkData!.length.toString(),
-                icon: ImageIcon(
+                label: 'NK',
+                icon: buildCustomBadget(
+                counter: nkData!.length,
+                child:  ImageIcon(
                   AssetImage('assets/icons/North-Direction-icon.png'),
                   size: 32,
-                ) //Icon(Icons.music_note),
+                )
+            )//Icon(Icons.music_note),
             ),
             BottomNavigationBarItem(
-                label: skData!.length.toString(),
-                icon: ImageIcon(
-                  AssetImage('assets/icons/South-Direction-icon.png'),
-                  size: 32,
-                ) //Icon(Icons.location_on),
-            ),
-            BottomNavigationBarItem(
-                label: wkData!.length.toString(),
-                icon: ImageIcon(
+                label: 'WK',
+                icon: buildCustomBadget(
+                counter: wkData!.length,
+                child:  ImageIcon(
                   AssetImage('assets/icons/West-Direction-icon.png'),
                   size: 32,
-                ) //Icon(Icons.library_books),
+                )
+            )//Icon(Icons.library_books),
             ),
             BottomNavigationBarItem(
-                label: otherData!.length.toString(),
-                icon: ImageIcon(
-                  AssetImage('assets/icons/Center-Direction-icon.png'),
-                  size: 32,
-                ) //Icon(Icons.ac_unit_sharp),
+                label: 'SK',
+                icon: buildCustomBadget(
+                        counter: skData!.length,
+                        child:  ImageIcon(
+                        AssetImage('assets/icons/South-Direction-icon.png'),
+                        size: 32,
+                        ),
+                ),//Icon(Icons.location_on),
+            ),
+            BottomNavigationBarItem(
+                label: 'EK',
+                icon: buildCustomBadget(
+                        counter: otherData!.length,
+                        child:  ImageIcon(
+                        AssetImage('assets/icons/East-Direction-icon.png'),
+                        size: 32,
+                        ),
+                ),//Icon(Icons.ac_unit_sharp),
             ),
           ],
         ));

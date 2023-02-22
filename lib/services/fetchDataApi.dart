@@ -27,10 +27,12 @@ import 'header_comp_connection.dart';
 class FetchDataApi{
 
   String myPath = ConstantValues.api_get_path_prod;
-  String myPostPath = ConstantValues.api_post_path_prod;
- // String myPath = ConstantValues.api_get_path_test;
  // String myPostPath = ConstantValues.api_post_path_test;
+ // String myPath = ConstantValues.api_get_path_test;
+ String myPostPath = ConstantValues.api_post_path_prod;
   String LogPath = "https://ashal.kockw.com/api/v1.0/";
+  String ExecPath = "https://ashal.kockw.com/api/v1.0/DynamicProc";
+
  // String LogPath = "https://ashalim.kockw.com/test/api/v1.0/";
 
 //  String myPath = "https://ashal.kockw.com/api/v1.0/GetTable/"; //"http://mvcsashlsrv/test/api/v1.0/GetTable/";
@@ -236,7 +238,8 @@ class FetchDataApi{
 
   Future PostWellOpStatus(String JsonHeader,String JsonBody) async {
 
-    final response = "";//await BaseClient().post(myPostPath, "Exe", JsonHeader, JsonBody);
+    //final response = await BaseClient().post(ExecPath, "Exe", JsonHeader, JsonBody);
+    var response = await controller.postData(ExecPath, JsonBody,'')  ;
 
 
    // var response = await BaseClient().get('${myPath}Well_Op_Status_Reason', JsonFilter);
@@ -406,9 +409,9 @@ class FetchDataApi{
     return response;
   }
 
-  Future<dynamic> fetchUserLoginPost(BodyPost well_post) async {
-    well_post.tableName= 'Login';
-    var response = await controller.postData(myPostPath, well_post.toJson(),'')  ;
+  Future<dynamic> fetchUserLoginPost(User user) async {
+    //well_post.tableName= 'Login';
+    var response = await controller.postData(LogPath+'Login', user.toJson(),'')  ;
   //  var response = await controller.getData(LogPath, 'Login', JsonFilter) ;// BaseClient().get('${LogPath}Login/', JsonFilter);
     return response;
   }
@@ -418,9 +421,9 @@ class FetchDataApi{
     return response;
   }
 
-  Future<dynamic> fetchUserLogoutPost(BodyPost well_post) async {
-    well_post.tableName= 'Logout';
-    var response = await controller.postData(myPostPath, well_post.toJson(),'')  ;
+  Future<dynamic> fetchUserLogoutPost(User user) async {
+    //well_post.tableName= 'Logout';
+    var response = await controller.postData(LogPath+'Login', user.toJson(),'')  ;
   //  var response = await controller.getData(LogPath, 'Logout', JsonFilter) ;// BaseClient().get('${LogPath}Logout/', JsonFilter);
     return response;
   }

@@ -1,3 +1,4 @@
+/*
 import 'dart:ui';
 
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
@@ -384,3 +385,5 @@ class AppColors {
     Color(0xff90a4ae)
   ];
 }
+
+ */

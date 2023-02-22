@@ -2,10 +2,18 @@
     package="com.example.ashal_ver_3">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+    </queries>
 
    <application
         android:label="Ashal KOC"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDm9jEUASieCws-0FK2h6Cg0RtMusiu4MQ"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

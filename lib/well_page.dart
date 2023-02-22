@@ -11,8 +11,12 @@ import 'package:ashal_ver_3/wellBore_page.dart';
 import 'package:ashal_ver_3/wellOperationStatus_page.dart';
 import 'package:ashal_ver_3/wellProduction_page.dart';
 import 'package:ashal_ver_3/wellTest_page.dart';
+import 'package:ashal_ver_3/well_completion_detial_page.dart';
 import 'package:ashal_ver_3/well_gc_connection_page.dart';
+import 'package:ashal_ver_3/well_location.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:ashal_ver_3/wirelineActivity_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,6 +53,9 @@ class _WellPageState extends State<WellPage> {
   late List<WellTest?> well_test;
   late List<WellOperationStatus?> well_operation_status;
   late List<WirelineActivity?> wireline_activity;
+  late List<Well>? AllWellsInReservoir;
+  late List<Well>? AllWellsInField;
+  late List<Well>? AllWellsInArea;
   //late WellBore? wellb;
   var wellb;
   var wellp;
@@ -57,7 +64,12 @@ class _WellPageState extends State<WellPage> {
   var wirelineAC;
   var wellLatest;
 
+   List<String> _all_well = <String>[];
+
+
   bool showLoading = false;
+  static const double _kItemExtent = 32.0;
+  int _selectedWellCompletion = 0;
 
   @override
   initState() {
@@ -66,29 +78,29 @@ class _WellPageState extends State<WellPage> {
     super.initState();
 
   }
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
+  }
 
   Future _fetchDara() async {
-    /*
-    final results = await Future.wait([
 
-      fetchApi.fetchWellBore("::UWI='"+widget.item.UWI.toString()+"'"),
-      fetchApi.fetchWellProduction("::UWI='"+widget.item.UWI.toString()+"':production_date desc"),
-      fetchApi.fetchWellTest("::UWI='"+widget.item.UWI.toString()+"'"),
-      fetchApi.fetchWellOperationStatus("::UWI='"+widget.item.UWI.toString()+"'"),
-      fetchApi.fetchWirelineActivity("::UWI='"+widget.item.UWI.toString()+"'"),
-
-
-      fetchApi.fetchWellLatest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'")
-      //fetchApi.fetchWellLatestByFile()
-    ]);
-     */
     BodyPost wellPostBody = BodyPost();
     wellPostBody.user =widget.user;
     wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item!.WELL_COMPLETION_S}'";
     well_latest = await fetchApi.fetchWellLatestPost(wellPostBody) as List<WellLatest?>;
    //'' well_latest = await fetchApi.fetchWellLatest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'") as List<WellLatest?>;
     wellLatest =  await well_latest[0];
-    print(well_latest);
+    //BodyPost wellPostBody = BodyPost();
+   // wellPostBody.user = widget.user;
+    wellPostBody.whereCondition = "RESERVOIR_ID='${widget.item!.RESERVOIR_ID}'";
+    AllWellsInReservoir = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+    wellPostBody.whereCondition = "FIELD='${widget.item!.FIELD}'";
+    AllWellsInField = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+    wellPostBody.whereCondition = "AREA='${widget.item!.AREA}'";
+    AllWellsInArea = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
+    //print(well_latest);
     setState(() {
      // well_latest = results[0]!.cast<WellLatest?>().toList(); //as  Future<List<WellLatest>?>;
       //wellLatest =  well_latest[0];
@@ -99,15 +111,34 @@ class _WellPageState extends State<WellPage> {
   //  });
   }
 
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => Container(
+          height: 216,
+          padding: const EdgeInsets.only(top: 6.0),
+          // The Bottom margin is provided to align the popup above the system navigation bar.
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          // Provide a background color for the popup.
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          // Use a SafeArea widget to avoid system overlaps.
+          child: SafeArea(
+            top: false,
+            child: child,
+          ),
+        ));
+  }
   @override
   Widget build(BuildContext context) {
 
     //ScreenUtil.init(context,designSize: Size(360, 690));
     print('WELL_COMPLETION_S '+widget.item!.WELL_COMPLETION_S.toString());
-    return 
+    return
       SafeArea(
         child: Scaffold(
-
+          resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: ConstantValues.MainColor1,
           iconTheme: IconThemeData(color: Colors.blue),
@@ -138,7 +169,7 @@ class _WellPageState extends State<WellPage> {
               ],
             ),
             onTap: () {
-              Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+              Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
             },
           ),
         ),
@@ -164,7 +195,7 @@ class _WellPageState extends State<WellPage> {
                   child: Center(
                     child: SmoothPageIndicator(
                       controller: controller,
-                      count: 6,
+                      count: 7,
                       effect: SwapEffect(
                         activeDotColor: Colors.deepPurple,
                         dotColor: Colors.deepPurple.shade100,
@@ -266,6 +297,7 @@ class _WellPageState extends State<WellPage> {
             scrollDirection: Axis.horizontal,
             children: [
               WellBorePage(item: wellLatest),
+              WellLocation(item: wellLatest),
               WellProductionPage(item: wellLatest ),
               WellTestPage(item: wellLatest),
               WellOperationStatusPage(item: wellLatest ),
@@ -277,6 +309,33 @@ class _WellPageState extends State<WellPage> {
         
 
   }
+
+
+  List<Color> BackgroundStatus(String? wellStatus){
+
+    List<Color> statusColor = [];
+
+
+   // widget.item!.OPERATION_STATUS
+
+    if(wellStatus == "OPEN")
+    {
+      statusColor.add(Colors.green);
+      statusColor.add(Colors.greenAccent);
+    }
+    else if(wellStatus == "CLOSE")
+    {
+      statusColor.add(Colors.red);
+      statusColor.add(Colors.redAccent);
+    } else
+    {
+      statusColor.add(Colors.grey);
+      statusColor.add(Colors.blueGrey);
+    }
+
+    return statusColor;
+  }
+
 
   Column AboveContentWell() {
     return Column(
@@ -292,41 +351,69 @@ class _WellPageState extends State<WellPage> {
                       style:
                           TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
                   SizedBox(height: 0.02.sh),
-                  Text(widget.item!.AREA.toString(),
-                      style: TextStyle(fontSize: 20.sp)),
+                  GestureDetector(
+                    child: Text(widget.item!.AREA.toString(),
+                        style: TextStyle(fontSize: 20.sp,color: Colors.blue),
+                    ),
+                    onTap: ()  async {
+                      final String? uwi = await showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => Container(
+                            height: 400,
+                            padding: const EdgeInsets.only(top: 6.0),
+                            margin: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            color: CupertinoColors.systemBackground.resolveFrom(context),
+                            child: SafeArea(
+                              top: false,
+                              child: buildActionSheet(context,AllWellsInArea,widget.item!.AREA.toString()),
+                            ),
+                          )
+                      );
+                      //print(uwi!);
+                    },
+                  ),
                 ],
               ),
               Column(
                 children: [
                   Padding(
                     padding:  EdgeInsets.all(8.r),
-                    child: CircleAvatar(
-                      radius: 60.r,
-                      backgroundColor: widget.item!.OPERATION_STATUS == 'OPEN'
-                          ? Colors.lightGreen
-                          : Colors.redAccent,
+                    child: GestureDetector(
                       child: CircleAvatar(
-                          radius: 55.r,
-                          backgroundColor: widget.item!.OPERATION_STATUS == 'OPEN'
-                              ? Colors.greenAccent
-                              : Colors.red,
-                          child:
-                              //Text('uwi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(widget.item!.UWI.toString(),
+                        radius: 60.r,
+                        backgroundColor: BackgroundStatus(widget.item!.OPERATION_STATUS)[1],
+                        child: CircleAvatar(
+                            radius: 55.r,
+                            backgroundColor: BackgroundStatus(widget.item!.OPERATION_STATUS)[0],
+                            child:
+                                //Text('uwi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(widget.item!.UWI.toString(),
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),textAlign: TextAlign.center,),
+                                    Text(widget.item!.FACILITY_NAME.toString()+" - "+widget.item!.FACILITY_ID.toString(),
                                       style: TextStyle(
-                                          fontSize: 18.sp,
+                                          fontSize: 20.sp,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),textAlign: TextAlign.center,),
-                                  Text(widget.item!.FACILITY_NAME.toString()+" - "+widget.item!.FACILITY_ID.toString(),
-                                    style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),textAlign: TextAlign.center,),
-                                ],
-                              ))
+                                  ],
+                                ))
+                      ),
+                      onTap: (){
+                        Navigator.push(context,
+                          MaterialPageRoute(
+                            builder: (context) => WellCompletionDetailPage(item: widget.item,),
+                            settings: RouteSettings(name: "Well_Completion_Detail"),
+
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -337,8 +424,29 @@ class _WellPageState extends State<WellPage> {
                       style:
                           TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
                   SizedBox(height: 0.02.sh),
-                  Text(widget.item!.FIELD.toString(),
-                      style: TextStyle(fontSize: 20.sp))
+                  GestureDetector(
+                    child: Text(widget.item!.FIELD.toString(),
+                        style: TextStyle(fontSize: 20.sp,color: Colors.blue)
+                    ),
+                    onTap: ()  async {
+                      final String? uwi = await showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => Container(
+                            height: 400,
+                            padding: const EdgeInsets.only(top: 6.0),
+                            margin: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            color: CupertinoColors.systemBackground.resolveFrom(context),
+                            child: SafeArea(
+                              top: false,
+                              child: buildActionSheet(context,AllWellsInField,widget.item!.FIELD.toString()),
+                            ),
+                          )
+                      );
+                      //print(uwi!);
+                    },
+                  )
                 ],
               ),
             ],
@@ -359,8 +467,29 @@ class _WellPageState extends State<WellPage> {
                         style:
                             TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
                     SizedBox(height: 0.02.sh),
-                    Text(widget.item!.RESERVOIR_ID.toString(),
-                        style: TextStyle(fontSize: 15.sp))
+                    GestureDetector(
+                    child: Text(widget.item!.RESERVOIR_ID.toString(),
+                    style: TextStyle(fontSize: 15.sp,color: Colors.blue),
+                    ),
+                    onTap: ()  async {
+                      final String? uwi = await showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => Container(
+                            height: 400,
+                            padding: const EdgeInsets.only(top: 6.0),
+                            margin: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            color: CupertinoColors.systemBackground.resolveFrom(context),
+                            child: SafeArea(
+                              top: false,
+                              child: buildActionSheet(context,AllWellsInReservoir,widget.item!.RESERVOIR_ID.toString()),
+                            ),
+                          )
+                      );
+                      //print(uwi!);
+                    },
+                    ),
                   ],
                 ),
               ),
@@ -398,4 +527,55 @@ class _WellPageState extends State<WellPage> {
       ],
     );
   }
+
+  Widget buildActionSheet(BuildContext context,List<Well>? list,String item) => CupertinoActionSheet(
+    title:  Text('Choose a well in ${item}'),
+    actions: [
+      CupertinoActionSheetAction(
+        isDefaultAction: true,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child:  Container(
+          height: 150,
+          child: CupertinoPicker(
+            magnification: 1.22,
+            squeeze: 1.2,
+            useMagnifier: true,
+            itemExtent: _kItemExtent,
+            // This is called when selected item is changed.
+            onSelectedItemChanged: (int selectedItem) {
+              setState(() {
+                _selectedWellCompletion = selectedItem;
+                // print(selectedItem);
+              });
+            },
+            children:
+            List<Widget>.generate(list!.length, (int index) {
+              return Center(
+                child: Text(
+                  '${list[index].UWI!} ${list[index].FACILITY_NAME!} - ${list[index].FACILITY_ID!}',
+                ),
+              );
+            }),
+
+          ),
+        ),
+      ),
+
+    ],
+    cancelButton: CupertinoActionSheetAction(
+      child: Text('Get Well Details'),
+      onPressed: () {
+        Navigator.push(context,
+          MaterialPageRoute(
+            builder: (context) => WellPage(item: list![_selectedWellCompletion],userPrivilege: widget.userPrivilege,user: widget.user,),
+            settings: RouteSettings(name: "Well_Page"),
+
+          ),
+        );
+      } //Navigator.pop(context,AllWellsInReservoir![_selectedWellCompletion].UWI),
+    ),
+  );
+
 }

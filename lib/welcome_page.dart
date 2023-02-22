@@ -1,3 +1,4 @@
+/*
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/user_info.dart';
 import 'package:flutter_aad_oauth/flutter_aad_oauth.dart';
@@ -632,3 +633,4 @@ class _WelcomePageState extends State<WelcomePage> with WidgetsBindingObserver {
     return null;
   }
 }
+*/

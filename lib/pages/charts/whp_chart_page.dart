@@ -89,7 +89,7 @@ class WHPChartPage extends StatelessWidget {
      return
        Padding(
          padding: const EdgeInsets.symmetric(vertical: 45.0,horizontal: 25.0),
-         child: LineChart(
+         child: (WHPSpot!.isNotEmpty) ? LineChart(
            LineChartData(
              lineBarsData: [
                LineChartBarData(
@@ -112,7 +112,7 @@ class WHPChartPage extends StatelessWidget {
 
              ),
            ),
-         ),
+         ) : Center(child: Text('No Chart'),),
        );
    }
 }

@@ -86,32 +86,41 @@ class WellCompletionMainInfo extends StatelessWidget {
   Widget WellStatusAvatar(String status,String end_time)
   {
     Color statusColor;
+    DateTime dt1 ;
+    String formattedDate="" ;
 
     if(wellStatus == "OPEN")
     {
       status = "Open";
       statusColor = Colors.green;
     }
-    else
+    else if(wellStatus == "CLOSE")
     {
       if(end_time == "") {
         status = "Close";
-        statusColor = Colors.grey;
+        statusColor = Colors.red;
+        formattedDate="";
       }
       else
       {
         status = "Close";
         statusColor = Colors.red;
+        dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(end_time);
+        formattedDate = DateFormat('dd/MM/yyyy').format(dt1);
       }
-    }
-    DateTime dt1 ;
-    String formattedDate ;
-    if(end_time != "") {
+    } else
+      {
+        status = "";
+        statusColor = Colors.grey;
+        formattedDate="";
+      }
+
+  /*  if(end_time != "") {
       dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(end_time);
        formattedDate = DateFormat('dd/MM/yyyy').format(dt1);
     }
     else
-      formattedDate="";
+      formattedDate="";*/
     return
         CircleAvatar(
           backgroundColor: statusColor,

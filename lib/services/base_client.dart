@@ -29,26 +29,12 @@ class BaseClient
   Future<dynamic> post(String baseUrl,dynamic bodyObj,dynamic headerObj) async {
     var uri = Uri.parse(baseUrl);
     var _bodyObj = bodyObj;
-    print(_bodyObj);
+    print(jsonEncode(_bodyObj));
     try {
       var response = await http.post(uri,
           headers: {
                      HttpHeaders.contentTypeHeader : "application/json"
                    },
-          // body: jsonEncode(<String,String>
-          //   {
-          //     'proc_name' : 'InsertOperationStatus',
-          //     'v_status'  : '',
-          //     'WELL_COMPLETION_S' : '2566730',
-          //     'start_time' : '29-May-2022 10:00:00 AM',
-          //     'status' : 'OPEN',
-          //     'STATUS_REASON' : 'Test from API',
-          //     'remarks' : 'testing',
-          //     'ofo_remarks' : '',
-          //     'insert_date' : '29-May-2022 10:00:00 AM',
-          //     'inserted_by' : 'ALMARRI'
-          //
-          // })
         body: jsonEncode(_bodyObj)
       );
       return _processResponse(response);

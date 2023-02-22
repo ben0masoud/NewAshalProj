@@ -8,11 +8,16 @@ import 'package:ashal_ver_3/well_page.dart';
 import 'package:ashal_ver_3/gc_connection_history_page.dart';
 import 'package:ashal_ver_3/well_test_chart.dart';
 import 'package:ashal_ver_3/wire_line_activity_history_page.dart';
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'AllWellTestHistory_Page.dart';
 import 'gc_list_page.dart';
+import 'main.dart';
 class NavBar extends StatelessWidget {
   final String? uwi;
   final String? well_completion;
@@ -22,6 +27,7 @@ class NavBar extends StatelessWidget {
 
    NavBar({Key? key, this.uwi,this.well_completion,this.my_well,this.userPrivilege,this.user}) : super(key: key);
  final padding = EdgeInsets.symmetric(horizontal: 20);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -70,7 +76,10 @@ class NavBar extends StatelessWidget {
           //  const SizedBox(height: 16,),
             buildMenuItem(text: 'Well Test Chart', icon: Icons.bar_chart_outlined, onClicked: ()=> selectedItem(context,6)),
             const SizedBox(height: 16,),
-            buildMenuItem(text: 'Exit', icon: Icons.exit_to_app, onClicked: ()=> SystemNavigator.pop()),
+            buildMenuItem(text: 'feedback by email', icon: Icons.feedback, onClicked: ()=> selectedItem(context,7)),
+            //buildMenuItem(text: 'Exit', icon: Icons.exit_to_app, onClicked: ()=> SystemNavigator.pop()),
+            const SizedBox(height: 16,),
+            buildMenuItem(text: 'feedback by shared', icon: Icons.dynamic_feed, onClicked: ()=> selectedItem(context,8)),
 
 
           ],
@@ -101,7 +110,7 @@ class NavBar extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(
           builder: (context) =>
-              WellPage(item: my_well),
+              WellPage(item: my_well,userPrivilege: userPrivilege,user: user),
                 settings: RouteSettings(name: "Well_Page")
         ));
         break;
@@ -140,13 +149,56 @@ class NavBar extends StatelessWidget {
         break;
       case 6:
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => WellTestChart(item_uwi: uwi,item_well_completion: well_completion,user: user),
+            builder: (context) => WellTestChart(item_uwi: uwi,item_well_completion: well_completion,item_well: my_well,userPrivilege: userPrivilege,user: user),
             settings: RouteSettings(name: "Well Test Chart")
         ));
+        break;
+      case 7:
+            FeedbackByEmail(context);
+        break;
+      case 8:
+        FeedbackByShared(context);
         break;
 
 
            //SystemNavigator.pop()
     }
+  }
+  void FeedbackByEmail(BuildContext context) async{
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    BetterFeedback.of(context).show((feedback) async {
+      // draft an email and send to developer
+      final screenshotFilePath =
+      await writeImageToStorage(feedback.screenshot);
+
+      final Email email = Email(
+        body: feedback.text,
+        subject: 'App : ${appName}, version: ${version}, buildNumber: ${buildNumber} Feedback',
+        recipients: ['AshalSupport@kockw.com'],
+        attachmentPaths: [screenshotFilePath],
+        isHTML: false,
+      );
+      await FlutterEmailSender.send(email);
+    });
+  }
+  void FeedbackByShared(BuildContext context){
+    BetterFeedback.of(context).show(
+          (feedback) async {
+        final screenshotFilePath =
+        await writeImageToStorage(feedback.screenshot);
+
+        /*await Share.shareFiles(
+                        [screenshotFilePath],
+                        text: feedback.text,
+                      );*/
+        await Share.shareXFiles( [XFile(screenshotFilePath)],
+          text: feedback.text,);
+      },
+    );
   }
 }

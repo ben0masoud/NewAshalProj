@@ -69,7 +69,7 @@ class LiquidRateChartPage extends StatelessWidget {
     return
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 45.0,horizontal: 25.0),
-        child: LineChart(
+        child: (LQRateSpots!.isNotEmpty) ?LineChart(
           LineChartData(
             lineBarsData: [
               LineChartBarData(
@@ -92,7 +92,7 @@ class LiquidRateChartPage extends StatelessWidget {
 
             ),
           ),
-        ),
+        ) : Center(child: Text('No Chart'),) ,
       );
   }
 }

@@ -1,4 +1,4 @@
-
+/*
 import 'package:action_slider/action_slider.dart';
 import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/app_security.dart';
@@ -36,6 +36,7 @@ class _WelcomePage1State extends State<WelcomePage1> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 
+
   late bool IsOn;
   late bool approve;
   String? UserName='';
@@ -46,6 +47,16 @@ class _WelcomePage1State extends State<WelcomePage1> {
   late List<UserProfile> user_profile = [];
 
 
+
+  /*getPref() async{
+    final SharedPreferences prefs = await _prefs;
+      UserName = prefs.getString('user_id');
+  }
+  savePref(String? userId) async{
+    final SharedPreferences prefs = await _prefs;
+    prefs.setString('user_id',userId!);
+  }*/
+
   @override
   initState() {
     Object redirectUri;
@@ -53,6 +64,8 @@ class _WelcomePage1State extends State<WelcomePage1> {
     late String responseType;
 
 
+
+   // getPref();
     if (kIsWeb) {
       scope = "openid profile email offline_access user.read";
       responseType = "id_token+token";
@@ -88,10 +101,10 @@ class _WelcomePage1State extends State<WelcomePage1> {
       user_info = UserInfo();
       usr_priv = UserPrivilege();
       appSecurity = AppSecurity(oauth,context);
-      user_info.GivenName = 'hamad';
-      user_info.FamilyName = 'almarri';
-      user_info.FullName = 'hamad masoud almarri';
-      user_info.UserName = 'hmmarri@kockw.com';
+      user_info.GivenName = '';
+      user_info.FamilyName = '';
+      user_info.FullName = '';
+      user_info.UserName = '';
 
     });
   }
@@ -117,7 +130,7 @@ class _WelcomePage1State extends State<WelcomePage1> {
               Lottie.asset('assets/dashboard.json'),
               SizedBox(height: 0.05.sh),
               Center(
-                child: Text('UserName'),
+                child: (UserName! != '') ? Text('Welcome : ${UserName!}') : Text(''),
               ),
               SizedBox(height: 0.05.sh),
               Center(
@@ -154,8 +167,15 @@ class _WelcomePage1State extends State<WelcomePage1> {
                       approve = await AccessPage(context);
                       if(approve)
                         controller.success();
-                       else
-                         controller.reset();
+                       else {
+                        controller.reset();
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.info,
+                          title: 'Oops...',
+                          text: 'User have no profile',
+                        );
+                      }
                     }
                     //login();
                   },
@@ -185,7 +205,7 @@ class _WelcomePage1State extends State<WelcomePage1> {
               SizedBox(
                 height: 0.05.sh,
               ),
-              /*
+
               Center(
                 child:
                 //( usr_priv.AccessToken != null) ?
@@ -200,25 +220,17 @@ class _WelcomePage1State extends State<WelcomePage1> {
                         // This is called when the user toggles the switch.
                         setState(() {
                           if (value) {
-                            QuickAlert.show(
-                              context: context,
-                              type: QuickAlertType.confirm,
-                              text: 'Do you want to logout',
-                              confirmBtnText: 'Yes',
-                              cancelBtnText: 'No',
-                              confirmBtnColor: Colors.green,
-                              onConfirmBtnTap: ()  async{
-                                 appSecurity.logout();
+                            appSecurity.logout();
 
-                                  Navigator.pop(context);
+
                                  // await Future.delayed(const Duration(milliseconds: 1000));
                                  // await QuickAlert.show(
                                  //     context: context,
                                  //     type: QuickAlertType.success,
                                  //     text: "${usr_priv.USER_ID} has been Logged out!.");
 
-                              }
-                            );
+
+
 
 
 
@@ -230,7 +242,7 @@ class _WelcomePage1State extends State<WelcomePage1> {
                   ],
                 ),// : null,
               ),
-              */
+
             ],
           ),
         ),
@@ -241,9 +253,9 @@ class _WelcomePage1State extends State<WelcomePage1> {
   Future<bool> AccessPage(BuildContext context) async {
 
     usr_priv = (await appSecurity.loginWithAD())!;
-    if (usr_priv.PROFILE == 'wellcompletionlist') {
+    if (usr_priv.PROFILE!.toUpperCase() == 'wellcompletionlist'.toUpperCase()) {
       await Navigator.of(context).pushReplacement(MaterialPageRoute(
-          settings: RouteSettings(name: "Home"),
+          settings: RouteSettings(name: "wellcompletionlist"),
           builder: (context) => MyHomePageWithPages(
             title: 'ASHAL',
             user: usr_priv.USER_ID,
@@ -252,9 +264,9 @@ class _WelcomePage1State extends State<WelcomePage1> {
             Area: usr_priv.Area,
           )));
       return true;
-    } else if (usr_priv.PROFILE == 'GcLists') {
+    } else if (usr_priv.PROFILE!.toUpperCase() == 'gcList'.toUpperCase()) {
       await Navigator.of(context).pushReplacement(MaterialPageRoute(
-          settings: RouteSettings(name: "GcLists"),
+          settings: RouteSettings(name: "gcList"),
           builder: (context) => GcListPages(
             title: 'ASHAL',
             user: usr_priv.USER_ID,
@@ -268,3 +280,5 @@ class _WelcomePage1State extends State<WelcomePage1> {
   }
 
 }
+
+ */

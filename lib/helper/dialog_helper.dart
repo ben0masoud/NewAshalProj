@@ -1,12 +1,12 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 class DialogHelper {
 
  static ShowErrorDialog({String? title = 'Error',String? description = 'Something went wrong'}) {
-
+/*
    Get.dialog(
      Dialog(
        child: Padding(
@@ -27,7 +27,7 @@ class DialogHelper {
        ),
      )
    );
-
+*/
  }
 
 

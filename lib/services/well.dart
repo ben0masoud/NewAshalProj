@@ -8,6 +8,8 @@ class Well
   String? GC_CONN_DATE;
   String? HEADER;
   String? HEADER_CONN_DATE;
+  String? SLOT;
+  String? SLOT_CONN_DATE;
   String? LIFT_METHOD;
   String? ALLOWABLE;
   String? OPERATION_STATUS;
@@ -35,6 +37,8 @@ class Well
         this.GC_CONN_DATE,
         this.HEADER,
         this.HEADER_CONN_DATE,
+        this.SLOT,
+        this.SLOT_CONN_DATE,
         this.LIFT_METHOD,
         this.ALLOWABLE,
         this.OPERATION_STATUS,
@@ -62,6 +66,8 @@ class Well
     this.GC_CONN_DATE = json["GC_CONN_DATE"];
     this.HEADER = json["HEADER"];
     this.HEADER_CONN_DATE = json["HEADER_CONN_DATE"];
+    this.SLOT = json["SLOT"];
+    this.SLOT_CONN_DATE = json["SLOT_CONN_DATE"];
     this.LIFT_METHOD= json["LIFT_METHOD"];
     this.ALLOWABLE = json["ALLOWABLE"];
     this.OPERATION_STATUS= json["OPERATION_STATUS"];

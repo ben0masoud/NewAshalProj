@@ -4,6 +4,7 @@ import 'package:ashal_ver_3/services/WellProduction.dart';
 import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +41,7 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
   Widget build(BuildContext context) {
 
     wellPostBody.user = widget.user;
-    wellPostBody.whereCondition = "UWI='${widget.item_uwi}'";
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion}'";
     wellPostBody.orderBy = "PRODUCTION_DATE DESC";
 
     return Scaffold(
@@ -77,7 +78,7 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
           ),
           onTap: () {
             //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),
@@ -98,7 +99,7 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
             List<WellProduction>? ListProductionHistory = snapshot.data as List<WellProduction>?;
             DateTime dt1;
             String _production_date,_last_update ;
-            return ListView.builder(
+            return  (ListProductionHistory!.length > 0) ? ListView.builder(
               itemCount: ListProductionHistory!.length,
               itemBuilder: (context,int index) {
                 if(ListProductionHistory[index].PRODUCTION_DATE.toString().isNotEmpty) {
@@ -163,7 +164,7 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
 
                 );
               },
-            );
+            ) : Center(child: Text('No Data'),);
           };
         },
       ),

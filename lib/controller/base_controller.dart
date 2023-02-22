@@ -16,28 +16,40 @@ class BaseController {
       //context =NavigationService.navigatorKey.currentContext;
       // var message = error.message;
       // DialogHelper.ShowErrorDialog(description: message);
-       QuickAlert.show(
+    /*   QuickAlert.show(
          context: context,
          type: QuickAlertType.error,
          title: 'Oops...',
          text: error.message,
+       );*/
+       SnackBar(
+         content: Text(error.message!),
+
        );
     } else if (error is FetchDataException) {
      // var message = error.message;
       //DialogHelper.ShowErrorDialog(description: message);
-      QuickAlert.show(
+    /*  QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
         title: 'Oops...',
         text: error.message,
+      );*/
+      SnackBar(
+        content: Text(error.message!),
+
       );
     } else if (error is ApiNotRespondingException){
       //DialogHelper.ShowErrorDialog(description: 'Opps! it took longer to respond.');
-      QuickAlert.show(
+      /*QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
         title: 'Oops...',
         text: error.message,
+      );*/
+      SnackBar(
+        content: Text(error.message!),
+
       );
     }
   }

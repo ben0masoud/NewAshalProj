@@ -5,12 +5,14 @@ import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 import 'package:ashal_ver_3/well_test_details.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import 'NavBar.dart';
 import 'constant_values.dart';
+import 'main.dart';
 
 class AllWellTestHistoryPage extends StatefulWidget {
   String? item_uwi;
@@ -60,8 +62,8 @@ class _AllWellTestHistoryPageState extends State<AllWellTestHistoryPage> {
             ],
           ),
           onTap: () {
-            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePage(title: 'Flutter Demo Home Page')));
-            Navigator.of(context).popUntil(ModalRoute.withName("/"));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            //Navigator.of(context).popUntil(ModalRoute.withName("/"));
           },
         ),
         actions: [
@@ -117,7 +119,7 @@ class _AllWellTestHistoryPageState extends State<AllWellTestHistoryPage> {
                   snapshot.data as List<WellTest>?;
               DateTime dt1,dt2;
               String _start_time, _end_time;
-              return ListView.builder(
+              return (ListWellTestHistory!.length > 0) ? ListView.builder(
                 itemCount: ListWellTestHistory!.length,
                 itemBuilder: (context, int index) {
                   if (ListWellTestHistory[index]
@@ -165,13 +167,14 @@ class _AllWellTestHistoryPageState extends State<AllWellTestHistoryPage> {
                         MaterialPageRoute(
                             builder: (context) => WellTestDetails(
                                 ListWellTest: ListWellTestHistory[index],
+                                item_well: widget.item_well,
                                 ),
                                    ),
                       );
                     },
                   );
                 },
-              );
+              ) : Center(child: Text('No Data'),);
               //return Container();
 
             }

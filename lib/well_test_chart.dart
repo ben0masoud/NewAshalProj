@@ -6,22 +6,31 @@ import 'package:ashal_ver_3/pages/charts/wc_chart_page.dart';
 import 'package:ashal_ver_3/pages/charts/whp_chart_page.dart';
 import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
+import 'package:ashal_ver_3/services/well.dart';
 //import 'package:ashal_ver_3/services/wellOperationStatus.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 import 'package:ashal_ver_3/services/wph_test.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 //import 'package:ashal_ver_3/well_test_chart_page.dart';
 //import 'package:ashal_ver_3/services/wph_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 
-class WellTestChart extends StatefulWidget {
-  String? item_uwi;
-  String? item_well_completion;
-  String? user;
+import 'NavBar.dart';
+import 'constant_values.dart';
+import 'main.dart';
 
-   WellTestChart({Key? key, required this.item_uwi, required this.item_well_completion,this.user}) : super(key: key);
+class WellTestChart extends StatefulWidget {
+  final String? item_uwi;
+  final String? item_well_completion;
+  final Well? item_well;
+  List<String>? userPrivilege;
+  final String? user;
+
+   WellTestChart({Key? key, this.item_uwi,this.item_well_completion,this.item_well, this.userPrivilege,this.user}) : super(key: key);
 
   @override
   State<WellTestChart> createState() => _WellTestChartState();
@@ -61,7 +70,8 @@ class _WellTestChartState extends State<WellTestChart> {
     FetchDataApi fetchApi = FetchDataApi();
     BodyPost wellPostBody = BodyPost();
     wellPostBody.user = widget.user;
-    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion!}' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y'";
+    wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion}' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y' and FLOW_LINE_PRESSURE is not null and TOTAL_GOR is not null and LIQUID_RATE is not null and WC is not null and WHP is not null";
+
     wellPostBody.orderBy = "START_TIME DESC";
     wellPostBody.rowsLimit = "20";
 
@@ -83,19 +93,21 @@ class _WellTestChartState extends State<WellTestChart> {
     //   double maxY = double.minPositive;
     List<WellTest>? ListWellHistoryRev = ListWellTestHistory!.reversed.toList();
     ListWellHistoryRev.forEach((e) {
-      dt = DateFormat('MM/dd/yyyy hh:mm').parse(e.START_TIME.toString());
+      if(e.START_TIME.toString().isNotEmpty)
+          dt = DateFormat('MM/dd/yyyy hh:mm').parse(e.START_TIME.toString());
+      else
+        dt=DateFormat('MM/dd/yyyy hh:mm').parse(DateTime.now().toString());
+
       print(dt);
-      w = double.parse(e.WHP.toString());
-      WHPList.add(WHPTest(date: dt, WHP: w));
-      _whp_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), w));
-      _liquid_rate_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(),
-          double.parse(e.LIQUID_RATE.toString())));
-      _wc_Spots.add(FlSpot(
-          dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
-      _gor_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(),
-          double.parse(e.TOTAL_GOR.toString())));
-      _flow_line_pressure_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(),
-          double.parse(e.FLOW_LINE_PRESSURE.toString())));
+      if(e.WHP.toString().isNotEmpty) {
+        w = double.parse(e.WHP.toString());
+        WHPList.add(WHPTest(date: dt, WHP: w));
+        _whp_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), w));
+      }
+      if(e.LIQUID_RATE.toString().isNotEmpty) _liquid_rate_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.LIQUID_RATE.toString())));
+      if(e.WC.toString().isNotEmpty) _wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+      if(e.TOTAL_GOR.toString().isNotEmpty) _gor_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.TOTAL_GOR.toString())));
+      if(e.FLOW_LINE_PRESSURE.toString().isNotEmpty) _flow_line_pressure_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.FLOW_LINE_PRESSURE.toString())));
     });
     setState(() {
       screens = [
@@ -114,23 +126,58 @@ class _WellTestChartState extends State<WellTestChart> {
 
     return Scaffold(
 
-       appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(
+            child: Column(
+              children: [
+                Text('Well Chart',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('${widget.item_uwi} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )),
+        leadingWidth: 75.w,
+        leading: GestureDetector(
+          child: Row(
+            children: [
+              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
+              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
+            ],
+          ),
+          onTap: () {
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            //Navigator.of(context).popUntil(ModalRoute.withName('wellcompletionlist'));
+          },
+        ),
+      ),
+      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
       // endDrawer: NavBar(),
       body: screens[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.email_outlined), label: 'WHP'),
+                icon: Icon(Icons.compress_outlined), label: 'WHP'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_balance_wallet_rounded),
+                icon: Icon(Icons.water_drop_outlined),
                 label: 'WC'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.connect_without_contact_outlined),
+                icon: Icon(Icons.water),
                 label: 'LQ'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.email_outlined), label: 'GOR'),
+                icon: Icon(Icons.oil_barrel_outlined), label: 'GOR'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_balance_wallet_rounded),
+                icon: Icon(Icons.line_axis_rounded),
                 label: 'FLP'),
 
 

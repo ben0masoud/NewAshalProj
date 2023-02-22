@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import 'constant_values.dart';
 import 'info_Container.dart';
 
 class WireLineActivityHistoryDetialPage extends StatefulWidget {
@@ -36,6 +37,8 @@ class _WireLineActivityHistoryDetialPageState extends State<WireLineActivityHist
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
         title: Center(
           child: Column(
             children: [

@@ -1,12 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class GORChartPage extends StatelessWidget {
+class GORChartPage extends StatefulWidget {
    GORChartPage({Key? key,required this.GORSpots}) : super(key: key);
 
 
   List<FlSpot>? GORSpots;
+
+  @override
+  State<GORChartPage> createState() => _GORChartPageState();
+}
+
+class _GORChartPageState extends State<GORChartPage> {
    @override
   SideTitles get _bottomTitles => SideTitles(
     showTitles: true,
@@ -61,18 +68,31 @@ class GORChartPage extends StatelessWidget {
     },
     //interval: _leftTitlesInterval,
   );
-
-
-
+  /*setLandscapeOrientation(){
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight
+    ]);
+  }
+  @override
+  void dispose(){
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,DeviceOrientation.portraitDown
+      ]);
+    super.dispose();
+  }*/
   Widget build(BuildContext context) {
+    // if(MediaQuery.of(context).orientation != null)
+    //   {
+    //     setLandscapeOrientation();
+    //   }
     return
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 45.0,horizontal: 25.0),
-        child: LineChart(
+        child: (widget.GORSpots!.isNotEmpty) ? LineChart(
           LineChartData(
             lineBarsData: [
               LineChartBarData(
-                  spots: GORSpots, //points.map((point) => FlSpot(point.index.toDouble(), point.test)).toList(),
+                  spots: widget.GORSpots, //points.map((point) => FlSpot(point.index.toDouble(), point.test)).toList(),
                   isCurved: true,
                   dotData: FlDotData(
                     show: true,
@@ -91,7 +111,7 @@ class GORChartPage extends StatelessWidget {
 
             ),
           ),
-        ),
+        ) : Center(child: Text('No Chart'),) ,
       );
   }
 }

@@ -1,5 +1,6 @@
 
 
+import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 //import 'package:ashal_ver_3/well_test_details_container.dart';
 import 'package:ashal_ver_3/widgets/custom_container.dart';
@@ -7,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import 'constant_values.dart';
+
 class WellTestDetails extends StatelessWidget {
 
   final WellTest ListWellTest;
-  const WellTestDetails({Key? key, required this.ListWellTest}) : super(key: key);
+  final Well? item_well;
+  const WellTestDetails({Key? key, required this.ListWellTest,this.item_well}) : super(key: key);
 
   @override
 
@@ -30,7 +34,9 @@ class WellTestDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Well Test'),
+        backgroundColor: ConstantValues.MainColor1,
+        iconTheme: IconThemeData(color: Colors.blue),
+        title: Center(child: Text('Well Test',style: TextStyle(color: Colors.black),)),
       ),
       body: Center(
         child: Padding(
@@ -120,7 +126,8 @@ class WellTestDetails extends StatelessWidget {
         SizedBox(
           width: 8.w,
         ),
-        MyContainer( ListWellTest.UWI.toString(),'',65.h,180.w,Colors.blue,false),
+        MyContainer( '${item_well!.UWI}  ${item_well!.FACILITY_NAME} - ${item_well!.FACILITY_ID}'
+            ,'',65.h,180.w,Colors.blue,false),
         SizedBox(
           width: 8.w,
         ),

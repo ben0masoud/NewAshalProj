@@ -30,7 +30,7 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
   FetchDataApi fetchApi = FetchDataApi();
  // PostWellOpStatus _postWellOpStatus
-  PostWellOpStatus post_well_op_status = PostWellOpStatus(v_status: "");
+  PostWellOpStatus post_well_op_status = PostWellOpStatus(proc_name: "" ,WellParams: []);
 
  /* late List<WellOpStatusReason?> AllWellsOp;
   late List<WellOpStatusReason?> level1;
@@ -81,6 +81,14 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
     super.initState();
 
 
+  }
+
+  void dispose(){
+    _remarkController.dispose();
+    _descController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+    super.dispose();
   }
 
   Future fetchWellOpStatusReason(String status) async {
@@ -141,11 +149,11 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
 
           }
-        if(widget.WellStatus == 'OPEN')
+       /* if(widget.WellStatus == 'OPEN')
         {
           int indx = Reason.indexWhere((e) => e["id"].contains(status_rsn));
           print('indx is $indx');
-        }
+        }*/
 
 
       });
@@ -164,6 +172,7 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
 
   Widget build(BuildContext context) {
+   // if(Reason.isNotEmpty) print('Reason : ${Reason.length}');
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -235,7 +244,8 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
               ),
 
             ),
-            level1.isNotEmpty  ? DropDownValues() : const Center(child: CircularProgressIndicator(),),
+            level1.isNotEmpty  ? DropDownValues(widget.WellStatus)
+                : (widget.WellStatus == 'OPEN') ? DropDownValues(widget.WellStatus) :const Center(child: CircularProgressIndicator(),),
 
           ],
         ),
@@ -244,17 +254,17 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
       floatingActionButton:   FloatingActionButton(child: Text('add'),
         onPressed: () async{
           post_well_op_status.proc_name = "InsertOperationStatus";
-          post_well_op_status.v_status = "";
-          post_well_op_status.WELL_COMPLETION_S = widget.WellCompletion;
-          print(DateFormat('dd-MMM-yyyy hh:mm:ss a').format(dateTime));
-          post_well_op_status.start_time = DateFormat('dd-MMM-yyyy hh:mm:ss a').format(dateTime);
-          post_well_op_status.status = widget.WellStatus;
-          post_well_op_status.STATUS_REASON = reasonId;
-          post_well_op_status.remarks = _descController.text;
-          post_well_op_status.ofo_remarks = _remarkController.text;
-          // post_well_op_status.insert_date = "29-May-2022 10:00:00 AM";//DateFormat('dd/MM/yyyy hh:mm a').parse('07/03/2021 2:05 AM').toString();
-          post_well_op_status.insert_date = DateFormat('dd-MMM-yyyy hh:mm:ss a').format(DateTime.now());
-          post_well_op_status.inserted_by = "hmmarri";
+          List<Param>? p = [];
+          p.add(Param(name: "v_status",value: ""));
+          p.add(Param(name: "WELL_COMPLETION_S",value: widget.WellCompletion!));
+          p.add(Param(name: "start_time",value: DateFormat('dd-MMM-yyyy hh:mm:ss a').format(dateTime)));
+          p.add(Param(name: "status",value:  widget.WellStatus));
+          p.add(Param(name: "STATUS_REASON",value: reasonId!));
+          p.add(Param(name: "remarks",value: _descController.text));
+          p.add(Param(name: "ofo_remarks",value: _remarkController.text));
+          p.add(Param(name: "insert_date",value: DateFormat('dd-MMM-yyyy hh:mm:ss a').format(DateTime.now())));
+          p.add(Param(name: "inserted_by",value: widget.user!));
+          post_well_op_status.WellParams = p;
 
           print('the json is : ${post_well_op_status.toJson()}');
           print('the json encode is : ${jsonEncode(post_well_op_status)}');
@@ -266,8 +276,14 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
     );
   }
 
-  Widget DropDownValues()
+  Widget DropDownValues(String? well_status)
   {
+    //if(Reason.isNotEmpty) print('Reason : ${Reason.length}');
+    if(well_status=='OPEN'){
+      level2 = [];
+      level1 = [];
+    }
+
     return Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,6 +363,11 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
             context,
             "Select Reason",
             reasonId,
+            (well_status == 'OPEN') ? Reason
+                .where(
+                  (Item) => Item!["parentID"].toString() == "" ,
+            )
+                .toList() :
             Rsn,
                 (onChangedVal) {
               setState(() {
@@ -553,41 +574,24 @@ class _AddWellOperationStatusState extends State<AddWellOperationStatus> {
 
 class PostWellOpStatus{
   String? proc_name="";
-  String v_status;
-  String? WELL_COMPLETION_S="";
-  String? start_time="";
-  String? status="";
-  String? STATUS_REASON="";
-  String? remarks="";
-  String? ofo_remarks="";
-  String? insert_date="";
-  String? inserted_by="";
+  List<Param> WellParams;
 
-  PostWellOpStatus({
-    this.proc_name,
-    required this.v_status,
-    this.WELL_COMPLETION_S,
-    this.start_time,
-    this.status,
-    this.STATUS_REASON,
-    this.remarks,
-    this.ofo_remarks,
-    this.insert_date,
-    this.inserted_by
-  });
+
+  PostWellOpStatus({this.proc_name, required this.WellParams});
 
   Map<String, dynamic> toJson() => {
     "proc_name": proc_name,
-    "v_status": v_status,
-    "WELL_COMPLETION_S" : WELL_COMPLETION_S,
-    "start_time": start_time,
-    "status":status,
-    "STATUS_REASON": STATUS_REASON,
-    "remarks": remarks,
-    "ofo_remarks": ofo_remarks,
-    "insert_date": insert_date,
-    "inserted_by": inserted_by
+    "params": List<dynamic>.from(WellParams!.map((p) => p.toJson()))
   };
 
+}
+class Param{
+  String name;
+  String value;
+  Param({required this.name,required this.value});
+  Map<String, dynamic> toJson() => {
+    "name" : name,
+    "value" : value
+  };
 }
 

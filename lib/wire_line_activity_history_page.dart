@@ -4,6 +4,7 @@ import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 import 'package:ashal_ver_3/services/wirelineActivity.dart';
 import 'package:ashal_ver_3/well_test_details.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:ashal_ver_3/wire_line_activity_history_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -162,6 +163,7 @@ class _WireLineActivityHistoryPageState
         MaterialPageRoute(
           builder: (context) => WellTestDetails(
             ListWellTest: ListWellTestHistory[0],
+            item_well: widget.item_well,
           ),
         ),
       );
@@ -206,7 +208,7 @@ class _WireLineActivityHistoryPageState
             ],
           ),
           onTap: () {
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),
@@ -224,7 +226,7 @@ class _WireLineActivityHistoryPageState
             } else {
               List<WirelineActivity?> ListWirelineActivityHistory =
                   snapshot.data as List<WirelineActivity?>;
-              return ListView.builder(
+              return (ListWirelineActivityHistory.length > 0) ? ListView.builder(
                   itemCount: (ListWirelineActivityHistory == null)
                       ? 0
                       : ListWirelineActivityHistory.length,
@@ -268,7 +270,7 @@ class _WireLineActivityHistoryPageState
                                         },
                                       );
                                         */
-                  });
+                  }) : Center(child: Text('No Data'),);
             }
             ;
           },

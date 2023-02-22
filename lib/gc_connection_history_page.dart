@@ -9,6 +9,7 @@ import 'package:ashal_ver_3/services/header_comp_connection.dart';
 import 'package:ashal_ver_3/services/slot_comp_connection.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/slot_comp_connection.dart';
+import 'package:ashal_ver_3/well_complition_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -166,7 +167,7 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
           ),
           onTap: () {
             //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePageWithPages(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),

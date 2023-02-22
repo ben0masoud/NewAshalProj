@@ -1,7 +1,6 @@
-
+/*
 
 import 'dart:io';
-
 import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aad_oauth/flutter_aad_oauth.dart';
@@ -32,9 +31,10 @@ class AppSecurity{
   Future<UserPrivilege?> loginWithAD() async {
     String? accessToken;
    // FetchDataApi fetchApi = FetchDataApi();
-    print(context);
+    //print(context);
     UserInfo user_info = UserInfo();
     UserPrivilege? user_priv;
+
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -47,15 +47,24 @@ class AppSecurity{
           //     text: "login was successfully from checkIsLogged");
          // await Future.delayed(const Duration(milliseconds: 1000));
         } else {
+
+
+
           await oauth.login();
           accessToken = await oauth.getAccessToken();
 
           String? idToken = await oauth.getIdToken();
           //print("login was successfully from login");
+          /*
           QuickAlert.show(
               context: context,
               type: QuickAlertType.success,
               text: "login was successfully from login");
+          */
+          SnackBar(
+            content: Text("login was successfully from login"),
+
+          );
         }
         //await Future.delayed(const Duration(milliseconds: 1000));
 
@@ -71,11 +80,18 @@ class AppSecurity{
 
         return user_priv;
     } on SocketException catch (_) {
+      /*
       QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
           text: "No Internet access",
        );
+       */
+
+      SnackBar(
+        content: Text("No Internet access"),
+
+      );
 
     }
 
@@ -93,10 +109,18 @@ class AppSecurity{
     //print(await fetchApi.fetchUserLogin('hmmarri'));
 
     //showMessage("Logged out");
+    /*
     QuickAlert.show(
         context: context,
         type: QuickAlertType.success,
         text: "Logged out");
+     */
+    SnackBar(
+      content: Text("Logged out"),
+
+    );
 
   }
 }
+
+ */

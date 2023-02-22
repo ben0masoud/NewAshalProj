@@ -46,3 +46,13 @@ class Filters {
     'value' : value,
   };
 }
+
+class User{
+  String? user;
+  User({this.user});
+
+  Map<String,dynamic> toJson() => {
+    'user' : user,
+  };
+
+}

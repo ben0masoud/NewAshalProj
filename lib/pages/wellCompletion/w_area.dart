@@ -6,9 +6,11 @@ import '../../well_page.dart';
 import '../../widgets/search_widget.dart';
 import '../../widgets/well_completion_main_info.dart';
 class WArea extends StatefulWidget {
-   WArea({Key? key,required this.wellList,this.userPrivilege}) : super(key: key);
+   WArea({Key? key,required this.wellList,this.userPrivilege,this.user}) : super(key: key);
   final List<Well>? wellList;
    List<String>? userPrivilege;
+   final String? user;
+
   @override
   State<WArea> createState() => _WAreaState();
 }
@@ -27,7 +29,7 @@ class _WAreaState extends State<WArea> {
       child: Padding(
         padding: const EdgeInsets.all(2),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Display the data loaded from data.json
             buildSearch(),
@@ -51,7 +53,7 @@ class _WAreaState extends State<WArea> {
 
                         Navigator.push(context,
                           MaterialPageRoute(
-                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,),
+                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,user: widget.user,),
                             settings: RouteSettings(name: "Well_Page"),
 
                           ),
