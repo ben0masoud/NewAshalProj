@@ -10,7 +10,7 @@ class BaseController {
  // BuildContext context;
   //BaseController(this.context);
   void handleError(error) {
-    BuildContext context = NavigationService.navigatorKey.currentContext!;
+    //BuildContext context = NavigationService.navigatorKey.currentContext!;
     if(error is BadRequestException) {
       //BuildContext? context;
       //context =NavigationService.navigatorKey.currentContext;
@@ -52,6 +52,11 @@ class BaseController {
 
       );
     }
+    else
+      SnackBar(
+        content: Text(error.message!),
+
+      );
   }
 
 

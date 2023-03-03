@@ -9,7 +9,7 @@ import 'constant_values.dart';
 
 class WellCompletionDetailPage extends StatefulWidget {
    WellCompletionDetailPage({Key? key,this.item}) : super(key: key);
-   Well? item;
+   final Well? item;
 
   @override
   State<WellCompletionDetailPage> createState() => _WellCompletionDetailPageState();
@@ -86,12 +86,12 @@ FirestRow(BuildContext context){
   String _date1 = well_completion!.END_TIME.toString();
 
   if(_date.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date);
-    _date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date);
+    _date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   if(_date1.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date1);
-    _date1 = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date1);
+    _date1 = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -130,12 +130,12 @@ SecondRow(BuildContext context){
   String _date1 = well_completion!.OPERATION_STATUS_DATE.toString();
 
   if(_date.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date);
-    _date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date);
+    _date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   if(_date1.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date1);
-    _date1 = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date1);
+    _date1 = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   return Container(
     height: 150,
@@ -160,11 +160,11 @@ SecondRow(BuildContext context){
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DynamicContainer(h: 30, w: 170, title: 'Operation Status Date', value: _date.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
+              DynamicContainer(h: 30, w: MediaQuery.of(context).size.width * 0.4, title: 'Operation Status Date', value: _date.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
               SizedBox(height: 10,),
-              DynamicContainer(h: 30, w: 170, title: 'Status', value: well_completion!.AL_STATUS.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
+              DynamicContainer(h: 30, w: MediaQuery.of(context).size.width * 0.4, title: 'Status', value: well_completion!.AL_STATUS.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
               SizedBox(height: 10,),
-              DynamicContainer(h: 30, w: 170, title: 'Status Date', value: _date1.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
+              DynamicContainer(h: 30, w: MediaQuery.of(context).size.width * 0.4, title: 'Status Date', value: _date1.toString(),titleSize: 10.sp,valueSize: 9.sp,borderType: 0,matrixType: 'R',),
 
             ],
           ),
@@ -189,16 +189,16 @@ ThiredRow(BuildContext context){
   String _date1 = well_completion!.HEADER_CONN_DATE.toString();
   String _date2 = well_completion!.SLOT_CONN_DATE.toString();
   if(_date.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date);
-    _date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date);
+    _date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   if(_date1.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date1);
-    _date1 = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date1);
+    _date1 = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   if(_date2.isNotEmpty ) {
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date2);
-    _date2 = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date2);
+    _date2 = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
   }
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -284,8 +284,8 @@ Fivth(BuildContext context){
     String _date = well_completion!.LAST_UPDATE.toString();
 
     if(_date.isNotEmpty ) {
-      DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(_date);
-      _date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+      DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(_date);
+      _date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

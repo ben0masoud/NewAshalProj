@@ -17,27 +17,28 @@ class WellLocation extends StatefulWidget {
 }
 
 class _WellLocationState extends State<WellLocation> {
-  late final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+ // late final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+//  late GoogleMapController _controller;
 
   Set<Marker> _markers = {};
-  late Set<Marker> markers={};
-  late BitmapDescriptor customIcon;
+//  late Set<Marker> markers={};
+ // late BitmapDescriptor customIcon;
 
 
 
 
-  static const CameraPosition _kLake = CameraPosition(
+/*  static const CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(30.0747047, 47.7612693),
       tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      zoom: 19.151926040649414);*/
 
 
   @override
 
   void initState() {
     // TODO: implement initState
-    getIcon();
+    //getIcon();
 
     super.initState();
 
@@ -48,7 +49,7 @@ class _WellLocationState extends State<WellLocation> {
     super.dispose();
   }*/
 
-
+/*
   Future<void> getIcon() async {
     markers = Set.from([]);
     await BitmapDescriptor.fromAssetImage(
@@ -56,6 +57,12 @@ class _WellLocationState extends State<WellLocation> {
         .then((icon) {
       customIcon = icon;
     });
+  }*/
+  GoogleMapController? mapController;
+
+  // ignore: use_setters_to_change_properties
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   Widget build(BuildContext context) {
@@ -102,12 +109,15 @@ class _WellLocationState extends State<WellLocation> {
               color:  Color(0xffaabbd5),
               child: GoogleMap(
                 mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  if(!_controller.isCompleted) {
-                    _controller.complete(controller);
-                  }
-                },
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(la, lo),
+                  zoom: 9//14.4746
+                ),
+                onMapCreated: _onMapCreated,//(GoogleMapController controller) {
+                 // if(!_controller.isCompleted) {
+               //     _controller.complete(controller);
+                  //}
+                //},
                 markers: _markers,
               ),
             )

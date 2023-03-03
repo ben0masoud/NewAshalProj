@@ -23,9 +23,9 @@ class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
     DateTime dt1;
     String _start_time = "";
     if(widget.item!.START_TIME != null) {
-       dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+       dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
           widget.item!.START_TIME.toString());
-       _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+       _start_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
     }
     return Scaffold(
       body: SingleChildScrollView(

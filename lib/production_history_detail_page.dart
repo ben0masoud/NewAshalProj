@@ -22,10 +22,10 @@ class _ProductionHistoryDetailPageState extends State<ProductionHistoryDetailPag
   Widget build(BuildContext context) {
     DateTime dt1;
     String _production_date ;
-    dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+    dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
         widget.item!.PRODUCTION_DATE.toString());
     _production_date =
-        DateFormat('dd/MM/yyyy h:mm a').format(
+        DateFormat('dd/MM/yyyy hh:mm a').format(
             dt1);
     return Scaffold(
         appBar: AppBar(

@@ -20,9 +20,10 @@ class WireLineActivityHistoryPage extends StatefulWidget {
   Well? item_well;
   List<String>? userPrivilege;
   String? user;
+  List<Well>? wells;
 
   WireLineActivityHistoryPage(
-      {Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user})
+      {Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user,this.wells})
       : super(key: key);
 
   @override
@@ -51,8 +52,8 @@ class _WireLineActivityHistoryPageState
 
   Widget buildCompanyCard(List<WirelineActivity?> list, int i) {
 
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse( list[i]!.START_TIME.toString());
-    String _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse( list[i]!.START_TIME.toString());
+    String _start_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
 
     return GestureDetector(
       onTap: (){
@@ -149,7 +150,7 @@ class _WireLineActivityHistoryPageState
   }
 
   _getWellTestInfo(String str,String? start_time) async{
-    DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(start_time!);
+    DateTime dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(start_time!);
     String _start_time = DateFormat('MM-dd-yyyy').format(dt);
 
     wellPostBody.user =widget.user;
@@ -208,11 +209,12 @@ class _WireLineActivityHistoryPageState
             ],
           ),
           onTap: () {
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).popUntil(ModalRoute.withName("wellcompletionlist"));
           },
         ),
       ),
-      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user,wells: widget.wells,),
       body: Container(
         child: FutureBuilder(
           future: fetchApi.fetchWirelineActivityPost(wellPostBody),

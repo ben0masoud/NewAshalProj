@@ -3,6 +3,8 @@ import 'package:ashal_ver_3/services/header_comp_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'constant_values.dart';
+
 class HeaderCompConnectionPage extends StatelessWidget {
   final List<HeaderCompConnection?> header_comp_list;
 
@@ -32,9 +34,9 @@ class HeaderCompConnectionPage extends StatelessWidget {
                 .toString()
                 .isNotEmpty) {
               dt1 =
-                  DateFormat('MM/dd/yyyy hh:mm').parse(
+                  DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
                       list.START_TIME.toString());
-              _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+              _start_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
             } else
               _start_time = '';
             if (list
@@ -42,9 +44,9 @@ class HeaderCompConnectionPage extends StatelessWidget {
                 .toString()
                 .isNotEmpty) {
               dt2 =
-                  DateFormat('MM/dd/yyyy hh:mm').parse(
+                  DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
                       list.END_TIME.toString());
-              _end_time = DateFormat('dd/MM/yyyy h:mm a').format(dt2);
+              _end_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt2);
             }
             else {
               _end_time = '';
@@ -54,53 +56,64 @@ class HeaderCompConnectionPage extends StatelessWidget {
               child: Card(
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        gc_header_slot!,
-                        style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                      Container(
+                        color: ConstantValues.MainColor2,
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: Text(
+                          list.HEADER!,
+                          style:
+                          TextStyle(fontSize: 12, fontStyle: FontStyle.italic,color: Colors.white,),
+                          textAlign: TextAlign.left,
+
+
+
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        width: 10,
                       ),
-                      Text(
-                        list.HEADER!,
-                        style:
-                        TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Start Time',
-                        style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        _start_time,
-                        style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'End Time',
-                        style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                      Column(
+                        children: [
+                          Text(
+                            'Start:',
+                            style:
+                            TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'End:',
+                            style:
+                            TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                       SizedBox(
-                        height: 10,
+                        width: 10,
                       ),
-                      Text(
-                        _end_time,
-                        style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
+                      Column(
+                        children: [
+                          Text(
+                            _start_time,
+                            style:
+                            TextStyle(fontSize: 14, ),
+                          ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          Text(
+                            _end_time,
+                            style:
+                            TextStyle(fontSize: 14, ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

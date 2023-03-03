@@ -49,11 +49,11 @@ class _SAreaGCsState extends State<SAreaGCs> {
                   String rmk="";
 
                   if(gcsSearch![index].START_DATE!.isNotEmpty) {
-                    dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(gcsSearch![index].START_DATE!);
+                    dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(gcsSearch![index].START_DATE!);
                     SDate = DateFormat('dd/MM/yyyy').format(dt1);
                   }
                   if(gcsSearch![index].END_DATE!.isNotEmpty) {
-                    dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(gcsSearch![index].END_DATE!);
+                    dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(gcsSearch![index].END_DATE!);
                     EDate = DateFormat('dd/MM/yyyy').format(dt1);
                   }
 
@@ -120,7 +120,7 @@ class _SAreaGCsState extends State<SAreaGCs> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            settings: RouteSettings(name: "Home"),
+                            settings: RouteSettings(name: "wellcompletionlist"),
                             builder: (context) =>
                                 WellCompletionListPage(title: 'Flutter Demo Home Page',
                                   profile: widget.profile!,

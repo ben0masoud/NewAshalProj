@@ -37,9 +37,9 @@ class _WirelineActivityPageState extends State<WirelineActivityPage> {
     DateTime dt1;
     String _start_time = "";
     if(widget.item!.START_TIME != null) {
-      DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+      DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
           widget.item!.START_TIME.toString());
-      String _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+      String _start_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
     }
     //print(widget.item!.SPUD_DATE.toString());
     //print(dt1);

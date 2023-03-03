@@ -22,10 +22,11 @@ class ProductionHistoryPage extends StatefulWidget {
   final Well? item_well;
   List<String>? userPrivilege;
   final String? user;
+  List<Well>? wells;
 
 
 
-  ProductionHistoryPage({Key? key ,required this.item_uwi,required this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
+  ProductionHistoryPage({Key? key ,required this.item_uwi,required this.item_well_completion,this.item_well,this.userPrivilege,this.user,this.wells}) : super(key: key);
 
   @override
   _ProductionHistoryPageState createState() => _ProductionHistoryPageState();
@@ -77,13 +78,13 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
             ],
           ),
           onTap: () {
-            //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).popUntil(ModalRoute.withName("wellcompletionlist"));
+            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),
       //drawer: NavBar(),
-      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user,wells: widget.wells,),
 
       body: Container(
       child: FutureBuilder(
@@ -103,10 +104,10 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
               itemCount: ListProductionHistory!.length,
               itemBuilder: (context,int index) {
                 if(ListProductionHistory[index].PRODUCTION_DATE.toString().isNotEmpty) {
-                  dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+                  dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
                       ListProductionHistory[index].PRODUCTION_DATE.toString());
                   _production_date =
-                      DateFormat('dd/MM/yyyy h:mm a').format(
+                      DateFormat('dd/MM/yyyy hh:mm a').format(
                           dt1);
                 }
                 else
@@ -114,10 +115,10 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
                   _production_date ='';
                 }
                 if(ListProductionHistory[index].LAST_UPDATE.toString().isNotEmpty) {
-                  dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+                  dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
                       ListProductionHistory[index].LAST_UPDATE.toString());
                   _last_update =
-                      DateFormat('dd/MM/yyyy h:mm a').format(
+                      DateFormat('dd/MM/yyyy hh:mm a').format(
                           dt1);
                 }
                 else
@@ -161,6 +162,8 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
                           (context) => ProductionHistoryDetailPage(item: ListProductionHistory[index])),
                     );
                   },
+                  trailing: Icon(Icons.arrow_forward_ios),
+
 
                 );
               },

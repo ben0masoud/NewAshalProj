@@ -27,8 +27,9 @@ class GcGonnectionHistoryPage extends StatefulWidget {
   final Well? item_well;
   List<String>? userPrivilege;
   final String? user;
+  List<Well>? wells;
 
-  GcGonnectionHistoryPage({Key? key,this.item_uwi,this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
+  GcGonnectionHistoryPage({Key? key,this.item_uwi,this.item_well_completion,this.item_well,this.userPrivilege,this.user,this.wells}) : super(key: key);
 
   //String? _itemWell_completion = item_well_completion;
   @override
@@ -89,15 +90,6 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
     slote_comp_list = results!.cast<SlotCompConnection?>().toList();
 
     setState(() {
-
-    //  gc_comp_list = results[0]!.cast<GcCompConnection?>().toList();
-    //  header_comp_list = results[1]!.cast<HeaderCompConnection?>().toList();
-    //  slote_comp_list = results[2]!.cast<SlotCompConnection?>().toList();
-     // print(gc_comp_list);
-     // print(header_comp_list);
-     // print(slote_comp_list);
-
-
       screens = [
         GcCompConnectionPage(
           gc_comp_list: gc_comp_list, gc_header_slot: 'GC',),
@@ -166,13 +158,13 @@ class _GcGonnectionHistoryPageState extends State<GcGonnectionHistoryPage> {
             ],
           ),
           onTap: () {
-            //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).popUntil(ModalRoute.withName("wellcompletionlist"));
+            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page'),),);
           },
         ),
       ),
       //drawer: NavBar(),
-      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user,wells: widget.wells,),
 
       body: screens[selectedPage],
       bottomNavigationBar: BottomNavigationBar(

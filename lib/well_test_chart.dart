@@ -1,51 +1,60 @@
 
-import 'package:ashal_ver_3/pages/charts/flow_line_pressure_chart_page.dart';
-import 'package:ashal_ver_3/pages/charts/gor_chart_page.dart';
-import 'package:ashal_ver_3/pages/charts/liquid_rate_chart_page.dart';
-import 'package:ashal_ver_3/pages/charts/wc_chart_page.dart';
-import 'package:ashal_ver_3/pages/charts/whp_chart_page.dart';
-import 'package:ashal_ver_3/services/body_post_json.dart';
-import 'package:ashal_ver_3/services/fetchDataApi.dart';
+// import 'package:ashal_ver_3/pages/charts/flow_line_pressure_chart_page.dart';
+// import 'package:ashal_ver_3/pages/charts/gor_chart_page.dart';
+// import 'package:ashal_ver_3/pages/charts/liquid_rate_chart_page.dart';
+// import 'package:ashal_ver_3/pages/charts/wc_chart_page.dart';
+// import 'package:ashal_ver_3/pages/charts/whp_chart_page.dart';
+// import 'package:ashal_ver_3/services/body_post_json.dart';
+// import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 //import 'package:ashal_ver_3/services/wellOperationStatus.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
-import 'package:ashal_ver_3/services/wph_test.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
+import 'package:ashal_ver_3/show_chart_page.dart';
+// import 'package:ashal_ver_3/services/wph_test.dart';
+// import 'package:ashal_ver_3/well_complition_list_page.dart';
+import 'package:ashal_ver_3/widgets/container_chart.dart';
 //import 'package:ashal_ver_3/well_test_chart_page.dart';
 //import 'package:ashal_ver_3/services/wph_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:fl_chart/fl_chart.dart';
-
-import 'NavBar.dart';
-import 'constant_values.dart';
-import 'main.dart';
+// import 'package:fl_chart/fl_chart.dart';
+//
+// import 'NavBar.dart';
+// import 'constant_values.dart';
+// import 'main.dart';
 
 class WellTestChart extends StatefulWidget {
-  final String? item_uwi;
-  final String? item_well_completion;
   final Well? item_well;
-  List<String>? userPrivilege;
-  final String? user;
+  final List<WellTest>? ListWellTestHistory;
+  final List<WellTest>? ListWCTestHistory;
+  final List<WellTest>? ListLQRateTestHistory;
+  final List<WellTest>? ListFLPTestHistory;
+  final List<WellTest>? ListWHPTestHistory;
+  final List<WellTest>? ListPressureTestHistory;
 
-   WellTestChart({Key? key, this.item_uwi,this.item_well_completion,this.item_well, this.userPrivilege,this.user}) : super(key: key);
+   WellTestChart({Key? key, this.item_well,this.ListWellTestHistory,this.ListWCTestHistory,this.ListLQRateTestHistory,this.ListFLPTestHistory,this.ListWHPTestHistory,this.ListPressureTestHistory}) : super(key: key);
 
   @override
   State<WellTestChart> createState() => _WellTestChartState();
 }
 
 class _WellTestChartState extends State<WellTestChart> {
-  @override
-
-  late int selectedPage=0;
+ // late int selectedPage=0;
   bool isLoad = false;
   List<WellTest>? results;
 
-  late List screens;
+//  late List screens;
+  late List<TestData> liquid_rate_list;
+  late List<TestData> wc_list;
+  late List<TestData> gor_list;
+  late List<TestData> flow_line_pressure_list;
+  late List<TestData> well_head_pressure_list;
+  late List<TestData> pressure_list;
 
-  FetchDataApi fetchApi = FetchDataApi();
+
+  //FetchDataApi fetchApi = FetchDataApi();
 
 //  List<WellTest>? ListWellTestHistory;
 // List<WHPTest>? WHPList;
@@ -57,17 +66,18 @@ class _WellTestChartState extends State<WellTestChart> {
 
   initState(){
    // MidP=widget.whpList![(widget.whpList!.length/2).toInt()].date!.millisecondsSinceEpoch.toDouble();
-    screens=[];
-    selectedPage=0;
+  //  screens=[];
+ //   selectedPage=0;
     isLoad = false;
     _fetchData();
 
     super.initState();
   }
 
-  Future _fetchData() async {
+   _fetchData()  {
 
-    FetchDataApi fetchApi = FetchDataApi();
+  /*
+  FetchDataApi fetchApi = FetchDataApi();
     BodyPost wellPostBody = BodyPost();
     wellPostBody.user = widget.user;
     wellPostBody.whereCondition = "WELL_COMPLETION_S='${widget.item_well_completion}' AND ACTIVITY_NAME='PORTABLE' AND PREFFERED_FLAG='Y' and FLOW_LINE_PRESSURE is not null and TOTAL_GOR is not null and LIQUID_RATE is not null and WC is not null and WHP is not null";
@@ -79,45 +89,122 @@ class _WellTestChartState extends State<WellTestChart> {
     results = await fetchApi.fetchWellTestPost(wellPostBody);
 
     List<WellTest>? ListWellTestHistory = results;// as List<WellTest>?;
-    List<WHPTest>? WHPList = [];
-    List<FlSpot> _whp_Spots = [];
-    List<FlSpot> _liquid_rate_Spots = [];
-    List<FlSpot> _wc_Spots = [];
-    List<FlSpot> _gor_Spots = [];
-    List<FlSpot> _flow_line_pressure_Spots = [];
+    */
+   // List<WHPTest>? WHPList = [];
+ //   List<FlSpot> _whp_Spots = [];
+ //   List<FlSpot> _liquid_rate_Spots = [];
+ //   List<FlSpot> _wc_Spots = [];
+//    List<FlSpot> _gor_Spots = [];
+ //   List<FlSpot> _flow_line_pressure_Spots = [];
+   // List<TestData> wc_list = [];
+
+    liquid_rate_list = [];
+    wc_list = [];
+    gor_list = [];
+    flow_line_pressure_list = [];
+    well_head_pressure_list = [];
+    pressure_list = [];
 
     DateTime dt;
     double w;
     // int i = 0;
     //   double minY = double.maxFinite;
     //   double maxY = double.minPositive;
-    List<WellTest>? ListWellHistoryRev = ListWellTestHistory!.reversed.toList();
-    ListWellHistoryRev.forEach((e) {
-      if(e.START_TIME.toString().isNotEmpty)
-          dt = DateFormat('MM/dd/yyyy hh:mm').parse(e.START_TIME.toString());
-      else
-        dt=DateFormat('MM/dd/yyyy hh:mm').parse(DateTime.now().toString());
-
-      print(dt);
-      if(e.WHP.toString().isNotEmpty) {
-        w = double.parse(e.WHP.toString());
-        WHPList.add(WHPTest(date: dt, WHP: w));
-        _whp_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), w));
+    List<WellTest>? ListWellHistoryRev = widget.ListWellTestHistory!.reversed.toList();
+    List<WellTest>? ListWCHistoryRev = widget.ListWCTestHistory!.reversed.toList();
+    List<WellTest>? ListLQRateTestHistoryRev = widget.ListLQRateTestHistory!.reversed.toList();
+    List<WellTest>? ListFLPTestHistoryRev = widget.ListFLPTestHistory!.reversed.toList();
+    List<WellTest>? ListWHPTestHistoryRev = widget.ListWHPTestHistory!.reversed.toList();
+    List<WellTest>? ListPressureTestHistoryRev = widget.ListPressureTestHistory!.reversed.toList();
+    ListWCHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.WC.toString().isNotEmpty))
+      {
+                dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+                //_wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+                wc_list.add(TestData(date: dt, value: double.parse(e.WC.toString()))
+      );
       }
-      if(e.LIQUID_RATE.toString().isNotEmpty) _liquid_rate_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.LIQUID_RATE.toString())));
-      if(e.WC.toString().isNotEmpty) _wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
-      if(e.TOTAL_GOR.toString().isNotEmpty) _gor_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.TOTAL_GOR.toString())));
-      if(e.FLOW_LINE_PRESSURE.toString().isNotEmpty) _flow_line_pressure_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.FLOW_LINE_PRESSURE.toString())));
+
+    });
+    ListLQRateTestHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.LIQUID_RATE.toString().isNotEmpty) ) {
+        dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+        //_wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+        liquid_rate_list.add(
+            TestData(date: dt, value: double.parse(e.LIQUID_RATE.toString()))
+        );
+      }
+
+    });
+    ListFLPTestHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.FLOW_LINE_PRESSURE.toString().isNotEmpty))
+        {
+            dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+            //_wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+            flow_line_pressure_list.add(TestData(date: dt, value: double.parse(e.FLOW_LINE_PRESSURE.toString())));
+      }
+
+    });
+    ListWHPTestHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.WHP.toString().isNotEmpty))
+      {
+        dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+        //_wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+        well_head_pressure_list.add(
+            TestData(date: dt, value: double.parse(e.WHP.toString()))
+        );
+      }
+
+    });
+    ListPressureTestHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.FLOW_LINE_PRESSURE.toString().isNotEmpty) && (e.WHP.toString().isNotEmpty))
+      {
+        dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+        //_wc_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.WC.toString())));
+        pressure_list.add(
+            TestData(
+                date:dt,
+                value: double.parse(e.FLOW_LINE_PRESSURE.toString()),
+                value1: double.parse(e.WHP.toString())
+            )
+        );
+
+      }
+
+    });
+    ListWellHistoryRev.forEach((e) {
+      if ((e.START_TIME
+          .toString()
+          .isNotEmpty) && (e.TOTAL_GOR.toString().isNotEmpty))
+      {
+          dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(e.START_TIME.toString());
+        //_gor_Spots.add(FlSpot(dt.millisecondsSinceEpoch.toDouble(), double.parse(e.TOTAL_GOR.toString())));
+        gor_list.add(
+            TestData(date: dt, value: double.parse(e.TOTAL_GOR.toString()))
+        );
+      }
+
+
     });
     setState(() {
-      screens = [
+     /* screens = [
         WHPChartPage(WHPSpot: _whp_Spots),
         WCChartPage(WCSpots: _wc_Spots),
         LiquidRateChartPage(LQRateSpots: _liquid_rate_Spots),
         GORChartPage(GORSpots: _gor_Spots),
         FlowLinePressureChartPage(FLPSpots: _flow_line_pressure_Spots)
 
-      ];
+      ];*/
       isLoad = true;
     });
 
@@ -125,75 +212,64 @@ class _WellTestChartState extends State<WellTestChart> {
   Scaffold NotEmptyPage() {
 
     return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GestureDetector(
+                child: ContainerChart(test: liquid_rate_list,more: false,title: 'Liquid Rate Test'),
+                onTap: (){
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ShowChartPage(list: liquid_rate_list,more: false,title: 'Liquid Rate Test',),
+                          settings: RouteSettings(name: "ShowChartPage")
+                      ));
 
-      appBar: AppBar(
-        backgroundColor: ConstantValues.MainColor1,
-        iconTheme: IconThemeData(color: Colors.blue),
-        title: Center(
-            child: Column(
-              children: [
-                Text('Well Chart',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                Text('${widget.item_uwi} ${widget.item_well!.FACILITY_NAME} - ${widget.item_well!.FACILITY_ID}',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            )),
-        leadingWidth: 75.w,
-        leading: GestureDetector(
-          child: Row(
-            children: [
-              Icon(Icons.arrow_back_ios_outlined,color: Colors.blue,),
-              Text("Wells",style: TextStyle(fontSize: 15.sp,color: Colors.blue),),
-            ],
-          ),
-          onTap: () {
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
-            //Navigator.of(context).popUntil(ModalRoute.withName('wellcompletionlist'));
-          },
-        ),
-      ),
-      endDrawer: NavBar(uwi: widget.item_well!.UWI,well_completion: widget.item_well!.WELL_COMPLETION_S,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
-      // endDrawer: NavBar(),
-      body: screens[selectedPage],
-      bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.compress_outlined), label: 'WHP'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.water_drop_outlined),
-                label: 'WC'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.water),
-                label: 'LQ'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.oil_barrel_outlined), label: 'GOR'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.line_axis_rounded),
-                label: 'FLP'),
+                },
+            ),
+            GestureDetector(
+              child: ContainerChart(test: wc_list,more: false,title: 'Water Cut Test'),
+              onTap: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ShowChartPage(list: wc_list,more: false,title: 'Water Cut Test',),
+                        settings: RouteSettings(name: "ShowChartPage")
+                    ));
 
+              },
+            ),
+            GestureDetector(
+              child: ContainerChart(test:  gor_list,more: false,title: 'GOR Test'),
+              onTap: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ShowChartPage(list:  gor_list,more: false,title: 'GOR Test'),
+                        settings: RouteSettings(name: "ShowChartPage")
+                    ));
 
+              },
+            ),
+            GestureDetector(
+              child: ContainerChart(test: pressure_list,more: true,title: 'Pressure Test'),
+              onTap: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ShowChartPage(list: pressure_list,more: true,title: 'Pressure Test'),
+                        settings: RouteSettings(name: "ShowChartPage")
+                    ));
+
+              },
+            ),
+           // ContainerChart(test: wc_list,title: 'Water Cut Test'),
+           // ContainerChart(test: gor_list,title: 'GOR Test'),
+           // ContainerChart(test: flow_line_pressure_list,title: 'Flow Line Pressure Test'),
           ],
-          selectedItemColor: Colors.green,
-          elevation: 5.0,
-          unselectedItemColor: Colors.green[900],
-          currentIndex: selectedPage,
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            setState(() {
-              //print('index = $index');
-              selectedPage = index;
-            });
-          }
-      ),
+        ),
+      )
+
     );
   }
   Scaffold IsEmptyPage() {

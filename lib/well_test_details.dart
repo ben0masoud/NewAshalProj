@@ -28,8 +28,8 @@ class WellTestDetails extends StatelessWidget {
     print('pressed');
     if(ListWellTest.LAST_UPDATE.toString().isNotEmpty)
       {
-         dt3 = DateFormat('MM/dd/yyyy hh:mm').parse(ListWellTest.LAST_UPDATE.toString());
-         _last_update = DateFormat('dd/MM/yyyy h:mm a').format(dt3);
+         dt3 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(ListWellTest.LAST_UPDATE.toString());
+         _last_update = DateFormat('dd/MM/yyyy hh:mm a').format(dt3);
       }
 
     return Scaffold(

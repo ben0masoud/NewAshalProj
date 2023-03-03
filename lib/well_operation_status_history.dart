@@ -24,8 +24,9 @@ class WellOperationStatusHistory_Page extends StatefulWidget {
   Well? item_well;
   List<String>? userPrivilege;
   String? user;
+  List<Well>? wells;
 
-  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user}) : super(key: key);
+  WellOperationStatusHistory_Page({Key? key, required this.item_uwi, required this.item_well_completion,this.item_well,this.userPrivilege,this.user,this.wells}) : super(key: key);
 
   @override
   State<WellOperationStatusHistory_Page> createState() => _WellOperationStatusHistory_PageState();
@@ -95,13 +96,13 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
             ],
           ),
           onTap: () {
-            //Navigator.of(context).popUntil(ModalRoute.withName("/home"));
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).popUntil(ModalRoute.withName('wellcompletionlist'));
+            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
           },
         ),
       ),
       //drawer: NavBar(),
-      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user),
+      endDrawer: NavBar(uwi: widget.item_uwi,well_completion: widget.item_well_completion,my_well: widget.item_well,userPrivilege: widget.userPrivilege,user:widget.user,wells: widget.wells,),
       body: Container(
         child: FutureBuilder(
           future: fetchApi.fetchWellOperationStatusPost(wellPostBody),//fetchApi.fetchWellTest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'"),
@@ -137,9 +138,9 @@ class _WellOperationStatusHistory_PageState extends State<WellOperationStatusHis
                       itemCount: ListWellOperationStatusHistory!.length,
                       itemBuilder: (context, int index) {
                         // print(ListWellOperationStatusHistory[index].START_TIME!);
-                        DateTime dt = DateFormat('MM/dd/yyyy hh:mm').parse(
+                        DateTime dt = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
                             ListWellOperationStatusHistory[index].START_TIME!);
-                        String _star_time = DateFormat('dd/MM/yyyy h:mm a')
+                        String _star_time = DateFormat('dd/MM/yyyy hh:mm a')
                             .format(dt);
                         if (index == 0) {
                           FirstStatusDate = _star_time;

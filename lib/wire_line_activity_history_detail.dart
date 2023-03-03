@@ -32,8 +32,8 @@ class _WireLineActivityHistoryDetialPageState extends State<WireLineActivityHist
 
     //double Myheight =  MediaQuery.of(context).size.height / 9 ;
 
-    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(widget.item!.START_TIME.toString());
-    String _start_time = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+    DateTime dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(widget.item!.START_TIME.toString());
+    String _start_time = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
 
     return Scaffold(
       appBar: AppBar(

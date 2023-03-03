@@ -29,14 +29,14 @@ class _WellBorePageState extends State<WellBorePage> {
     DateTime dt2;
     String _completion_date = "";
     if(widget.item!.SPUD_DATE != "") {
-      dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(
+      dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
           widget.item!.SPUD_DATE.toString());
-      _spud_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+      _spud_date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
     }
     if(widget.item!.COMPLETION_DATE != "") {
-       dt2 = DateFormat('MM/dd/yyyy hh:mm').parse(
+       dt2 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(
           widget.item!.COMPLETION_DATE.toString());
-       _completion_date = DateFormat('dd/MM/yyyy h:mm a').format(dt2);
+       _completion_date = DateFormat('dd/MM/yyyy hh:mm a').format(dt2);
     }
 
     print("well bore page UWI  = "+widget.item!.UWI.toString());

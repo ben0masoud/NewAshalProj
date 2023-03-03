@@ -53,7 +53,7 @@ class _SAreaState extends State<SArea> {
 
                         Navigator.push(context,
                           MaterialPageRoute(
-                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,user: widget.user,),
+                            builder: (context) => WellPage(item: wellsSearch![index],userPrivilege: widget.userPrivilege,user: widget.user,wells: wellsSearch),
                             settings: RouteSettings(name: "Well_Page"),
 
                           ),

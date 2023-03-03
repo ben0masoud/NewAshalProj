@@ -26,8 +26,8 @@ class _WellProductionPageState extends State<WellProductionPage> {
     DateTime dt1;
     String _production_date = "";
     if(widget.item!.PRODUCTION_DATE != "") {
-      dt1 = DateFormat('MM/dd/yyyy hh:mm').parse(widget.item!.PRODUCTION_DATE.toString());
-      _production_date = DateFormat('dd/MM/yyyy h:mm a').format(dt1);
+      dt1 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(widget.item!.PRODUCTION_DATE.toString());
+      _production_date = DateFormat('dd/MM/yyyy hh:mm a').format(dt1);
     }
     return Scaffold(
       body: SingleChildScrollView(
