@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'constant_values.dart';
-import 'info_Container.dart';
+import '../../services/constant_values.dart';
+import '../../widgets/info_Container.dart';
 
 class WireLineActivityHistoryDetialPage extends StatefulWidget {
   WirelineActivity? item;

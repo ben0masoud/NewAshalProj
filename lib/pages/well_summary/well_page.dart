@@ -7,15 +7,15 @@ import 'package:ashal_ver_3/services/wellLatest.dart';
 import 'package:ashal_ver_3/services/wellOperationStatus.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 import 'package:ashal_ver_3/services/wirelineActivity.dart';
-import 'package:ashal_ver_3/wellBore_page.dart';
-import 'package:ashal_ver_3/wellOperationStatus_page.dart';
-import 'package:ashal_ver_3/wellProduction_page.dart';
-import 'package:ashal_ver_3/wellTest_page.dart';
-import 'package:ashal_ver_3/well_completion_detial_page.dart';
-import 'package:ashal_ver_3/well_gc_connection_page.dart';
-import 'package:ashal_ver_3/well_location.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
-import 'package:ashal_ver_3/wirelineActivity_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/wellBore_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/wellOperationStatus_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/wellProduction_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/wellTest_page.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_completion_detial_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/well_gc_connection_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/well_location.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/well_summary/wirelineActivity_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
@@ -24,9 +24,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'NavBar.dart';
-import 'constant_values.dart';
-import 'main.dart';
+import '../../services/NavBar.dart';
+import '../../services/constant_values.dart';
+import '../../main.dart';
 
 class WellPage extends StatefulWidget {
   Well? item;
@@ -95,25 +95,11 @@ class _WellPageState extends State<WellPage> {
     await fetchApi.fetchWellLatestPost(wellPostBody) as List<WellLatest?>;
     //'' well_latest = await fetchApi.fetchWellLatest("::WELL_COMPLETION_S='"+widget.item!.WELL_COMPLETION_S.toString()+"'") as List<WellLatest?>;
     wellLatest = await well_latest[0];
-    //BodyPost wellPostBody = BodyPost();
-    // wellPostBody.user = widget.user;
-    /*
-    wellPostBody.whereCondition = "RESERVOIR_ID='${widget.item!.RESERVOIR_ID}'";
-    AllWellsInReservoir =
-    await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
-    wellPostBody.whereCondition = "FIELD='${widget.item!.FIELD}'";
-    AllWellsInField = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
-    wellPostBody.whereCondition = "AREA='${widget.item!.AREA}'";
-    AllWellsInArea = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;*/
-    //print(well_latest);
+
     setState(() {
-      // well_latest = results[0]!.cast<WellLatest?>().toList(); //as  Future<List<WellLatest>?>;
-      //wellLatest =  well_latest[0];
       showLoading = true;
     });
-    //  setState(() {
-    //    _showLoading = false;
-    //  });
+
   }
 
   void _showDialog(Widget child) {
@@ -196,102 +182,47 @@ class _WellPageState extends State<WellPage> {
               user: widget.user,
               wells: widget.wells,
           ),
-          body: Center(
-            child: Container(
-              //color: Colors.red,
-              child: Column(
-                children: [
-                  Container(
-                    height: 250.h,
-                    width: double.infinity,
-                    child: AboveContentWell(),
-                  ),
-                  Container(
-                    height: 300.h,
-                    width: double.infinity,
-                    child: BelowContentWell(),
-                  ),
-                  Container(
-                    height: 20.h,
-                    width: double.infinity,
-                    child: Center(
-                      child: SmoothPageIndicator(
-                        controller: controller,
-                        count: 7,
-                        effect: SwapEffect(
-                          activeDotColor: Colors.deepPurple,
-                          dotColor: Colors.deepPurple.shade100,
-                          //dotHeight: 15,
-                          //dotWidth: 15,
-                          //spacing: 8
+          body: RefreshIndicator(
+            onRefresh: _fetchDara,
+            child: Center(
+              child: Container(
+                //color: Colors.red,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 250.h,
+                      width: double.infinity,
+                      child: AboveContentWell(),
+                    ),
+                    Container(
+                      height: 300.h,
+                      width: double.infinity,
+                      child: BelowContentWell(),
+                    ),
+                    Container(
+                      height: 20.h,
+                      width: double.infinity,
+                      child: Center(
+                        child: SmoothPageIndicator(
+                          controller: controller,
+                          count: 7,
+                          effect: SwapEffect(
+                            activeDotColor: Colors.deepPurple,
+                            dotColor: Colors.deepPurple.shade100,
+                            //dotHeight: 15,
+                            //dotWidth: 15,
+                            //spacing: 8
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
         ),
       );
-    /*ScreenUtilInit(
-      designSize: Size(360,640),
-      builder: (child) => Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text(widget.item!.UWI.toString())),
-          leadingWidth: 75,
-          leading: GestureDetector(
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back_ios_outlined),
-                Text("Wells",style: TextStyle(fontSize: 20),),
-              ],
-            ),
-            onTap: () {
-                  Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>MyHomePage(title: 'Flutter Demo Home Page')));
-        },
-          ),
-        ),
-        endDrawer: NavBar(uwi: widget.item!.UWI,well_completion: widget.item!.WELL_COMPLETION_S,my_well: widget.item,),
-        body: Center(
-          child: Container(
-            //color: Colors.red,
-            child: Column(
-              children: [
-                Expanded(
-
-                  flex: 45,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                      child: AboveContentWell()
-                  ),
-                ),
-                Expanded(
-                  flex: 50,
-                    child: (wellLatest == null )
-                        ?  SpinKitCircle(size: 140,color: Colors.deepPurple,)// CircularProgressIndicator()
-                        : BelowContentWell(),
-                  ),
-                Expanded(
-                    flex: 5,
-                    child: SmoothPageIndicator(
-                      controller: controller,
-                      count: 5,
-                      effect: SwapEffect(
-                        activeDotColor: Colors.deepPurple,
-                        dotColor: Colors.deepPurple.shade100,
-                        //dotHeight: 15,
-                        //dotWidth: 15,
-                        //spacing: 8
-                      ),
-                    ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );*/
 
   }
 

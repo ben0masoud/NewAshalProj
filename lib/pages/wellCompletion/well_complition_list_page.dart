@@ -3,15 +3,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'constant_values.dart';
-import 'pages/wellCompletion/all_area.dart';
-import 'pages/wellCompletion/n_area.dart';
-import 'pages/wellCompletion/o_area.dart';
-import 'pages/wellCompletion/s_area.dart';
-import 'pages/wellCompletion/w_area.dart';
-import 'services/body_post_json.dart';
-import 'services/fetchDataApi.dart';
-import 'services/well.dart';
+import '../../services/constant_values.dart';
+import 'all_area.dart';
+import 'n_area.dart';
+import 'o_area.dart';
+import 's_area.dart';
+import 'w_area.dart';
+import '../../services/body_post_json.dart';
+import '../../services/fetchDataApi.dart';
+import '../../services/well.dart';
 
 class WellCompletionListPage extends StatefulWidget {
    WellCompletionListPage({Key? key, required this.title,this.user, this.profile,this.AshalAccess,this.Gc,this.Area}) : super(key: key);
@@ -39,31 +39,33 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
   late List screens;
   late int selectedPage = 0;
   bool isLoad=false;
+  FetchDataApi fetchApi = FetchDataApi();
+  BodyPost wellPostBody = BodyPost();
 
   @override
   void initState() {
-    AllWells = [];
-    nkData = [];
-    wkData = [];
-    screens = [];
-    selectedPage = 0;
-    super.initState();
-    wellsSearch = wells;
-    setState(() {
-      isLoad=false;
-    });
-    fetchWellCompletion(widget.profile!, widget.Area!,widget.user!);
+
+    fetchWellCompletion();
 
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);
   //FetchDataApi fetchApi = FetchDataApi();
 
-  Future fetchWellCompletion(String prof, String access,String user) async {
-    FetchDataApi fetchApi = FetchDataApi();
+  Future fetchWellCompletion() async {
 
-    BodyPost wellPostBody = BodyPost();
-    wellPostBody.user =user;
+    AllWells = [];
+    nkData = [];
+    wkData = [];
+    screens = [];
+    selectedPage = 0;
+    wellsSearch = wells;
+    setState(() {
+      isLoad=false;
+    });
+
+
+    wellPostBody.user =widget.user!;
     wellPostBody.orderBy = "UWI";
     // AllWells = await fetchApi.fetchWellPost(wellPostBody);
 
@@ -71,24 +73,24 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
     try {
       // print('the response is '+response.statusCode.toString());
       AllWells!.clear();
-      if (prof.toUpperCase() == 'wellcompletionlist'.toUpperCase()) {
-        if (access == 'ALL AREA') {
+      if (widget.profile!.toUpperCase() == 'wellcompletionlist'.toUpperCase()) {
+        if (widget.Area! == 'ALL AREA') {
           //AllWells = await fetchApi.fetchWell('') as List<Well>?;
 
           AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
         } else {
-          wellPostBody.whereCondition = "AREA='${access}'";
+          wellPostBody.whereCondition = "AREA='${widget.Area!}'";
           AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
           //AllWells = await fetchApi.fetchWell("::AREA='${access}'") as List<Well>?;
         }
-      } else if(prof.toUpperCase() =='gcList'.toUpperCase())
+      } else if(widget.profile!.toUpperCase() =='gcList'.toUpperCase())
       {
-        if (access.toUpperCase() == 'ALL AREA'.toUpperCase()) {
+        if (widget.Area!.toUpperCase() == 'ALL AREA'.toUpperCase()) {
           wellPostBody.whereCondition = "GC='${widget.Gc}'";
           AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
           //AllWells = await fetchApi.fetchWell("::GC='${widget.Gc}'") as List<Well>?;
         } else {
-          wellPostBody.whereCondition = "AREA='${access}' AND GC='${widget.Gc}'";
+          wellPostBody.whereCondition = "AREA='${widget.Area!}' AND GC='${widget.Gc}'";
           AllWells = await fetchApi.fetchWellPost(wellPostBody) as List<Well>?;
           //   AllWells = await fetchApi.fetchWell("::AREA='${access}' AND GC='${widget.Gc}'") as List<Well>?;
         }
@@ -102,14 +104,14 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
 
           selectedPage = 0;
           //  print('AllWells = ${AllWells!.length}');
-          nkData = AllWells!.where((e) => e.AREA == "NK").toList();
+          nkData = AllWells!.where((e) => e.ACTUAL_AREA == "NK").toList();
           //  print('nkData = ${nkData!.length}');
-          wkData = AllWells!.where((e) => e.AREA == "WK").toList();
+          wkData = AllWells!.where((e) => e.ACTUAL_AREA == "WK").toList();
           //  print('wkData = ${wkData!.length}');
-          skData = AllWells!.where((e) => e.AREA == "SK").toList();
+          skData = AllWells!.where((e) => e.ACTUAL_AREA == "SEK").toList();
           //  print('skData = ${skData!.length}');
           otherData = AllWells!
-              .where((e) => e.AREA != "SK" && e.AREA != "WK" && e.AREA != "NK")
+              .where((e) => e.ACTUAL_AREA != "SEK" && e.ACTUAL_AREA != "WK" && e.ACTUAL_AREA != "NK")
               .toList();
           // print('otherData = ${otherData!.length}');
 
@@ -162,7 +164,10 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
         ),
 
         body: isLoad
-            ? screens[selectedPage]
+            ? RefreshIndicator(
+            child: screens[selectedPage],
+            onRefresh: fetchWellCompletion
+        )
             : Center(child: CircularProgressIndicator()),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPage,
@@ -210,7 +215,7 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
 
             ),
             BottomNavigationBarItem(
-              label: 'SK',
+              label: 'SEK',
               icon: buildCustomBadget(
                 counter: skData!.length,
                 child:  ImageIcon(
@@ -220,7 +225,7 @@ class _WellCompletionListPageState extends State<WellCompletionListPage> {
               ), //Icon(Icons.favorite),
             ),
             BottomNavigationBarItem(
-              label: otherData!.length.toString(),
+              label: "Other",//Data!.length.toString(),
               icon: buildCustomBadget(
                 counter: otherData!.length,
                 child:  ImageIcon(

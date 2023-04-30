@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../constant_values.dart';
+import '../../services/constant_values.dart';
 import '../../main.dart';
 import '../../services/production_facility.dart';
 import '../../widgets/search_widget.dart';
-import '../../well_complition_list_page.dart';
+import '../wellCompletion/well_complition_list_page.dart';
 
 class NAreaGCs extends StatefulWidget {
   const NAreaGCs({Key? key,this.gcList,this.profile,this.AshalAccess,this.Area,this.user}) : super(key: key);

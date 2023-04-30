@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../NavBar.dart';
+import '../services/NavBar.dart';
 import '../services/fetchDataApi.dart';
 import '../services/gc_comp_connection.dart';
 import '../services/well.dart';

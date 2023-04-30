@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 
 class Page2 extends StatefulWidget {
@@ -15,3 +16,4 @@ class _Page2State extends State<Page2> {
     );
   }
 }
+*/

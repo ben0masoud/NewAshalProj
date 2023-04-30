@@ -1,19 +1,19 @@
 
 
-import 'package:ashal_ver_3/page1.dart';
-import 'package:ashal_ver_3/page2.dart';
+import 'package:ashal_ver_3/unused_files/page1.dart';
+import 'package:ashal_ver_3/unused_files/page2.dart';
 import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
-import 'package:ashal_ver_3/well_test_chart.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'AllWellTestHistory_Page.dart';
-import 'NavBar.dart';
-import 'constant_values.dart';
+import '../wire_line_activity/AllWellTestHistory_Page.dart';
+import '../../services/NavBar.dart';
+import '../../services/constant_values.dart';
 
 class WellTestAndChartPage extends StatefulWidget {
 
@@ -156,8 +156,8 @@ class _WellTestAndChartPageState extends State<WellTestAndChartPage> {
             ],
           ),
           onTap: () {
-            Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
-            //Navigator.of(context).popUntil(ModalRoute.withName("/"));
+            //Navigator.of(context).pop(MaterialPageRoute(builder: (context)=>WellCompletionListPage(title: 'Flutter Demo Home Page')));
+           // Navigator.of(context).popUntil(ModalRoute.withName("/"));
           },
         ),
         actions: [

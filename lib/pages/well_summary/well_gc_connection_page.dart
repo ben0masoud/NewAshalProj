@@ -21,6 +21,15 @@ class WellGcConnectionPage extends StatefulWidget {
 class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
   @override
   Widget build(BuildContext context) {
+
+    Color titleBackgroundColor = Colors.white;
+    Color titleTextColor = Colors.black;
+    Color titleBorderColor = Colors.black;
+
+    Color valueBackgroundColor = Colors.white;
+    Color valueTextColor = Colors.black;
+    Color valueBorderColor = Colors.black;
+
    // print("well op status page UWI  = "+widget.item!.UWI.toString());
     DateTime dt1;
     String _gc_conn_date = "";
@@ -68,10 +77,10 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                 color:  Color(0xffaabbd5), //Colors.grey,
                 child: Column(
                   children: [
-                    GcConnCard('GC',widget.item!.GC!,_gc_conn_date!),
+                    GcConnCard('GC',widget.item!.GC!,_gc_conn_date!,titleBackgroundColor,valueBackgroundColor),
                     SizedBox(height: 0.002.sh,),
-                    GcConnCard('HEADER',widget.item!.HEADER!,_header_conn_date!),
-                    GcConnCard('SLOT',widget.item!.SLOT!,_slot_conn_date!),
+                    GcConnCard('HEADER',widget.item!.HEADER!,_header_conn_date!,titleBackgroundColor,valueBackgroundColor),
+                    GcConnCard('SLOT',widget.item!.SLOT!,_slot_conn_date!,titleBackgroundColor,valueBackgroundColor),
                     SizedBox(height: 0.002.sh,),
 
                   ],
@@ -83,7 +92,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
       ),
     );
   }
-  Widget GcConnCard(String? gc_title,String? gc_name,String? conn_date) {
+  Widget GcConnCard(String? gc_title,String? gc_name,String? conn_date,Color title,Color value) {
 
     /*if(conn_date!.isNotEmpty) {
       DateTime? dt3 = DateFormat('MM/dd/yyyy hh:mm:ss a').parse(conn_date!);
@@ -100,7 +109,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
           borderColor: Colors.black,
           borderWidth: 1,
           radius: 5.r,
-          color: Colors.white,
+          color: title,
         ),
         //CustomText(text: gc_title!,size: 20.sp,color: Colors.blue,fontwdth: FontWeight.bold,textAlign: TextAlign.right,),
         SizedBox(width: 0.002.sw,),
@@ -114,7 +123,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
               borderColor: Colors.black,
               borderWidth: 1,
               radius: 5.r,
-              color: Colors.white,
+              color: value,
             ),
             SizedBox(height: 0.002.sh,),
             Row(
@@ -126,7 +135,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                   borderColor: Colors.black,
                   borderWidth: 1,
                   radius: 5.r,
-                  color: Colors.white,
+                  color: title,
                 ),
                 SizedBox(width: 0.007.sw,),
                 CustomContainer(
@@ -136,7 +145,7 @@ class _WellGcConnectionPageState extends State<WellGcConnectionPage> {
                   borderColor: Colors.black,
                   borderWidth: 1,
                   radius: 5.r,
-                  color: Colors.white,
+                  color: value,
                 ),
               ],
             ),

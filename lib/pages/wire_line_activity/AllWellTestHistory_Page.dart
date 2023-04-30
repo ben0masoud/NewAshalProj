@@ -1,7 +1,7 @@
-import 'package:ashal_ver_3/WellTest_Container.dart';
+import 'package:ashal_ver_3/pages/well_test/WellTest_Container.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
-import 'package:ashal_ver_3/well_test_details.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -24,6 +24,8 @@ class Well
   String? COMPLETION_OBJECTIVE;
   String? WELL_COMPLETION_S;
   String? LAST_UPDATE;
+  String? ASSET;
+  String? ACTUAL_AREA;
 
 
 
@@ -52,7 +54,9 @@ class Well
         this.END_TIME,
         this.COMPLETION_OBJECTIVE,
         this.WELL_COMPLETION_S,
-        this.LAST_UPDATE
+        this.LAST_UPDATE,
+        this.ASSET,
+        this.ACTUAL_AREA
 
       });
 
@@ -82,6 +86,8 @@ class Well
     this.COMPLETION_OBJECTIVE = json["COMPLETION_OBJECTIVE"];
     this.WELL_COMPLETION_S = json["WELL_COMPLETION_S"];
     this.LAST_UPDATE = json["LAST_UPDATE"];
+    this.ASSET = json["ASSET"];
+    this.ACTUAL_AREA = json["ACTUAL_AREA"];
 
   }
 

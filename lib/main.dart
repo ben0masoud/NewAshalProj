@@ -7,7 +7,7 @@ import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/custom_feedback.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/widgets/user_container.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path_provider/path_provider.dart';
-import 'gc_list_page.dart';
+import 'pages/gc_list/gc_list_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String getUser = (prefs.getString("user_name") ?? "Sign in");
-    final bool finish = (getUser.isEmpty);
+    final bool finish = getUser.isEmpty;
     setState(() {
       UserName =   getUser;
       doAction = finish;
@@ -388,9 +388,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return GestureDetector(
       onTap: (){
         setState(() {
-          doAction=true;
+          this.doAction=true;
+          login(true);
         });
-        login(true);
+
       },
       child: (this.doAction) ? CupertinoActivityIndicator(radius: 60,) : Text(this.UserName.split('@')[0],style: TextStyle(fontSize: 40,color: Colors.white),),
     );

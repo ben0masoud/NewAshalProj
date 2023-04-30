@@ -1,17 +1,17 @@
 //import 'package:ashal_ver_3/daysContainer.dart';
-import 'package:ashal_ver_3/production_history_detail_page.dart';
+import 'package:ashal_ver_3/pages/production/production_history_detail_page.dart';
 import 'package:ashal_ver_3/services/WellProduction.dart';
 import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'NavBar.dart';
-import 'constant_values.dart';
-import 'main.dart';
+import '../../services/NavBar.dart';
+import '../../services/constant_values.dart';
+import '../../main.dart';
 
 class ProductionHistoryPage extends StatefulWidget {
 
@@ -143,7 +143,7 @@ class _ProductionHistoryPageState extends State<ProductionHistoryPage> {
                   ),
                   title:  Row(
                     children: [
-                      Text("Started:",style: TextStyle(fontSize: 15.sp),),
+                      Text("Started:",style: TextStyle(fontSize: 13.sp),),
                       SizedBox(width: 0.005.sw,),
                       Text(_production_date,style: TextStyle(fontSize: 13.sp),),
                     ],

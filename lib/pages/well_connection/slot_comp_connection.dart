@@ -3,7 +3,7 @@ import 'package:ashal_ver_3/services/slot_comp_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'constant_values.dart';
+import '../../services/constant_values.dart';
 
 class SLotCompConnectionPage extends StatelessWidget {
   final List<SlotCompConnection?> slot_comp_list;
@@ -93,22 +93,27 @@ class SLotCompConnectionPage extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        children: [
-                          Text(
-                            _start_time,
-                            style:
-                            TextStyle(fontSize: 14, ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Column(
+                            children: [
+                              Text(
+                                _start_time,
+                                style:
+                                TextStyle(fontSize: 14, ),
+                              ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              Text(
+                                _end_time,
+                                style:
+                                TextStyle(fontSize: 14, ),
+                              ),
+                            ],
                           ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          Text(
-                            _end_time,
-                            style:
-                            TextStyle(fontSize: 14, ),
-                          ),
-                        ],
+                        ),
                       )
                     ],
                   ),

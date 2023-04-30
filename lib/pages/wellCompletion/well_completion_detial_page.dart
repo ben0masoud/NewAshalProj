@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'constant_values.dart';
+import '../../services/constant_values.dart';
 
 class WellCompletionDetailPage extends StatefulWidget {
    WellCompletionDetailPage({Key? key,this.item}) : super(key: key);
@@ -273,7 +273,7 @@ FourthRow(BuildContext context){
           SizedBox(height: 5,),
           DynamicContainer(h: 50, w: MediaQuery.of(context).size.width*0.9, title: 'Left Method', value: well_completion!.LIFT_METHOD.toString(),titleSize: 16.sp,valueSize: 16.sp,borderType: 0,matrixType: 'R',),
           SizedBox(height: 5,),
-          DynamicContainer(h: 50, w: MediaQuery.of(context).size.width*0.9, title: 'Allowable', value: well_completion!.ALLOWABLE.toString(),titleSize: 16.sp,valueSize: 16.sp,borderType: 0,matrixType: 'R',),
+          DynamicContainer(h: 50, w: MediaQuery.of(context).size.width*0.9, title: 'Allowable', value: (well_completion!.ALLOWABLE!.isNotEmpty) ? well_completion!.ALLOWABLE!+' BBL' : '',titleSize: 16.sp,valueSize: 16.sp,borderType: 0,matrixType: 'R',),
         ],
       ),
     ),

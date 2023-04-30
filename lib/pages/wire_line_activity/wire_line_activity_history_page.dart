@@ -3,16 +3,16 @@ import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellTest.dart';
 import 'package:ashal_ver_3/services/wirelineActivity.dart';
-import 'package:ashal_ver_3/well_test_details.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
-import 'package:ashal_ver_3/wire_line_activity_history_detail.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_details.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/wire_line_activity/wire_line_activity_history_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'NavBar.dart';
-import 'constant_values.dart';
-import 'main.dart';
+import '../../services/NavBar.dart';
+import '../../services/constant_values.dart';
+import '../../main.dart';
 
 class WireLineActivityHistoryPage extends StatefulWidget {
   String? item_uwi;

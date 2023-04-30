@@ -1,6 +1,6 @@
 
 
-import 'package:ashal_ver_3/constant_values.dart';
+import 'package:ashal_ver_3/services/constant_values.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import '../../main.dart';
 import '../../services/production_facility.dart';
 import '../../widgets/search_widget.dart';
-import '../../well_complition_list_page.dart';
+import '../wellCompletion/well_complition_list_page.dart';
 
 
 class AllAreaGCs extends StatefulWidget {

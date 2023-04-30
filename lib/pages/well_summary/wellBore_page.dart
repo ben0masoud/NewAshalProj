@@ -1,4 +1,4 @@
-import 'package:ashal_ver_3/info_Container.dart';
+import 'package:ashal_ver_3/widgets/info_Container.dart';
 //import 'package:ashal_ver_3/services/fetchDataApi.dart';
 //import 'package:ashal_ver_3/services/wellBore.dart';
 import 'package:ashal_ver_3/services/wellLatest.dart';
@@ -21,9 +21,21 @@ class _WellBorePageState extends State<WellBorePage> {
 
   @override
 
+
+
   Widget build(BuildContext context) {
    // FetchDataApi fetchApi = FetchDataApi();
+
     ScreenUtil.init(context,designSize: Size(360, 690));
+
+    Color titleBackgroundColor = Colors.white;
+    Color titleTextColor = Colors.black;
+    Color titleBorderColor = Colors.black;
+
+    Color valueBackgroundColor = Colors.white;
+    Color valueTextColor = Colors.black;
+    Color valueBorderColor = Colors.black;
+
     DateTime dt1;
     String _spud_date = "";
     DateTime dt2;
@@ -75,19 +87,19 @@ class _WellBorePageState extends State<WellBorePage> {
                               children: [
                                 infoContainer(height: 0.05.sh,
                                     width: 0.28.sw,
-                                    textColor: Colors.black,
-                                    backgroundColor: Colors.white,
-                                    borderColor: Colors.black,
+                                    textColor: titleTextColor,
+                                    backgroundColor: titleBackgroundColor,
+                                    borderColor: titleBorderColor,
                                     text: "Elevation", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0.r, rbRadius: 0.r,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
                                 SizedBox(height: 0.005.sh),
                                 infoContainer(height: 0.05.sh,
                                     width: 0.28.sw,
-                                    textColor: Colors.black,
-                                    backgroundColor: Colors.white,
-                                    borderColor: Colors.black,
-                                    text: widget.item!.ELEVATION.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                    textColor: valueTextColor,
+                                    backgroundColor: valueBackgroundColor,
+                                    borderColor: valueBorderColor,
+                                    text: widget.item!.ELEVATION!+' Ft', size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
                               ],
@@ -98,18 +110,18 @@ class _WellBorePageState extends State<WellBorePage> {
                               //Text("Elevation Ref."),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: titleTextColor,
+                                  backgroundColor: titleBackgroundColor,
+                                  borderColor: titleBorderColor,
                                 text: "Elevation Ref.", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: valueTextColor,
+                                  backgroundColor: valueBackgroundColor,
+                                  borderColor: valueBorderColor,
                                 text: widget.item!.ELEVATION_REF.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
@@ -134,9 +146,9 @@ class _WellBorePageState extends State<WellBorePage> {
                              // Text("Spud Date"),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: titleTextColor,
+                                  backgroundColor: titleBackgroundColor,
+                                  borderColor: titleBorderColor,
                                 text: "Spud Date", size: fontSize, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
@@ -144,9 +156,9 @@ class _WellBorePageState extends State<WellBorePage> {
                               SizedBox(height: 0.005.sh),
                                 infoContainer(height: 0.05.sh,
                                   width: 0.28.sw,
-                                  textColor: Colors.black,
-                                  backgroundColor: Colors.white,
-                                  borderColor: Colors.black,
+                                    textColor: titleTextColor,
+                                    backgroundColor: titleBackgroundColor,
+                                    borderColor: titleBorderColor,
                                   text: "Comp. Date" , size: fontSize, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
                                     borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                                 ),
@@ -159,9 +171,9 @@ class _WellBorePageState extends State<WellBorePage> {
                              // Text(widget.item!.comP_DATE.toString()),
                               infoContainer(height: 0.05.sh,
                                 width: 0.5.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: valueTextColor,
+                                  backgroundColor: valueBackgroundColor,
+                                  borderColor: valueBorderColor,
                                 text: _spud_date, size: fontSize, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
@@ -169,9 +181,9 @@ class _WellBorePageState extends State<WellBorePage> {
                               SizedBox(height: 0.005.sh),
                               infoContainer(height: 0.05.sh,
                                 width: 0.5.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: valueTextColor,
+                                  backgroundColor: valueBackgroundColor,
+                                  borderColor: valueBorderColor,
                                 text: _completion_date , size: fontSize, ltRadius: 0, rtRadius: 5.r, lbRadius: 0, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
@@ -194,19 +206,19 @@ class _WellBorePageState extends State<WellBorePage> {
                              // Text("Ground Elevation"),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: titleTextColor,
+                                  backgroundColor: titleBackgroundColor,
+                                  borderColor: titleBorderColor,
                                 text: "Ground Elevation", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
-                                text: widget.item!.GROUND_ELEVATION.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                  textColor: valueTextColor,
+                                  backgroundColor: valueBackgroundColor,
+                                  borderColor: valueBorderColor,
+                                text: widget.item!.GROUND_ELEVATION!+' Ft', size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               //Text(widget.item!.grounD_ELEVATION.toString()),
@@ -217,19 +229,19 @@ class _WellBorePageState extends State<WellBorePage> {
                               //Text("Drillers TD"),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                  textColor: titleTextColor,
+                                  backgroundColor: titleBackgroundColor,
+                                  borderColor: titleBorderColor,
                                 text: "Drillers TD.", size: fontSize, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               SizedBox(height: 0.005.sh),
                               infoContainer(height: 0.05.sh,
                                 width: 0.28.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
-                                text: widget.item!.DRILLERS_TD.toString(), size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                  textColor: valueTextColor,
+                                  backgroundColor: valueBackgroundColor,
+                                  borderColor: valueBorderColor,
+                                text: widget.item!.DRILLERS_TD!+' Ft', size: 15.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                   borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                               ),
                               //Text(widget.item!.drillerS_TD.toString()),

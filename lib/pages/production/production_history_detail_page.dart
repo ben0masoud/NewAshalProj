@@ -1,13 +1,13 @@
 
 //import 'package:ashal_ver_3/info_Container.dart';
 import 'package:ashal_ver_3/services/WellProduction.dart';
-import 'package:ashal_ver_3/well_test_details_container.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_details_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'constant_values.dart';
+import '../../services/constant_values.dart';
 
 class ProductionHistoryDetailPage extends StatefulWidget {
   WellProduction? item;

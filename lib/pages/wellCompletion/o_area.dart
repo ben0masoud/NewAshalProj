@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../services/access_info.dart';
 import '../../services/well.dart';
-import '../../well_page.dart';
+import '../well_summary/well_page.dart';
 import '../../widgets/search_widget.dart';
 import '../../widgets/well_completion_main_info.dart';
 class OArea extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:ashal_ver_3/info_Container.dart';
+import 'package:ashal_ver_3/widgets/info_Container.dart';
 //import 'package:ashal_ver_3/services/WellProduction.dart';
 //import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/wellLatest.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import 'daysContainer.dart';
+import '../../widgets/daysContainer.dart';
 
 class WellProductionPage extends StatefulWidget {
   WellLatest? item;
@@ -22,6 +22,15 @@ class _WellProductionPageState extends State<WellProductionPage> {
   Widget build(BuildContext context) {
    //FetchDataApi fetchApi = FetchDataApi();
     ScreenUtil.init(context,designSize: Size(360, 690));
+
+    Color titleBackgroundColor = Colors.white;
+    Color titleTextColor = Colors.black;
+    Color titleBorderColor = Colors.black;
+
+    Color valueBackgroundColor = Colors.white;
+    Color valueTextColor = Colors.black;
+    Color valueBorderColor = Colors.black;
+
     print(" production page UWI  = "+widget.item!.UWI.toString());
     DateTime dt1;
     String _production_date = "";
@@ -63,9 +72,9 @@ class _WellProductionPageState extends State<WellProductionPage> {
                           //Text("Production Date"),
                           infoContainer(height: 0.05.sh,
                               width: 0.4.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
+                              textColor: titleTextColor,
+                              backgroundColor: titleBackgroundColor,
+                              borderColor: titleBorderColor,
                               text: "Production Date", size: 12.sp, ltRadius: 5.r, rtRadius: 0, lbRadius: 5.r, rbRadius: 0,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
@@ -74,9 +83,9 @@ class _WellProductionPageState extends State<WellProductionPage> {
                           SizedBox(width: 0.02.sw,),
                           infoContainer(height: 0.05.sh,
                               width: 0.45.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
+                              textColor: valueTextColor,
+                              backgroundColor: valueBackgroundColor,
+                              borderColor: valueBorderColor,
                               text: _production_date, size: 12.sp, ltRadius: 0, rtRadius: 5, lbRadius: 0, rbRadius: 5,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
@@ -93,37 +102,37 @@ class _WellProductionPageState extends State<WellProductionPage> {
                           SizedBox(height: 0.02.sh,),
                           infoContainer(height: 0.05.sh,
                               width: 0.30.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
+                              textColor: titleTextColor,
+                              backgroundColor: titleBackgroundColor,
+                              borderColor: titleBorderColor,
                               text: "Oil Volume", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
                           SizedBox(height: 0.005.sh,),
                           infoContainer(height: 0.05.sh,
                               width: 0.30.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
-                              text: widget.item!.OIL_VOLUME.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                              textColor: valueTextColor,
+                              backgroundColor: valueBackgroundColor,
+                              borderColor: valueBorderColor,
+                              text: widget.item!.OIL_VOLUME!+' BBL', size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
                           SizedBox(height: 0.03.sh,),
                           infoContainer(height: 0.05.sh,
                               width: 0.30.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
+                              textColor: titleTextColor,
+                              backgroundColor: titleBackgroundColor,
+                              borderColor: titleBorderColor,
                               text: "Gas Volume", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
                           SizedBox(height: 0.005.sh,),
                           infoContainer(height: 0.05.sh,
                               width: 0.30.sw,
-                              textColor: Colors.black,
-                              backgroundColor: Colors.white,
-                              borderColor: Colors.black,
-                              text: widget.item!.GAS_VOLUME.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                              textColor: valueTextColor,
+                              backgroundColor: valueBackgroundColor,
+                              borderColor: valueBorderColor,
+                              text: widget.item!.GAS_VOLUME!+' MMSCF', size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                               borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                           ),
                         ],
@@ -165,37 +174,37 @@ class _WellProductionPageState extends State<WellProductionPage> {
                             SizedBox(height: 0.02.sh,),
                             infoContainer(height: 0.05.sh,
                                 width: 0.33.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                textColor: titleTextColor,
+                                backgroundColor: titleBackgroundColor,
+                                borderColor: titleBorderColor,
                                 text: "Condensate Volume", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                             ),
                             SizedBox(height: 0.005.sh,),
                             infoContainer(height: 0.05.sh,
                                 width: 0.33.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
-                                text: widget.item!.CONDENSATE_VOLUME.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                textColor: valueTextColor,
+                                backgroundColor: valueBackgroundColor,
+                                borderColor: valueBorderColor,
+                                text: (widget.item!.CONDENSATE_VOLUME!.isNotEmpty) ? widget.item!.CONDENSATE_VOLUME!+' BBL' : '', size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                             ),
                             SizedBox(height: 0.03.sh,),
                             infoContainer(height: 0.05.sh,
                                 width: 0.33.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
+                                textColor: titleTextColor,
+                                backgroundColor: titleBackgroundColor,
+                                borderColor: titleBorderColor,
                                 text: "Water Volume", size: 12.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                             ),
                             SizedBox(height: 0.005.sh,),
                             infoContainer(height: 0.05.sh,
                                 width: 0.33.sw,
-                                textColor: Colors.black,
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.black,
-                                text: widget.item!.WATER_VOLUME.toString(), size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
+                                textColor: valueTextColor,
+                                backgroundColor: valueBackgroundColor,
+                                borderColor: valueBorderColor,
+                                text: widget.item!.WATER_VOLUME!+' BBL', size: 12.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                                 borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0
                             ),
 

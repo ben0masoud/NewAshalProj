@@ -1,14 +1,14 @@
 //import 'package:ashal_ver_3/WellTest_Container.dart';
-import 'package:ashal_ver_3/constant_values.dart';
-import 'package:ashal_ver_3/productionHistory_page.dart';
+import 'package:ashal_ver_3/services/constant_values.dart';
+import 'package:ashal_ver_3/pages/production/productionHistory_page.dart';
 //import 'package:ashal_ver_3/services/access_info.dart';
 import 'package:ashal_ver_3/services/well.dart';
-import 'package:ashal_ver_3/well_operation_status_history.dart';
-import 'package:ashal_ver_3/well_page.dart';
-import 'package:ashal_ver_3/gc_connection_history_page.dart';
-import 'package:ashal_ver_3/well_test_and_chart_page.dart';
-import 'package:ashal_ver_3/well_test_chart.dart';
-import 'package:ashal_ver_3/wire_line_activity_history_page.dart';
+import 'package:ashal_ver_3/pages/well_status/well_operation_status_history.dart';
+import 'package:ashal_ver_3/pages/well_summary/well_page.dart';
+import 'package:ashal_ver_3/pages/well_connection/gc_connection_history_page.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_and_chart_page.dart';
+import 'package:ashal_ver_3/pages/well_test/well_test_chart.dart';
+import 'package:ashal_ver_3/pages/wire_line_activity/wire_line_activity_history_page.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
@@ -16,9 +16,9 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'AllWellTestHistory_Page.dart';
+import '../pages/wire_line_activity/AllWellTestHistory_Page.dart';
 //import 'gc_list_page.dart';
-import 'main.dart';
+import '../main.dart';
 class NavBar extends StatelessWidget {
   final String? uwi;
   final String? well_completion;

@@ -1,6 +1,6 @@
 
 
-import 'package:ashal_ver_3/info_Container.dart';
+import 'package:ashal_ver_3/widgets/info_Container.dart';
 import 'package:ashal_ver_3/services/wellLatest.dart';
 //import 'package:ashal_ver_3/services/wellOperationStatus.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,15 @@ class WellOperationStatusPage extends StatefulWidget {
 class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
   @override
   Widget build(BuildContext context) {
+
+    Color titleBackgroundColor = Colors.white;
+    Color titleTextColor = Colors.black;
+    Color titleBorderColor = Colors.black;
+
+    Color valueBackgroundColor = Colors.white;
+    Color valueTextColor = Colors.black;
+    Color valueBorderColor = Colors.black;
+
     print("well op status page UWI  = "+widget.item!.UWI.toString());
     DateTime dt1;
     String _start_time = "";
@@ -65,18 +74,18 @@ class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
                           //Text("Elevation Ref."),
                           infoContainer(height: 0.05.sh,
                             width: 0.65.sw,
-                            textColor: Colors.black,
-                            backgroundColor: Colors.white,
-                            borderColor: Colors.black,
+                            textColor: titleTextColor,
+                            backgroundColor: titleBackgroundColor,
+                            borderColor: titleBorderColor,
                             text: "Start Date", size: 20.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                             borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                           ),
                           SizedBox(height: 0.002.sh),
                           infoContainer(height: 0.05.sh,
                             width: 0.65.sw,
-                            textColor: Colors.black,
-                            backgroundColor: Colors.white,
-                            borderColor: Colors.black,
+                            textColor: valueTextColor,
+                            backgroundColor: valueBackgroundColor,
+                            borderColor: valueBorderColor,
                             text: _start_time, size: 18.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                             borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                           ),
@@ -89,36 +98,36 @@ class _WellOperationStatusPageState extends State<WellOperationStatusPage> {
                     SizedBox(height: 0.002.sh),
                     infoContainer(height: 0.05.sh,
                       width: double.infinity,
-                      textColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.black,
+                      textColor: titleTextColor,
+                      backgroundColor: titleBackgroundColor,
+                      borderColor: titleBorderColor,
                       text: "Reason", size: 15.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                       borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                     ),
                     SizedBox(height: 0.002.sh),
                     infoContainer(height: 0.05.sh,
                       width: double.infinity,
-                      textColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.black,
+                      textColor: valueTextColor,
+                      backgroundColor: valueBackgroundColor,
+                      borderColor: valueBorderColor,
                       text: widget.item!.REASON.toString(), size: 13.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                       borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                     ),
                     SizedBox(height: 0.005.sh),
                     infoContainer(height: 0.05.sh,
                       width: double.infinity,
-                      textColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.black,
+                      textColor: titleTextColor,
+                      backgroundColor: titleBackgroundColor,
+                      borderColor: titleBorderColor,
                       text: "Remarks", size: 18.sp, ltRadius: 5.r, rtRadius: 5.r, lbRadius: 0, rbRadius: 0,
                       borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                     ),
                     SizedBox(height: 0.002.sh),
                     infoContainer(height: 0.06.sh,
                       width: double.infinity,
-                      textColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.black,
+                      textColor: valueTextColor,
+                      backgroundColor: valueBackgroundColor,
+                      borderColor: valueBorderColor,
                       text: widget.item!.WLA_REMARKS.toString(), size: 13.sp, ltRadius: 0, rtRadius: 0, lbRadius: 5.r, rbRadius: 5.r,
                       borderWidthL: 2.0,borderWidthT: 2.0,borderWidthR: 2.0,borderWidthB: 2.0,
                     ),

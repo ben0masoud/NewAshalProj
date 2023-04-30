@@ -4,16 +4,16 @@ import 'package:ashal_ver_3/services/body_post_json.dart';
 import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/well.dart';
 import 'package:ashal_ver_3/services/wellOperationStatus.dart';
-import 'package:ashal_ver_3/well_complition_list_page.dart';
+import 'package:ashal_ver_3/pages/wellCompletion/well_complition_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
-import 'NavBar.dart';
+import '../../services/NavBar.dart';
 import 'add_well_operation_status.dart';
-import 'constant_values.dart';
-import 'main.dart';
+import '../../services/constant_values.dart';
+import '../../main.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

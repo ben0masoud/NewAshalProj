@@ -11,7 +11,7 @@ import 'package:ashal_ver_3/services/fetchDataApi.dart';
 import 'package:ashal_ver_3/services/production_facility.dart';
 import 'package:flutter/material.dart';
 
-import 'constant_values.dart';
+import '../../services/constant_values.dart';
 
 class GcListPages extends StatefulWidget {
   const GcListPages({Key? key,required this.title,this.user,this.profile,this.AshalAccess,this.Area}) : super(key: key);
@@ -39,24 +39,37 @@ class _GcListPagesState extends State<GcListPages> {
   int index = 0;
   late List screens;
   late int selectedPage = 0;
+  bool isLoad=false;
 
   @override
 
   void initState() {
-    AllGcs = [];
-    nkData = [];
-    wkData = [];
-    screens = [];
-    selectedPage = 0;
+   // AllGcs = [];
+   // nkData = [];
+   // wkData = [];
+   // screens = [];
+   // selectedPage = 0;
     super.initState();
-    gcsSearch = gcs;
-    fetchGCList(widget.profile!, widget.Area!,widget.user!);
+   // gcsSearch = gcs;
+  //  setState(() {
+  //    isLoad=false;
+  //  });
+    fetchGCList();
   }
 
   //AllWells = GetData(widget.profile!,widget.AshalAccess!);
   //FetchDataApi fetchApi = FetchDataApi();
 
-  Future fetchGCList(String prof, String access,String user) async {
+  Future fetchGCList() async {
+    AllGcs = [];
+    nkData = [];
+    wkData = [];
+    screens = [];
+    selectedPage = 0;
+    gcsSearch = gcs;
+    setState(() {
+      isLoad=false;
+    });
     FetchDataApi fetchApi = FetchDataApi();
     BodyPost wellPostBody = BodyPost();
     wellPostBody.user = widget.user;
@@ -68,30 +81,28 @@ class _GcListPagesState extends State<GcListPages> {
       // print('the response is '+response.statusCode.toString());
       AllGcs!.clear();
 
-      if (access == 'ALL AREA') {
+      if (widget.Area! == 'ALL AREA') {
         //AllGcs = await fetchApi.fetchProductFacility('') as List<ProductionFacility>?;
         AllGcs = await fetchApi.fetchProductFacilityPost(wellPostBody) as List<ProductionFacility>?;
       } else {
-        wellPostBody.whereCondition = "OPERATOR='${access}'";
+        wellPostBody.whereCondition = "AREA='${widget.Area!}'";
         //AllGcs = await fetchApi.fetchProductFacility("::OPERATOR='${access}'") as List<ProductionFacility>?;
         AllGcs = await fetchApi.fetchProductFacilityPost(wellPostBody) as List<ProductionFacility>?;
       }
 
 
-      if (AllGcs!.isNotEmpty) {
         setState(() {
-          selectedPage = 0;
+          if (AllGcs!.isNotEmpty) {
+            selectedPage = 0;
           //  print('AllWells = ${AllWells!.length}');
-          nkData = AllGcs!.where((e) => e.OPERATOR == "NK").toList();
+            nkData = AllGcs!.where((e) => e.ACTUAL_AREA == "NK").toList();
           //  print('nkData = ${nkData!.length}');
-          wkData = AllGcs!.where((e) => e.OPERATOR == "WK").toList();
+            wkData = AllGcs!.where((e) => e.ACTUAL_AREA == "WK").toList();
           //  print('wkData = ${wkData!.length}');
-          skData = AllGcs!.where((e) => e.OPERATOR == "SK").toList();
+            skData = AllGcs!.where((e) => e.ACTUAL_AREA == "SEK").toList();
           //  print('skData = ${skData!.length}');
-          otherData = AllGcs!
-              .where((e) => e.OPERATOR != "SK" && e.OPERATOR != "WK" && e.OPERATOR != "NK")
-              .toList();
-
+            otherData = AllGcs!.where((e) => e.ACTUAL_AREA != "SEK" && e.ACTUAL_AREA != "WK" && e.ACTUAL_AREA != "NK").toList();
+        }
           screens = [
             AllAreaGCs(
               gcList: AllGcs,
@@ -129,8 +140,8 @@ class _GcListPagesState extends State<GcListPages> {
               user: widget.user,
             )
           ];
+          isLoad=true;
         });
-      }
 
     } on SocketException catch (e) {
       print('e is ${e.osError}');
@@ -146,8 +157,11 @@ class _GcListPagesState extends State<GcListPages> {
           backgroundColor: ConstantValues.MainColor1,
           title: Text('GC List',style: TextStyle(color: Colors.black),),
         ),
-        body: AllGcs!.isNotEmpty
-            ? screens[selectedPage]
+        body: isLoad
+            ? RefreshIndicator(
+            child: screens[selectedPage],
+            onRefresh: fetchGCList
+        )
             : Center(child: CircularProgressIndicator()),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedPage,
@@ -194,7 +208,7 @@ class _GcListPagesState extends State<GcListPages> {
             )//Icon(Icons.library_books),
             ),
             BottomNavigationBarItem(
-                label: 'SK',
+                label: 'SEK',
                 icon: buildCustomBadget(
                         counter: skData!.length,
                         child:  ImageIcon(
@@ -204,7 +218,7 @@ class _GcListPagesState extends State<GcListPages> {
                 ),//Icon(Icons.location_on),
             ),
             BottomNavigationBarItem(
-                label: 'EK',
+                label: 'Other',
                 icon: buildCustomBadget(
                         counter: otherData!.length,
                         child:  ImageIcon(
